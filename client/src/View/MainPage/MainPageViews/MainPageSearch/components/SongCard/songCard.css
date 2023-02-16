@@ -1,0 +1,124 @@
+.song-cards {
+    width: 50%;
+    margin: auto;
+    margin-top: 5rem;
+    margin-bottom: 5rem;
+}
+
+.song-card {
+    height: 60px;
+    width: 100%;
+    margin-top: 1rem;
+    /* margin-left: 1rem; */
+    border-radius: 10px;
+    background-color: #000000;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    text-align: center;
+    box-shadow: 0px 10px 15px -6px rgba(55, 55, 55, 0.75);
+    -webkit-box-shadow: 0px 10px 15px -6px rgba(55, 55, 55, 0.75);
+    -moz-box-shadow: 0px 10px 15px -6px rgba(55, 55, 55, 0.75);
+    transition: all 0.5s ease-in-out;
+    cursor: pointer;
+    opacity: 0.7;
+}
+
+.song-card:hover {
+    box-shadow: 0px 10px 15px -6px var(--purple);
+    -webkit-box-shadow: 0px 10px 15px -6px var(--purple);
+    -moz-box-shadow: 0px 10px 15px -6px var(--purple);
+    opacity: 1;
+    transform: scale(1.1);
+}
+
+.song-card-play-button {
+    border: 1px solid var(--purple);
+    background: #000;
+    width: 30px;
+    height: 30px;
+    border-radius: 10px;
+    margin-left: 1rem;
+    cursor: pointer;
+}
+
+.play-icon {
+    color: #fff;
+    transition: all 0.3s ease-in-out;
+}
+
+.play-icon:hover {
+    transform: scale(1.2);
+    color: var(--purple);
+}
+
+.song-card-text {
+    padding-top: 5px;
+    width: 150px;
+}
+
+.author-name-p {
+    /* color: var(--purple); */
+    color: #ffffff;
+    font-family: var(--text-font1);
+}
+
+.song-name-p {
+    /* color: var(--purple-dark); */
+    color: #a9a9a9;
+    font-family: var(--text-font1);
+
+}
+
+.genre-p {
+    color: var(--yellow);
+}
+
+.addToFavourites {
+    width: 30px;
+    height: 30px;
+    background-color: #000;
+    border: 1px solid var(--purple);
+    border-radius: 10px;
+    cursor: pointer;
+    margin-right: 1rem;
+}
+
+.removeFromFavourites {
+    width: 30px;
+    height: 30px;
+    background-color: #000;
+    border: none;
+    cursor: pointer;
+    color: red;
+}
+
+.bookmark-icon {
+    color: #ffffff;
+    transition: all 0.3s ease-in-out;
+}
+
+.bookmark-icon-remove {
+    color: #ffffff;
+    transition: all 0.3s ease-in-out;
+}
+
+.bookmark-icon:hover {
+    color: var(--purple);
+    transform: scale(1.2)
+}
+
+.bookmark-icon-remove:hover {
+    color: var(--purple);
+    transform: scale(1.4);
+}
+
+.author-image {
+    /* border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px; */
+}
+
+.album-image {
+    /* border-top-left-radius: 8px;
+    border-bottom-left-radius: 8px; */
+}

@@ -1,0 +1,26 @@
+# IMPORTANT TASKS
+
+- Add notification axios calls to FE
+- Check out useCallback for usage of memoized versions of callbacks
+
+# ADDITIONAL TASKS
+
+- Decode JWT on FE when saving to user state
+- Allow users to upload profile pictures
+- Rename audioFiles collection (Music?)
+- Allow addition of multiple genres per song
+- Admin panel: https://www.google.com/search?q=admin+panel&rlz=1C1CHBF_enDE905DE905&sxsrf=ALiCzsaNK3HR1j6PO9M8mlBqwxZJwYKU2A:1662114276260&source=lnms&tbm=isch&sa=X&ved=2ahUKEwjKuYyY8vX5AhXvh4sKHdp7DtoQ_AUoAXoECAEQAw&biw=1536&bih=722&dpr=1.25#imgrc=Gi7TfDGj7KMVUM
+
+# USEFUL LINKS
+
+- https://www.atlassian.com/git/tutorials/using-branches/git-merge
+- https://github.com/LloydJanseVanRensburg/mern-pagination/blob/master/controllers/postControllers.js
+
+
+# NOTES
+
+- From a browser compatibility standpoint, .MP3 and .MP4 are the best audio file formats for use on the Web. 
+All modern browsers support this format, including IE9. Other formats that are supported by most browsers include OGG, WebM, AAC, and WAV.
+
+- Impossible to prevent users from downloading audio files through dev tools (?)
+https://stackoverflow.com/questions/34530925/web-audio-api-and-audio-download-and-protection

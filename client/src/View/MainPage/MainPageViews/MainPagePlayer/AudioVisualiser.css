@@ -1,0 +1,187 @@
+:root {
+    --main-color: rgb(144, 144, 144);
+    --main-color-hover: rgb(104, 117, 217, 0.2);
+    --track-color: #ddd;
+}
+
+.volumeSlider {
+    /* max width of your slider */
+    width: 100px;
+    top: -95px;
+    /* Optional: Only If you want to center your slider in the page */
+    margin: auto;
+}
+
+.seekSlider {
+    /* max width of your slider */
+    width: 100px;
+    top: -115px;
+    /* Optional: Only If you want to center your slider in the page */
+    margin-top: 2rem;
+}
+
+.seekSlider-icons-container {
+    display: flex;
+    justify-content: space-between;
+}
+
+.seekSlider-icons {
+    color: var(--yellow);
+}
+
+.customSlider-track {
+    /* Top value to align your track to the center of your thumb */
+    top: 8px;
+    max-width: 200px;
+    /* thickness of the track */
+    height: 4px;
+    /* default color of your track */
+    background: var(--track-color);
+}
+
+.customSlider-track.customSlider-track-0 {
+    /* color of the track before the thumb */
+    background: var(--main-color);
+    width: 200px;
+}
+
+.customSlider-thumb {
+    cursor: pointer;
+    /*color for the thumb */
+    background: var(--yellow);
+    /* shape of the thumb: circle */
+    width: 20px;
+    height: 20px;
+    border-radius: 100%;
+    /* remove default outline when selected */
+    outline: none;
+}
+
+.volume-icons {
+    color: var(--yellow);
+}
+
+.customSlider-thumb:hover {
+    box-shadow: 0 0 0 8px var(--main-color-hover);
+}
+
+/* * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+} */
+/* 
+#container {
+    z-index: 0;
+    position: relative;
+    top: 0;
+    left: 0;
+    background: black;
+    width: 100%;
+    height: 100%;
+} */
+
+#button1 {
+    position: relative;
+    z-index: 1;
+}
+
+#canvas1 {
+    background: rgb(58, 58, 58);
+    z-index: 0;
+    position: relative;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    /* filter: blur(1px) contrast(1); */
+}
+
+.slider-container {
+    width: 200px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    /* padding-bottom: 2rem; */
+}
+
+.music-player {
+    display: flex;
+    width: 100%;
+    justify-content: space-around;
+    align-items: center;
+    background: linear-gradient(-45deg, var(--yellow-dark), var(--purple-dark));
+    background-size: 400% 400%;
+    animation: gradient 15s ease infinite;
+    height: 100vh;
+}
+
+
+@keyframes gradient {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+.musicPlayer-button-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.volume-low {
+    margin-right: auto;
+}
+
+.volume-high {
+    margin-left: auto;
+}
+
+.volume-icons-container {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 1rem;
+}
+
+.song-information {
+    border: 2px solid var(--yellow);
+    border-bottom-left-radius: 30px;
+    border-top-right-radius: 30px;
+    outline: none;
+    text-align: center;
+    height: 80px;
+    padding: 10px;
+}
+
+.song-information p {
+    /* color: #aeaeae; */
+    font-family: var(--text-font1);
+    width: 250px;
+}
+
+.author-name {
+    color: #fff;
+    font-size: 20px;
+}
+
+.song-name {
+    color: #fff;
+}
+
+.played-from {
+    color: var(--yellow);
+    font-size: 14px;
+}
+
+.not-playing-p {
+    color: #eaeaea;
+    font-style: italic;
+}

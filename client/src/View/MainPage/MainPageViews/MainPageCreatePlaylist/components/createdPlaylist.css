@@ -1,0 +1,109 @@
+.created-playlist-container {
+    width: 50%;
+    height: 60px;
+    margin: auto;
+    background: var(--linear-bg);
+    display: flex;
+    align-items: center;
+    justify-content: left;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+    border-radius: 10px;
+}
+
+.user-image {
+    margin-left: 1rem;
+    border-radius: 10%;
+    border: 2px solid #000;
+}
+
+.playlist-name-title {
+    font-family: var(--title-font);
+    font-size: 2rem;
+    padding-left: 5rem;
+    margin-right: auto;
+    width: 80%;
+}
+
+.edit-menu {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    width: 100px;
+    height: 100%;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+    border-left: 2px solid #000;
+}
+
+.edit-playlist {
+    cursor: pointer;
+    color: #000;
+}
+
+.edit-playlist:hover {
+    color: var(--purple);
+    transform: scale(1.1);
+}
+
+.delete-playlist {
+    cursor: pointer;
+    color: #000;
+}
+
+.delete-playlist:hover {
+    color: var(--purple);
+    transform: scale(1.1);
+}
+
+.lock-playlist {
+    cursor: pointer;
+    color: #000;
+}
+
+.lock-playlist:hover {
+    color: var(--purple);
+    transform: scale(1.1);
+}
+
+.unlock-playlist {
+    cursor: pointer;
+    color: #000;
+}
+
+.unlock-playlist:hover {
+    color: var(--purple);
+    transform: scale(1.1);
+}
+
+.close-edit-menu {
+    cursor: pointer;
+    color: #000;
+}
+
+.close-edit-menu:hover {
+    color: var(--purple);
+    transform: scale(1.1);
+}
+
+.open-edit-menu {
+    cursor: pointer;
+    color: #000;
+}
+
+.open-edit-menu:hover {
+    color: var(--purple);
+    transform: scale(1.1);
+}
+
+.edit-menu-closed {
+    display: none;
+}
+
+.expand-shrink-button {
+    border: none;
+    background: none;
+    outline: none;
+    padding-right: 1rem;
+}

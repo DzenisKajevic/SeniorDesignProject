@@ -1,0 +1,101 @@
+/* footer components container  */
+.footer-container {
+    padding-top: 15rem;
+}
+
+/* two link containers  */
+.footer-links-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 80%;
+    margin: auto;
+    height: 150px;
+    margin-bottom: 3rem;
+}
+
+/* list containing links  */
+.footer-ul {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+}
+
+/* list header  */
+.footer-ul h4 {
+    color: var(--white-text);
+    font-family: var(--text-font1);
+    font-size: 1.5rem;
+}
+
+/* list links  */
+.footer-ul a {
+    /* color: var(--white-text); */
+    color: #878888;
+    font-family: var(--text-font1);
+    padding-top: 1rem;
+}
+
+/* list links on hover change color and get an underline */
+.footer-ul a:hover {
+    color: var(--white-text);
+    text-decoration: underline;
+}
+
+/* container with social media icons  */
+.sm-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 200px;
+    height: 50px;
+    align-self: flex-end;
+}
+
+/* styling social media icons  */
+.sm-icons-styling {
+    width: 50px;
+    color: var(--white-text);
+    cursor: pointer;
+}
+
+/* a div used as a break line, separating footer content  */
+.breakline {
+    width: 80%;
+    margin: auto;
+    border: 1px solid #3f3f3f;
+}
+
+/* container with form, icon and copyright p  */
+.footer-bottom-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 80%;
+    margin: auto;
+    height: 100px;
+}
+
+/* footer form with different languages select  */
+.language-form {
+    background: var(--linear-bg);
+    border: none;
+    outline: none;
+    height: 30px;
+    border-radius: 10px;
+    width: 100px;
+    cursor: pointer;
+}
+
+/* music app logo in the footer  */
+.footer-music-app-logo {
+    width: 180px;
+    overflow: hidden;
+}
+
+/* copyright paragraph in the footer  */
+.copyright-p {
+    color: var(--white-text);
+    text-decoration: underline;
+    font-family: var(--text-font1);
+}
