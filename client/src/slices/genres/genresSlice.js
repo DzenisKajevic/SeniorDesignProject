@@ -4,7 +4,8 @@ export const genresSlice = createSlice({
     name: 'genres',
     initialState: {
         genres: [],
-        songs: [],
+        songs: [], // used for displaying songs inside of a genre which we are currently browsing
+        currentlyPlayingGenreSongs: [], // used for playing songs from this genre, if we are browsing another
         currentGenre: null,
         genresPageCount: null,
         songsPageCount: null,
@@ -13,10 +14,12 @@ export const genresSlice = createSlice({
         songsHidden: true
     },
     reducers: {
+        setCurrentlyPlayingGenreSongs: (state, action) => {
+            state.currentlyPlayingGenreSongs = state.songs;
+        },
         setGenres: (state, action) => {
             state.genres = action.payload.genres;
             state.genresPageCount = Number(action.payload.pageCount);
-
         },
         setGenreSongs: (state, action) => {
             state.songs = action.payload.searchResults;
@@ -37,6 +40,6 @@ export const genresSlice = createSlice({
 })
 
 // Action creators are generated for each case reducer function
-export const { setGenres, setReloadGenres, setGenreSongs, unhideGenres } = genresSlice.actions
+export const { setGenres, setReloadGenres, setGenreSongs, setCurrentlyPlayingGenreSongs, unhideGenres } = genresSlice.actions
 
 export default genresSlice.reducer

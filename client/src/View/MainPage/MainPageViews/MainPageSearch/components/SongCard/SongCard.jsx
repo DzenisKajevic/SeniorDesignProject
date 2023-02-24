@@ -6,6 +6,9 @@ import {
   setSongInfo,
   setReloadPlaylists,
 } from "../../../../../../slices/audioVisualiser/songInfoSlice";
+import {
+  setCurrentlyPlayingGenreSongs,
+} from "../../../../../../slices/genres/genresSlice";
 import { cleanup, source } from "../../../MainPagePlayer/AudioVisualiser";
 import { setSeekBytes } from "../../../../../../slices/audioVisualiser/seekBytesSlice";
 import * as mainAxios from "../../../../mainAxios";
@@ -131,6 +134,7 @@ const SongCard = (source, style) => {
               <button
                 className="song-card-play-button"
                 onClick={ async () => {
+                  dispatch(setCurrentlyPlayingGenreSongs());
                   playSong(song, index);
                 } }
               >

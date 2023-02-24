@@ -73,12 +73,12 @@ const MainContent = () => {
         map1.set("genresPrevious", song);
       } else {
         song = {
-          ...genres.songs[genres.songs.length - 1],
+          ...genres.currentlyPlayingGenreSongs[genres.currentlyPlayingGenreSongs.length - 1],
           playedFrom: "GENRES",
         };
         map1.set("genresPreviousFinal", song);
       }
-      await playPrevious("genresPrevious", Number(genres.songs.length) - 1);
+      await playPrevious("genresPrevious", Number(genres.currentlyPlayingGenreSongs.length) - 1);
     }
   };
 
@@ -109,17 +109,17 @@ const MainContent = () => {
       }
       await playNext("favouriteSongsNext", favouriteSongs.songs.length - 1);
     } else if (songInfo.playedFrom === "GENRES") {
-      if (songInfo.songIndex < genres.songs.length - 1) {
+      if (songInfo.songIndex < genres.currentlyPlayingGenreSongs.length - 1) {
         song = {
-          ...genres.songs[Number(songInfo.songIndex) + 1],
+          ...genres.currentlyPlayingGenreSongs[Number(songInfo.songIndex) + 1],
           playedFrom: "GENRES",
         };
         map1.set("genresNext", song);
       } else {
-        song = { ...genres.songs[0], playedFrom: "GENRES" };
+        song = { ...genres.currentlyPlayingGenreSongs[0], playedFrom: "GENRES" };
         map1.set("genresNextFirst", song);
       }
-      await playNext("genresNext", genres.songs.length - 1);
+      await playNext("genresNext", genres.currentlyPlayingGenreSongs.length - 1);
     }
   };
 
