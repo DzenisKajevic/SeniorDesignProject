@@ -59,7 +59,10 @@ const AudioVisualiser = () => {
             dispatch(setRedirected(false));
         }
         if (seekBytes === -1) { return; };
-        if (seekBytes) { cleanup(); };
+
+        // in case seekBytes was 0, cleanup() wasn't called, so audio sources kept stacking over each other
+        // every time the slider was used to move the song to the beginning
+        if (seekBytes != undefined) { cleanup(); };
 
         if (songInfo !== null) {
             fileUrl.current = 'http://localhost:3001/api/v1/audioFiles/getFile/' + songInfo['_id'];
