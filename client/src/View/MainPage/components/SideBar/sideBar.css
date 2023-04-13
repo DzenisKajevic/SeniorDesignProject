@@ -4,7 +4,7 @@
     padding-top: 4rem;
     position: -webkit-sticky;
     position: sticky;
-    top: 0;
+    top: -1px;
 }
 
 .animated-logo {

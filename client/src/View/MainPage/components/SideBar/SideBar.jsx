@@ -93,7 +93,6 @@ const SideBar = () => {
       <a className="sidebar-links" href="#">
         Partners
       </a>
-      <p className="copyright-p-main">2022 &copy; AntCol Music App</p>
     </aside>
   );
 };
