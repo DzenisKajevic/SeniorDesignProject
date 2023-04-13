@@ -65,6 +65,7 @@ const MainPageCreatePlaylist = () => {
         </form>
       </div>
       <CreatedPlaylist />
+      <div className="mainPage-button-container"></div>
     </section>
   );
 };
