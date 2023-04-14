@@ -51,7 +51,7 @@ const MainPageCreatePlaylist = () => {
             }
           } }
         />
-        <form onSubmit={ (e) => {
+        <form style={ { width: "100%" } } onSubmit={ (e) => {
           e.preventDefault();
         } }>
           <input
