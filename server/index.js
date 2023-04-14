@@ -36,7 +36,7 @@ const swaggerOptions = {
         openapi: '3.0.0',
         info: {
             //basePath: "/api/v1",
-            title: 'AntCol Music App API',
+            title: 'Music App API',
             description: 'Developer API',
             contact: {
                 name: "Dženis Kajević"

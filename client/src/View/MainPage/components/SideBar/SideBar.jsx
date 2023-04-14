@@ -82,7 +82,7 @@ const SideBar = () => {
         {/* this side bar will have sticky position  */ }
       </nav>
       <div className="animated-logo">
-        <h1 className="animated-logo-title">AntCol Music App</h1>
+        <h1 className="animated-logo-title">Music App</h1>
       </div>
       <a className="sidebar-links" href="#">
         About

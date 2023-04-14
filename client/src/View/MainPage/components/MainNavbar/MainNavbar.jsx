@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import "./mainNavbar.css";
 import "../../../../variables.css";
 import { Link } from "react-router-dom";
-import logo from "./navbarImages/music-app-logo.png";
+import logo from "./navbarImages/music-app-logo2.png";
 import * as mainAxios from "../../mainAxios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import * as mainNavbarAxios from "./mainNavbarAxios";
