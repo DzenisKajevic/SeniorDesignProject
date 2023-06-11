@@ -125,17 +125,7 @@ app.get('/test', async (req, res) => {
      */
 });
 
-app.get('/useRefreshToken', (req, res) => {
-    spotifyApi.resetRefreshToken().then(
-        function (data) {
-            console.log('The refresh token has been refreshed!');
-            console.log(data.body);
-            spotifyApi.setRefreshToken(data.body['refresh_token']);
-        },
-        function (err) {
-            console.log('Could not refresh refresh token', err);
-        }
-    );
+app.get('/useRefreshToken', async function (req, res) {
     spotifyApi.refreshAccessToken().then(
         function (data) {
             console.log('The access token has been refreshed!');
@@ -157,8 +147,8 @@ var spotifyApi = new SpotifyWebApi({
 const getSongFromSpotify = async (songName) => {
     try {
         const data = await spotifyApi.searchTracks(songName);
-        console.log(data.body.tracks.items[0].album.images[0].url);
-        return data.body.tracks.items[0].album.images[0].url;
+        console.log(data.body.tracks.items[0]);
+        return data.body.tracks.items[0];
     } catch (error) {
         console.log(error);
     }
@@ -170,6 +160,12 @@ app.get('/spotify', async (req, res) => {
     res.send(song);
 });
 
+app.get('/spotifySongFeatures', async (req, res) => {
+    const songId = req.query.songId;
+    const songFeatures = await spotifyApi.getAudioFeaturesForTrack(songId);
+    res.send(songFeatures);
+});
+
 app.get('/callback', (req, res) => {
     const code = req.query.code;
     spotifyApi.authorizationCodeGrant(code).then((response) => {
@@ -177,20 +173,6 @@ app.get('/callback', (req, res) => {
         spotifyApi.setAccessToken(response.body['access_token']);
         spotifyApi.setRefreshToken(response.body['refresh_token']);
     });
-    /*     spotifyApi.authorizationCodeGrant(code).then(
-            function (data) {
-                console.log('The token expires in ' + data.body['expires_in']);
-                console.log('The access token is ' + data.body['access_token']);
-                console.log('The refresh token is ' + data.body['refresh_token']);
-                spotifyApi.setAccessToken(data.body['access_token']);
-                spotifyApi.setRefreshToken(data.body['refresh_token']);
-                res.redirect('http://localhost:3000');
-            },
-            function (err) {
-                console.log('Something went wrong!', err);
-            }
-        );
-     */
 });
 
 // route middleware
