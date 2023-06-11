@@ -24,6 +24,10 @@ const app = express();
 const mongoose = require('mongoose');
 const swaggerJsDoc = require('swagger-jsdoc');
 const swaggerUI = require('swagger-ui-express');
+const SpotifyWebApi = require('spotify-web-api-node');
+const spotifyConfig = require('./configs/spotify.config');
+const { default: axios } = require('axios');
+const { resolve } = require('./utils/resolver');
 
 
 app.use(cors()) // Use this after the variable declaration
@@ -93,7 +97,100 @@ app.all('*', middleware.JWTAuth);
  *         description: hello world
  */
 app.get('/', (req, res) => {
-    res.send("Welcome");
+    console.log(spotifyApi);
+    res.redirect(spotifyApi.createAuthorizeURL(["user-read-private"]));
+});
+
+app.get('/test', async (req, res) => {
+    var AUTH_URL = 'https://accounts.spotify.com/api/token';
+    var result = await resolve(
+        axios({
+            method: 'post',
+            url: AUTH_URL,
+            data: {
+                'scope': 'user-read-private',
+                'client_id': spotifyConfig.SPOTIPY_CLIENT_ID,
+                'client_secret': spotifyConfig.SPOTIPY_CLIENT_SECRET,
+            }
+        }));
+    console.log(result);
+    /*     auth_response = request.post(AUTH_URL, {
+            'grant_type': 'client_credentials',
+            'client_id': spotifyConfig.SPOTIPY_CLIENT_ID,
+            'client_secret': spotifyConfig.SPOTIPY_CLIENT_SECRET,
+        })
+        auth_response_data = auth_response.json()
+        access_token = auth_response_data['access_token']
+        console.log(access_token);
+     */
+});
+
+app.get('/useRefreshToken', (req, res) => {
+    spotifyApi.resetRefreshToken().then(
+        function (data) {
+            console.log('The refresh token has been refreshed!');
+            console.log(data.body);
+            spotifyApi.setRefreshToken(data.body['refresh_token']);
+        },
+        function (err) {
+            console.log('Could not refresh refresh token', err);
+        }
+    );
+    spotifyApi.refreshAccessToken().then(
+        function (data) {
+            console.log('The access token has been refreshed!');
+            console.log(data.body);
+            spotifyApi.setAccessToken(data.body['access_token']);
+        },
+        function (err) {
+            console.log('Could not refresh access token', err);
+        }
+    );
+});
+
+var spotifyApi = new SpotifyWebApi({
+    clientId: spotifyConfig.SPOTIPY_CLIENT_ID,
+    clientSecret: spotifyConfig.SPOTIPY_CLIENT_SECRET,
+    redirectUri: spotifyConfig.SPOTIPY_REDIRECT_URI
+});
+
+const getSongFromSpotify = async (songName) => {
+    try {
+        const data = await spotifyApi.searchTracks(songName);
+        console.log(data.body.tracks.items[0].album.images[0].url);
+        return data.body.tracks.items[0].album.images[0].url;
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+app.get('/spotify', async (req, res) => {
+    const songName = req.query.songName;
+    const song = await getSongFromSpotify(songName);
+    res.send(song);
+});
+
+app.get('/callback', (req, res) => {
+    const code = req.query.code;
+    spotifyApi.authorizationCodeGrant(code).then((response) => {
+        res.send(JSON.stringify(response));
+        spotifyApi.setAccessToken(response.body['access_token']);
+        spotifyApi.setRefreshToken(response.body['refresh_token']);
+    });
+    /*     spotifyApi.authorizationCodeGrant(code).then(
+            function (data) {
+                console.log('The token expires in ' + data.body['expires_in']);
+                console.log('The access token is ' + data.body['access_token']);
+                console.log('The refresh token is ' + data.body['refresh_token']);
+                spotifyApi.setAccessToken(data.body['access_token']);
+                spotifyApi.setRefreshToken(data.body['refresh_token']);
+                res.redirect('http://localhost:3000');
+            },
+            function (err) {
+                console.log('Something went wrong!', err);
+            }
+        );
+     */
 });
 
 // route middleware

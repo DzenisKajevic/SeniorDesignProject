@@ -24,11 +24,12 @@ function JWTAuth(req, res, next) {
     const auth = '/api/v1/auth/';
     const files = '/api/v1/audioFiles/';
     // Skip authorization checking on the following routes: 
-    if (req.path === '/' || req.path === auth + 'login' || req.path === auth + 'register' || req.path === '/api-docs') return next();
+    if (req.path === '/' || req.path === '/callback' || req.path === '/useRefreshToken' || req.path === '/test' || req.path === '/spotify' || req.path === auth + 'login' || req.path === auth + 'register' || req.path === '/api-docs' || req.path === '/favicon.ico') return next();
 
     //console.log(req.body);
     const authHeader = req.headers['authorization'];
     if (!authHeader) {
+        console.log(req.path);
         req.err = "Missing authorization";
         console.log('Missing authorization');
         return res.status(401).send("Missing authorization");

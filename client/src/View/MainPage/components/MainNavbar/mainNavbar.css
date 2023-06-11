@@ -107,10 +107,23 @@
 }
 
 .mainNavbar-username {
+    max-width: 140px;
+    overflow: hidden;
     font-family: var(--text-font1);
     color: var(--white-text);
     padding-left: 1rem;
     cursor: pointer;
+}
+
+@media (max-width: 800px) {
+    .mainNavbar-username {
+        max-width: 80px;
+        overflow: hidden;
+        font-family: var(--text-font1);
+        color: var(--white-text);
+        padding-left: 1rem;
+        cursor: pointer;
+    }
 }
 
 .mainNavbar-username:hover {
