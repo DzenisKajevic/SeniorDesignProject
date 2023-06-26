@@ -12,6 +12,7 @@ const notificationsRouter = require('./routes/notifications.route');
 const audioFilesRouter = require('./routes/audioFiles.route');
 const favouriteFilesRouter = require('./routes/favouriteFiles.route');
 const playlistsRouter = require('./routes/playlists.route');
+const spotifyRouter = require('./routes/spotipy.route');
 const profilePicRouter = require('./routes/profilePics.routes');
 const middleware = require('./middleware/middleware');
 const { morgan } = require('./utils/helper.util');
@@ -26,8 +27,6 @@ const swaggerJsDoc = require('swagger-jsdoc');
 const swaggerUI = require('swagger-ui-express');
 const SpotifyWebApi = require('spotify-web-api-node');
 const spotifyConfig = require('./configs/spotify.config');
-const { default: axios } = require('axios');
-const { resolve } = require('./utils/resolver');
 
 
 app.use(cors()) // Use this after the variable declaration
@@ -96,47 +95,6 @@ app.all('*', middleware.JWTAuth);
  *       200:
  *         description: hello world
  */
-app.get('/', (req, res) => {
-    console.log(spotifyApi);
-    res.redirect(spotifyApi.createAuthorizeURL(["user-read-private"]));
-});
-
-app.get('/test', async (req, res) => {
-    var AUTH_URL = 'https://accounts.spotify.com/api/token';
-    var result = await resolve(
-        axios({
-            method: 'post',
-            url: AUTH_URL,
-            data: {
-                'scope': 'user-read-private',
-                'client_id': spotifyConfig.SPOTIPY_CLIENT_ID,
-                'client_secret': spotifyConfig.SPOTIPY_CLIENT_SECRET,
-            }
-        }));
-    console.log(result);
-    /*     auth_response = request.post(AUTH_URL, {
-            'grant_type': 'client_credentials',
-            'client_id': spotifyConfig.SPOTIPY_CLIENT_ID,
-            'client_secret': spotifyConfig.SPOTIPY_CLIENT_SECRET,
-        })
-        auth_response_data = auth_response.json()
-        access_token = auth_response_data['access_token']
-        console.log(access_token);
-     */
-});
-
-app.get('/useRefreshToken', async function (req, res) {
-    spotifyApi.refreshAccessToken().then(
-        function (data) {
-            console.log('The access token has been refreshed!');
-            console.log(data.body);
-            spotifyApi.setAccessToken(data.body['access_token']);
-        },
-        function (err) {
-            console.log('Could not refresh access token', err);
-        }
-    );
-});
 
 var spotifyApi = new SpotifyWebApi({
     clientId: spotifyConfig.SPOTIPY_CLIENT_ID,
@@ -166,16 +124,8 @@ app.get('/spotifySongFeatures', async (req, res) => {
     res.send(songFeatures);
 });
 
-app.get('/callback', (req, res) => {
-    const code = req.query.code;
-    spotifyApi.authorizationCodeGrant(code).then((response) => {
-        res.send(JSON.stringify(response));
-        spotifyApi.setAccessToken(response.body['access_token']);
-        spotifyApi.setRefreshToken(response.body['refresh_token']);
-    });
-});
-
 // route middleware
+app.use('/api/v1/spotify', spotifyRouter);
 app.use('/api/v1/auth', usersAuthRouter);
 app.use('/api/v1/audioFiles', audioFilesRouter);
 app.use('/api/v1/profilePics', profilePicRouter);

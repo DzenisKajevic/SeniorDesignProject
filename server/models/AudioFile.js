@@ -21,6 +21,10 @@ const metadata = new mongoose.Schema({
         type: String,
         required: true
     },
+    spotifySongId: {
+        type: String,
+        default: null
+    },
     uploadedBy: {
         type: mongoose.Schema.Types.ObjectId,
         required: true

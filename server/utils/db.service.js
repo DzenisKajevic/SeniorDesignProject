@@ -4,7 +4,7 @@ const dbConfig = require('../configs/db.config');
 const GridFsStorage = require('multer-gridfs-storage').GridFsStorage;
 const crypto = require('crypto');
 const path = require('path');
-
+const spotipyController = require('../controllers/spotipy.controller');
 // deep populate in mongoose
 /* SomeModel
   .find()
@@ -26,7 +26,7 @@ checkAudioFileType = (file, cb) => {
     if (mimetype && extname) return cb(null, true);
     cb('Unsupported file type submitted');
 };
-checkMetadata = (req, cb) => {
+checkMetadata = async (req, cb) => {
     let metadata = req.body;
     const requiredMetadata = ["genre", "author", "songName", "album"];
     const hasOwnProperty = Object.hasOwnProperty.bind(metadata)
@@ -84,9 +84,10 @@ const dbService = {
         dbService.audioStorage = new GridFsStorage({
             url: dbService.dbURI,
             bucketName: dbService.audioBucketName,
-            file: (req, file) => {
+            file: async (req, file) => {
                 let metadata = req.body;
 
+                metadata['spotifySongID'] = await spotipyController.findSpotifySongID2(metadata.songName);
                 metadata['reviewed'] = 'false';
                 metadata['uploadedBy'] = mongoose.Types.ObjectId(req.user.userId);
                 return new Promise((resolve, reject) => {

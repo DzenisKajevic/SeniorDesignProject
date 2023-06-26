@@ -24,7 +24,7 @@ function JWTAuth(req, res, next) {
     const auth = '/api/v1/auth/';
     const files = '/api/v1/audioFiles/';
     // Skip authorization checking on the following routes: 
-    if (req.path === '/' || req.path === '/callback' || req.path === '/useRefreshToken' || req.path === '/test' || req.path === '/spotify' || req.path === '/spotifySongFeatures' || req.path === auth + 'login' || req.path === auth + 'register' || req.path === '/api-docs' || req.path === '/favicon.ico') return next();
+    if (req.path === '/getAccessToken' || req.path === '/callback' || req.path === '/useRefreshToken' || req.path === '/spotify' || req.path === '/spotifySongFeatures' || req.path === auth + 'login' || req.path === auth + 'register' || req.path === '/api-docs' || req.path === '/favicon.ico' || req.path.startsWith('/api/v1/spotify')) return next();
 
     //console.log(req.body);
     const authHeader = req.headers['authorization'];
