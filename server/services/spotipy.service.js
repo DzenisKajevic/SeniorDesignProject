@@ -6,34 +6,23 @@ const SpotipyInfo = require('../models/SpotipyInfo');
 const SpotifyWebApi = require('spotify-web-api-node');
 const spotifyConfig = require('../configs/spotify.config.js');
 
-/* // this function and updateVisibility could be merged into a single function, but that's not the priority currently.
-async function updatePlaylistName(user, playlistId, playlistName) {
-    let playlist = await Playlist.findOneAndUpdate({ '_id': playlistId, 'userId': user.userId }, { 'playlistName': playlistName }, { new: true });
-    if (!playlist) {
-        throw new StatusError(null, 'Playlist not found', 404);
-    }
-    console.log(playlist);
-    return playlist;
-};
- */
 
-// used for testing route; delete later
-const findSpotifySongID = async (res, next, songName) => {
+const findSpotifySongFeatures = async (songId) => {
     try {
         let spotifyApi = await getSpotifyInfoAccessToken();
         if (!spotifyApi) {
-            next(new StatusError(null, `Error getting access token for the API`, 400));
+            console.log("Error getting access token for the API");
+            return null;
         }
-        const data = await spotifyApi.searchTracks(songName);
-        console.log(data.body.tracks.items[0]);
-        res.status(200).send(data.body.tracks.items[0]['id']);
+        const data = await spotifyApi.getAudioFeaturesForTrack(songId);
+        return data.body;
     } catch (error) {
         console.log(error);
-        next(new StatusError(error.message, `Error finding spotify song id`, 400));
+        console.log("Error finding spotify song features");
     }
 }
 
-const findSpotifySongID2 = async (songName) => {
+const findSpotifySongID = async (songName) => {
     try {
         let spotifyApi = await getSpotifyInfoAccessToken();
         if (!spotifyApi) {
@@ -49,12 +38,6 @@ const findSpotifySongID2 = async (songName) => {
         console.log("Error finding spotify song id");
     }
 }
-
-/* app.get('/spotify', async (req, res) => {
-    const songName = req.query.songName;
-    const song = await getSongFromSpotify(songName);
-    res.send(song);
-}); */
 
 async function callback(res, next, code) {
     let spotifyApi = createApiObject();
@@ -134,5 +117,5 @@ module.exports = {
     getNewAccessToken,
     useRefreshToken,
     findSpotifySongID,
-    findSpotifySongID2
+    findSpotifySongFeatures
 }

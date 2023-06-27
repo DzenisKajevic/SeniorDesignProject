@@ -41,7 +41,7 @@ async function getFile(input, res) {
 
         await db.getProfilePicGfs().find({ '_id': _id }).limit(1).toArray((err, files) => {
             console.log(files);
-            console.log(err);
+            if (err) console.log(err);
             if (!files || files.length === 0) res.status(500).send('A file with that id was not found');
             else {
                 //res.setHeader('Content-Disposition', 'attachment');
@@ -57,7 +57,7 @@ async function getFile(input, res) {
 
         await db.getProfilePicGfs().find({ 'metadata.uploadedBy': userId }).limit(1).toArray((err, files) => {
             console.log("FILE", files);
-            console.log(err);
+            if (err) console.log(err);
             if (!files || files.length === 0) res.status(500).send('A file with that id was not found');
             else {
                 //res.setHeader('Content-Disposition', 'attachment');

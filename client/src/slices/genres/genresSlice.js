@@ -15,16 +15,36 @@ export const genresSlice = createSlice({
     },
     reducers: {
         setCurrentlyPlayingGenreSongs: (state, action) => {
-            state.currentlyPlayingGenreSongs = state.songs;
+            console.log(action.payload);
+            console.log(state.currentGenre, action.payload.newGenre);
+            if (action.payload.calledFrom === "playButton") {
+                console.log("called");
+                state.currentlyPlayingGenreSongs = state.songs;
+                console.log(state.currentlyPlayingGenreSongs);
+            }
+            else if (action.payload.newGenre === state.currentGenre) {
+                console.log("CALLED 2");
+                console.log(state.currentlyPlayingGenreSongs);
+                console.log(state.songs);
+
+                console.log(JSON.parse(JSON.stringify(state.currentlyPlayingGenreSongs)));
+                console.log(JSON.parse(JSON.stringify(state.songs)));
+                state.currentlyPlayingGenreSongs = state.songs;
+                console.log(state.currentlyPlayingGenreSongs);
+            }
         },
         setGenres: (state, action) => {
             state.genres = action.payload.genres;
             state.genresPageCount = Number(action.payload.pageCount);
         },
         setGenreSongs: (state, action) => {
+            let temp = state.currentGenre;
+            if (action.payload.currentGenre !== undefined) {
+                state.currentGenre = action.payload.currentGenre;
+            }
+            else state.currentGenre = temp;
             state.songs = action.payload.searchResults;
             state.songsPageCount = action.payload.pageCount;
-            state.currentGenre = action.payload.currentGenre;
             state.genresHidden = true;
             state.songsHidden = false;
         },

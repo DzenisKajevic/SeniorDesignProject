@@ -8,6 +8,8 @@ import {
   setReloadGenres,
   unhideGenres,
   reloadGenres,
+  setGenreSongs,
+  setCurrentlyPlayingGenreSongs,
 } from "../../../../slices/genres/genresSlice";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleArrowLeft } from "@fortawesome/free-solid-svg-icons";
@@ -124,19 +126,21 @@ const MainPageHome = () => {
                 : null,
           } }
           onClick={ async () => {
-            pagination.current.page--;
+            songPagination.current.page--;
             const filters = {
               page: songPagination.current.page,
               pageSize: songPagination.current.pageSize,
               genre: genres.currentGenre,
             };
             let result = await mainAxios.getAllFiles(filters);
-            dispatch(setGenres(result.data.data));
+            console.log(result.data.data);
+            dispatch(setGenreSongs(result.data.data));
+            dispatch(setCurrentlyPlayingGenreSongs({ newGenre: filters.genre }));
             window.location.hash = "nonExistantHashUsedForRefreshing";
             window.location.hash = "#card-container";
           } }
         >
-          { Number(pagination.current.page) - 1 }
+          { Number(songPagination.current.page) - 1 }
         </button>
 
         <button
@@ -158,19 +162,21 @@ const MainPageHome = () => {
                 : null,
           } }
           onClick={ async () => {
-            pagination.current.page++;
+            songPagination.current.page++;
             const filters = {
               page: songPagination.current.page,
               pageSize: songPagination.current.pageSize,
               genre: genres.currentGenre,
             };
             let result = await mainAxios.getAllFiles(filters);
-            dispatch(setGenres(result.data.data));
+            console.log(result.data.data);
+            dispatch(setGenreSongs(result.data.data));
+            dispatch(setCurrentlyPlayingGenreSongs({ newGenre: filters.genre }));
             window.location.hash = "nonExistantHashUsedForRefreshing";
             window.location.hash = "#card-container";
           } }
         >
-          { Number(pagination.current.page) + 1 }
+          { Number(songPagination.current.page) + 1 }
         </button>
       </div>
 

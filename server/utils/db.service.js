@@ -87,7 +87,7 @@ const dbService = {
             file: async (req, file) => {
                 let metadata = req.body;
 
-                metadata['spotifySongID'] = await spotipyController.findSpotifySongID2(metadata.songName);
+                metadata['spotifySongID'] = await spotipyController.findSpotifySongID(metadata.songName);
                 metadata['reviewed'] = 'false';
                 metadata['uploadedBy'] = mongoose.Types.ObjectId(req.user.userId);
                 return new Promise((resolve, reject) => {

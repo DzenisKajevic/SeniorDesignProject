@@ -21,7 +21,7 @@ const metadata = new mongoose.Schema({
         type: String,
         required: true
     },
-    spotifySongId: {
+    spotifySongID: {
         type: String,
         default: null
     },

@@ -30,7 +30,7 @@ const GenreCard = () => {
       return (
         <div className="genre-card" key={ genre } onClick={ async () => {
           let result = await mainAxios.getAllFiles({
-            "metadata.genre": genre,
+            genre: genre,
             page: pagination.current.page,
             pageSize: pagination.current.pageSize,
           });

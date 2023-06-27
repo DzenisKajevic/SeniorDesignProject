@@ -1,38 +1,24 @@
 const spotipyService = require('../services/spotipy.service');
 const { StatusError } = require('../utils/helper.util');
 
-// used for testing route; delete later
-async function findSpotifySongID(req, res, next) {
+const findSpotifySongFeatures = async (songId) => {
     try {
-        const songName = req.query.songName;
-        await spotipyService.findSpotifySongID(res, next, songName);
+        return await spotipyService.findSpotifySongFeatures(songId);
+    } catch (error) {
+        console.log(error);
+        return null;
+    }
+}
+
+async function findSpotifySongID(songName) {
+    try {
+        return await spotipyService.findSpotifySongID(songName);
     }
     catch (err) {
         console.error(`Error getting song id\n`, err);
         return null;
     }
 };
-async function findSpotifySongID2(songName) {
-    try {
-        return await spotipyService.findSpotifySongID2(songName);
-    }
-    catch (err) {
-        console.error(`Error getting song id\n`, err);
-        return null;
-    }
-};
-
-async function spotifySongFeatures(songId) {
-    try {
-        return await spotipyService.getAudioFeaturesForTrack(songId);
-        /*         const songFeatures = await spotifyApi.getAudioFeaturesForTrack(songId);
-                return songFeatures; */
-    } catch (err) {
-        console.error(`Error getting song features\n`, err);
-        return null;
-    }
-};
-
 
 async function callback(req, res, next) {
     const code = req.query.code;
@@ -60,8 +46,7 @@ async function getNewAccessToken(req, res, next) {
 module.exports = {
     callback,
     findSpotifySongID,
-    findSpotifySongID2,
-    spotifySongFeatures,
+    findSpotifySongFeatures,
     getNewAccessToken,
     useRefreshToken
 }

@@ -65,7 +65,8 @@ const MainContent = () => {
         Number(favouriteSongs.songs.length) - 1
       );
     } else if (songInfo.playedFrom === "GENRES") {
-      if (Number(songInfo.songIndex - 1) >= 0) {
+      map1.set("genresPreviousFinal", genres.currentlyPlayingGenreSongs[genres.currentlyPlayingGenreSongs.length - 1]);
+      if (Number(songInfo.songIndex - 1) >= 0 && Number(songInfo.songIndex - 1) < genres.currentlyPlayingGenreSongs.length) {
         song = {
           ...genres.songs[Number(songInfo.songIndex) - 1],
           playedFrom: "GENRES",
@@ -78,7 +79,12 @@ const MainContent = () => {
         };
         map1.set("genresPreviousFinal", song);
       }
-      await playPrevious("genresPrevious", Number(genres.currentlyPlayingGenreSongs.length) - 1);
+      if (Number(genres.currentlyPlayingGenreSongs.length) === 1) {
+        map1.set("genresPreviousFinal", song);
+        await playPrevious("genresPrevious", 0);
+      }
+      else
+        await playPrevious("genresPrevious", Number(genres.currentlyPlayingGenreSongs.length) - 1);
     }
   };
 
@@ -96,7 +102,9 @@ const MainContent = () => {
         map1.set("searchResultsNextFirst", song);
       }
       await playNext("searchResultsNext", searchResults.songs.length - 1);
-    } else if (songInfo.playedFrom === "FAVOURITES") {
+    }
+
+    else if (songInfo.playedFrom === "FAVOURITES") {
       if (songInfo.songIndex < favouriteSongs.songs.length - 1) {
         song = {
           ...favouriteSongs.songs[Number(songInfo.songIndex) + 1].fileId,
@@ -108,7 +116,10 @@ const MainContent = () => {
         map1.set("favouriteSongsNextFirst", song);
       }
       await playNext("favouriteSongsNext", favouriteSongs.songs.length - 1);
-    } else if (songInfo.playedFrom === "GENRES") {
+    }
+
+    else if (songInfo.playedFrom === "GENRES") {
+      map1.set("genresPreviousFinal", genres.currentlyPlayingGenreSongs[genres.currentlyPlayingGenreSongs.length - 1]);
       if (songInfo.songIndex < genres.currentlyPlayingGenreSongs.length - 1) {
         song = {
           ...genres.currentlyPlayingGenreSongs[Number(songInfo.songIndex) + 1],
@@ -124,17 +135,23 @@ const MainContent = () => {
   };
 
   const playPrevious = async function (source, sourceMaxIndex) {
+    console.log(source);
     let song = map1.get(source);
-    if (Number(songInfo.songIndex) > 0) {
+    console.log(song);
+    console.log(songInfo.songIndex, sourceMaxIndex);
+    if (Number(songInfo.songIndex) > 0 && Number(songInfo.songIndex) <= Number(sourceMaxIndex)) {
+      console.log("PRVI");
       await playSong(map1.get(source), Number(songInfo.songIndex) - 1);
     } else {
+      console.log("DRUGI");
+      console.log(map1);
       await playSong(map1.get(source + "Final"), sourceMaxIndex);
     }
   };
 
   const playNext = async function (source, sourceMaxIndex) {
     if (songInfo.songIndex < sourceMaxIndex) {
-      await playSong(map1.get(source), songInfo.songIndex + 1);
+      await playSong(map1.get(source), Number(songInfo.songIndex) + 1);
     } else await playSong(map1.get(source + "First"), 0);
   };
 

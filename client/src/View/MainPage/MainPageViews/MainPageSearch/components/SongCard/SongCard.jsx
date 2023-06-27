@@ -27,6 +27,8 @@ const SongCard = (source, style) => {
   playSong = function (song, index) {
     cleanup();
     let tempSongInfo = structuredClone(song);
+    console.log(song);
+    console.log(tempSongInfo);
     tempSongInfo["songIndex"] = index;
     if (!song["playedFrom"]) tempSongInfo["playedFrom"] = source.source;
     dispatch(setSongInfo(tempSongInfo));
@@ -54,7 +56,7 @@ const SongCard = (source, style) => {
               </div>
               <img
                 src="http://placekitten.com/60"
-                alt="author image"
+                alt="author"
                 className="author-image"
               />
               <button
@@ -99,7 +101,7 @@ const SongCard = (source, style) => {
               <img
                 // src={null}
                 src="http://placekitten.com/60"
-                alt="album image"
+                alt="album"
                 className="album-image"
               />
               <button
@@ -134,7 +136,7 @@ const SongCard = (source, style) => {
               <button
                 className="song-card-play-button"
                 onClick={ async () => {
-                  dispatch(setCurrentlyPlayingGenreSongs());
+                  dispatch(setCurrentlyPlayingGenreSongs({ calledFrom: "playButton" }));
                   playSong(song, index);
                 } }
               >
@@ -148,7 +150,7 @@ const SongCard = (source, style) => {
               <img
                 // src={null}
                 src="http://placekitten.com/60"
-                alt="album image"
+                alt="album"
                 className="album-image"
               />
               <button

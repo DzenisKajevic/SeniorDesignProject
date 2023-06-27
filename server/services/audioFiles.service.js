@@ -3,10 +3,12 @@ const AudioFile = require('../models/AudioFile');
 const FavouriteFile = require('../models/FavouriteFile');
 const FileReview = require('../models/FileReview');
 const Playlist = require('../models/Playlist');
+const SongFeatures = require('../models/SongFeatures');
 const { StatusError } = require('../utils/helper.util');
 const mongoose = require('mongoose');
 const util = require('../utils/helper.util');
 const Notification = require('../models/Notifications');
+const spotipyController = require('../controllers/spotipy.controller');
 
 async function deleteFileHelper(id) {
     if (!id || id === 'undefined') return 'The file id was not provided';
@@ -27,6 +29,7 @@ async function deleteFile(user, fileId) {
         await FavouriteFile.deleteMany({ 'fileId': fileId });
         // deletes the file from everyone's playlists 
         await Playlist.updateMany({ 'fileId': fileId }, { $pull: { 'files': fileId } });
+        await SongFeatures.deleteOne({ 'songId': fileId });
         return "Successfully deleted the file";
     }
     else {
@@ -137,9 +140,11 @@ async function getFileInfo(fileId) {
 
 // Added filters, removed 2 routes
 async function getAllFiles(user, queryParams, callback) {
+    console.log("Query params", queryParams);
     //{ genre, page, pageSize }
     console.log(user)
     let filters = {};
+    if (queryParams['genre'] !== undefined) filters['metadata.genre'] = queryParams['genre'];
     filters['contentType'] = "audio/mpeg";
     if (user.role !== 'Admin') filters['reviewed'] = true;
     else if (queryParams['reviewed'] === 'true' || queryParams['reviewed'] === 'false') filters['reviewed'] = queryParams['reviewed'];
@@ -150,7 +155,7 @@ async function getAllFiles(user, queryParams, callback) {
     let page = parseInt(queryParams.page) || 1;
     let pageSize = parseInt(queryParams.pageSize) || 4;
     //if songName is present, use regex to find matching songs
-    if (filters['metadata.songName'] !== null) {
+    if (filters['metadata.songName'] !== undefined) {
         let songNameRegex = filters['metadata.songName'];
         filters['metadata.songName'] = undefined;
         delete filters['metadata.songName'];
@@ -162,8 +167,7 @@ async function getAllFiles(user, queryParams, callback) {
                     callback(new StatusError(null, 'No files available', 404));
                 }
                 else {
-
-                    console.log(files);
+                    //console.log(files);
                     let returnObject = {
                         'searchResults': files,
                         'pageCount': Math.ceil(matchingCount / pageSize)
@@ -243,7 +247,8 @@ async function handleFileReview(user, fileId, status, description = '') {
         console.log(file);
         throw new StatusError(null, 'That file does not exist, closing review', 404);
     }
-
+    console.log(file.metadata.spotifySongID);
+    let spotifySongID = file.metadata.spotifySongID;
     const update = {
         'reviewStatus': status,
         'adminId': mongoose.Types.ObjectId(user.userId),
@@ -252,12 +257,27 @@ async function handleFileReview(user, fileId, status, description = '') {
     };
 
     if (status === "Accepted") {
+        let spotifySongFeatures = await spotipyController.findSpotifySongFeatures(spotifySongID);
+        console.log(spotifySongFeatures);
+        songFeaturesEntry = {
+            'songId': fileId,
+            'danceability': spotifySongFeatures.danceability,
+            'energy': spotifySongFeatures.energy,
+            'acousticness': spotifySongFeatures.acousticness,
+            'instrumentalness': spotifySongFeatures.instrumentalness,
+            'valence': spotifySongFeatures.valence,
+            'tempo': spotifySongFeatures.tempo
+        }
+
+        await SongFeatures.create(songFeaturesEntry);
+
         const date = new Date;
         update['reviewed'] = true;
         update['reviewTerminationDate'] = date.toISOString();
         const filter = { '_id': fileId };
         const file = await AudioFile.findOneAndUpdate(
-            filter, update, { upsert: false, useFindAndModify: false, new: true });
+            filter, { 'metadata.reviewed': true }, { upsert: false, useFindAndModify: true, new: false });
+        console.log(file);
         await Notification.create({
             'userId': file.metadata.uploadedBy, 'read': false,
             'description': `The uploaded file ${file.filename} has been accepted`,
