@@ -1,0 +1,11 @@
+- when a song is played, check if there's already 10 songs there
+- if yes, remove oldest, add newest (using timestamps)
+- when a user clicks on the refresh recommendations button, send a request for it
+- open python script
+- pull all recently listened songs from db using user's id
+- check if there are at least 3 recently listened songs
+- if no, throw exit code 1 & tell the user to listen to more songs first
+- if yes, kmeans 3 clusters & recommend
+- after finding recommended songs, add them to 3 new playlists (based on clusters)
+- playlists should contain flag: "recommendedPlaylist"
+- load recommended playlists on the frontend with the flag as the filter
