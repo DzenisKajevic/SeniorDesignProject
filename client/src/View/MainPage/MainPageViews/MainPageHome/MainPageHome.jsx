@@ -133,7 +133,7 @@ const MainPageHome = () => {
               genre: genres.currentGenre,
             };
             let result = await mainAxios.getAllFiles(filters);
-            console.log(result.data.data);
+
             dispatch(setGenreSongs(result.data.data));
             dispatch(setCurrentlyPlayingGenreSongs({ newGenre: filters.genre }));
             window.location.hash = "nonExistantHashUsedForRefreshing";
@@ -169,7 +169,7 @@ const MainPageHome = () => {
               genre: genres.currentGenre,
             };
             let result = await mainAxios.getAllFiles(filters);
-            console.log(result.data.data);
+
             dispatch(setGenreSongs(result.data.data));
             dispatch(setCurrentlyPlayingGenreSongs({ newGenre: filters.genre }));
             window.location.hash = "nonExistantHashUsedForRefreshing";

@@ -15,22 +15,11 @@ export const genresSlice = createSlice({
     },
     reducers: {
         setCurrentlyPlayingGenreSongs: (state, action) => {
-            console.log(action.payload);
-            console.log(state.currentGenre, action.payload.newGenre);
             if (action.payload.calledFrom === "playButton") {
-                console.log("called");
                 state.currentlyPlayingGenreSongs = state.songs;
-                console.log(state.currentlyPlayingGenreSongs);
             }
             else if (action.payload.newGenre === state.currentGenre) {
-                console.log("CALLED 2");
-                console.log(state.currentlyPlayingGenreSongs);
-                console.log(state.songs);
-
-                console.log(JSON.parse(JSON.stringify(state.currentlyPlayingGenreSongs)));
-                console.log(JSON.parse(JSON.stringify(state.songs)));
                 state.currentlyPlayingGenreSongs = state.songs;
-                console.log(state.currentlyPlayingGenreSongs);
             }
         },
         setGenres: (state, action) => {

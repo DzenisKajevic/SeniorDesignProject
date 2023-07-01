@@ -14,6 +14,7 @@ const favouriteFilesRouter = require('./routes/favouriteFiles.route');
 const playlistsRouter = require('./routes/playlists.route');
 const spotifyRouter = require('./routes/spotipy.route');
 const profilePicRouter = require('./routes/profilePics.routes');
+const recentlyPlayedSongsRouter = require('./routes/recentlyPlayedSongs.route');
 const middleware = require('./middleware/middleware');
 const { morgan } = require('./utils/helper.util');
 const { v4: uuidv4 } = require('uuid');
@@ -132,6 +133,7 @@ app.use('/api/v1/profilePics', profilePicRouter);
 app.use('/api/v1/favouriteFiles', favouriteFilesRouter);
 app.use('/api/v1/playlists', playlistsRouter);
 app.use('/api/v1/notifications', notificationsRouter);
+app.use('/api/v1/recentlyPlayedSongs', recentlyPlayedSongsRouter);
 
 // error handler middleware
 app.use(middleware.handleErrors);

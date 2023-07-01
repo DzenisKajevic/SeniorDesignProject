@@ -6,7 +6,6 @@ export async function register(user) {
     const response = await userAuth.register(user.username, user.email, user.password);
     if (response.error) {
         console.log(response.error); // response.error.response.data -> error message
-
     }
     else {
         // saves the token into the localStorage. 

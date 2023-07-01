@@ -12,6 +12,7 @@ import MainPageFavorites from "./View/MainPage/MainPageViews/MainPageFavorites/M
 import { AudioVisualiser } from './View/MainPage/MainPageViews/MainPagePlayer/AudioVisualiser';
 import PageNotFound from './View/MainPage/components/PageNotFound/PageNotFound';
 import { PrivateRoute } from './View/PrivateRoute';
+import MainPageRecents from './View/MainPage/MainPageViews/MainPageRecents/MainPageRecents';
 
 function App() {
   return (
@@ -49,7 +50,13 @@ function App() {
           <PrivateRoute>
             <MainPageFavorites />
           </PrivateRoute> } />
+
+        < Route path="/main-page/recently-played" element={
+          <PrivateRoute>
+            <MainPageRecents />
+          </PrivateRoute> } />
       </Route>
+
       <Route path="*" element={ <PageNotFound /> } />
     </Routes >
   );

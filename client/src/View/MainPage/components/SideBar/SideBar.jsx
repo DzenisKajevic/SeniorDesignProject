@@ -2,6 +2,7 @@ import React from "react";
 import "./sideBar.css";
 import "../../../../variables.css";
 import {
+  faClockRotateLeft,
   faHouse,
   faMagnifyingGlass,
   faPlus,
@@ -75,6 +76,18 @@ const SideBar = () => {
           <span className="sidebar-navigation">
             <FontAwesomeIcon icon={ faStar } className="navigation-icons" />
             <h3 className="not-active-link">Favorites</h3>
+          </span>
+        </NavLink>
+        <NavLink
+          onClick={ () => { checkVisualiserBeforeRedirect() } }
+          to="/main-page/recently-played"
+          className={ ({ isActive }) =>
+            isActive ? "active-link" : "not-active-link"
+          }
+        >
+          <span className="sidebar-navigation">
+            <FontAwesomeIcon icon={ faClockRotateLeft } className="navigation-icons" />
+            <h3 className="not-active-link">Recents</h3>
           </span>
         </NavLink>
 

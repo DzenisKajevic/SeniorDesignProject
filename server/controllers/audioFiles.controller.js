@@ -26,6 +26,7 @@ async function uploadFile(req, res, next) {
 async function getFile(req, res, next) {
     try {
         // res is required for the .pipe(res) on the DownloadStream
+        // also adds to the list of recently played songs (within the service)
         await audioFilesService.getFile(req, res);
     } catch (err) {
         if (err.name === 'StatusError') {

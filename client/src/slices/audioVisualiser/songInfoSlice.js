@@ -23,8 +23,6 @@ export const songInfoSlice = createSlice({
                 state.song = action.payload;
 
             state.isPlaying = true;
-
-            console.log(state.song);
         },
         setReloadPlaylists: (state, action) => {
             state.reloadPlaylists = action.payload;

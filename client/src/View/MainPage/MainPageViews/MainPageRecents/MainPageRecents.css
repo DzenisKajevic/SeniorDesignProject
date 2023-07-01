@@ -1,0 +1,32 @@
+.refresh-icon {
+    color: #fff;
+    cursor: pointer;
+    padding-left: 1rem;
+    padding-right: 1rem;
+}
+
+.refresh-icon:hover {
+    color: var(--purple);
+}
+
+.refresh-button {
+    /*     width: 100%; */
+    border: none;
+    background: none;
+}
+
+.linear-p {
+    display: flex;
+    font-family: var(--title-font);
+    font-size: 1.2rem;
+    background: var(--linear-bg);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.flex-container {
+    display: flex;
+    justify-content: center;
+    padding-top: 1rem;
+}

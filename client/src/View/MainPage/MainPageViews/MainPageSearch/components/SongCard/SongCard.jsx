@@ -21,18 +21,23 @@ const SongCard = (source, style) => {
   const genres = useSelector((state) => state.genres);
   const searchResults = useSelector((state) => state.searchResults);
   const favouriteSongs = useSelector((state) => state.favouriteSongs);
+  const recentSongs = useSelector((state) => state.recentSongs);
   const songInfo = useSelector((state) => state.songInfo.song);
   const dispatch = useDispatch();
 
-  playSong = function (song, index) {
+  playSong = async function (song, index) {
     cleanup();
     let tempSongInfo = structuredClone(song);
-    console.log(song);
-    console.log(tempSongInfo);
     tempSongInfo["songIndex"] = index;
     if (!song["playedFrom"]) tempSongInfo["playedFrom"] = source.source;
     dispatch(setSongInfo(tempSongInfo));
     dispatch(setSeekBytes(0));
+    if (source.source === "SEARCH" || source.source === "GENRES") {
+      await mainAxios.addToRecentlyPlayedSongs(song._id);
+    }
+    else {
+      await mainAxios.addToRecentlyPlayedSongs(song.fileId._id);
+    }
   };
 
   if (source.source === "SEARCH") {
@@ -52,7 +57,7 @@ const SongCard = (source, style) => {
               <div className="song-card-text">
                 <p className="author-name-p">{ song.metadata.author }</p>
                 <p className="song-name-p">{ song.metadata.songName }</p>
-                <p className="genre-p">{ song.metadata.genre }</p>
+                {/* <p className="genre-p">{ song.metadata.genre }</p> */ }
               </div>
               <img
                 src="http://placekitten.com/60"
@@ -96,7 +101,7 @@ const SongCard = (source, style) => {
               <div className="song-card-text">
                 <p className="author-name-p">{ song.fileId.metadata.author }</p>
                 <p className="song-name-p">{ song.fileId.metadata.songName }</p>
-                <p className="genre-p">{ song.fileId.metadata.genre }</p>
+                {/* <p className="genre-p">{ song.fileId.metadata.genre }</p> */ }
               </div>
               <img
                 // src={null}
@@ -145,7 +150,7 @@ const SongCard = (source, style) => {
               <div className="song-card-text">
                 <p className="author-name-p">{ song.metadata.author }</p>
                 <p className="song-name-p">{ song.metadata.songName }</p>
-                <p className="genre-p">{ song.metadata.genre }</p>
+                {/* <p className="genre-p">{ song.metadata.genre }</p> */ }
               </div>
               <img
                 // src={null}
@@ -171,6 +176,52 @@ const SongCard = (source, style) => {
             </div>
           );
         }) : <p>No songs found</p> }
+      </div>
+    );
+  }
+  else if (source.source === "RECENTS") {
+    return (
+      <div className="song-cards">
+        { recentSongs.currentlyViewingRecentSongs ? recentSongs.currentlyViewingRecentSongs.map((song, index) => {
+          return (
+            <div className="song-card" key={ song.fileId["_id"] }>
+              <button
+                className="song-card-play-button"
+                onClick={ async () => {
+                  playSong(song, index);
+                } }
+              >
+                <FontAwesomeIcon icon={ faPlay } className="play-icon" />
+              </button>
+              <div className="song-card-text">
+                <p className="author-name-p">{ song.fileId.metadata.author }</p>
+                <p className="song-name-p">{ song.fileId.metadata.songName }</p>
+                {/* <p className="genre-p">{ song.fileId.metadata.genre }</p> */ }
+              </div>
+              <img
+                // src={null}
+                src="http://placekitten.com/60"
+                alt="album"
+                className="album-image"
+              />
+              {/*               <button
+                className="removeFromFavourites"
+                onClick={ async () => {
+                  const result = await mainAxios.deleteFavouriteFile(
+                    song.fileId["_id"]
+                  );
+                  if (result.data) dispatch(setReloadFavouriteSongs(true));
+                } }
+              >
+                <FontAwesomeIcon
+                  icon={ faXmark }
+                  className="bookmark-icon-remove"
+                  title="Remove song from favorites"
+                />
+              </button> */}
+            </div>
+          );
+        }) : <p>{/* No favorites found */ }</p> }
       </div>
     );
   }

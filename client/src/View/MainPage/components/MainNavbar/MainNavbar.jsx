@@ -87,7 +87,6 @@ const MainNavbar = () => {
                   onClick={ (event) => {
                     event.stopPropagation();
                     setVisibility(!visibility);
-                    console.log("usao sam");
                   } }
                 >
                   Change picture{ " " }

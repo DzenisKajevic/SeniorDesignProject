@@ -94,6 +94,9 @@ async function getFile(req, res) {
             let rangeRequest;
             if (fileSize && rangeHeader) rangeRequest = util.readRangeHeader(rangeHeader, fileSize);
             // if no range is requested, send the whole file
+            if (!rangeRequest || rangeRequest.Start == 0) {
+                // add to recently played
+            }
             if (!rangeRequest) {
                 console.log("no range req");
                 res.setHeader('Content-Type', files[0].contentType);
@@ -102,6 +105,8 @@ async function getFile(req, res) {
             }
             // otherwise send only the requested portion of the file
             else {
+                /*                 console.log("range req", rangeRequest);
+                                console.log(rangeRequest.Start, rangeRequest.End); */
                 var start = rangeRequest.Start;
                 var end = rangeRequest.End;
 

@@ -6,6 +6,7 @@ import seekBytesReducer from './slices/audioVisualiser/seekBytesSlice'
 import visualiserHiddenReducer from './slices/audioVisualiser/visualiserHiddenSlice'
 import searchResultsReducer from './slices/search/searchResultsSlice'
 import favouriteSongsReducer from './slices/favourites/favouriteSongsSlice'
+import recentSongsReducer from './slices/recents/recentSongsSlice'
 import playlistsReducer from './slices/playlists/playlistsSlice'
 import genresReducer from './slices/genres/genresSlice'
 
@@ -20,5 +21,6 @@ export default configureStore({
         favouriteSongs: favouriteSongsReducer,
         playlists: playlistsReducer,
         genres: genresReducer,
+        recentSongs: recentSongsReducer,
     },
 })

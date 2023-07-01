@@ -2,6 +2,7 @@ import * as userAuth from "../../api/auth/userAuth"
 import * as audioFiles from "../../api/audioFiles/audioFiles"
 import * as favouriteFiles from "../../api/favouriteFiles/favouriteFiles"
 import * as playlists from "../../api/playlists/playlists"
+import * as recentlyPlayedSongs from "../../api/recentlyPlayedSongs/recentlyPlayedSongs"
 
 // most of these functions will need to be moved to different folders
 export function logout() {
@@ -169,6 +170,42 @@ export async function deleteFavouriteFile(fileId) {
     }
     return response;
 }
+
+//onClick = {() => addToRecentlyPlayedSongs("6322fab48ab321a55be1d784")}
+export async function addToRecentlyPlayedSongs(fileId) {
+    const response = await recentlyPlayedSongs.addToRecentlyPlayedSongs(fileId);
+    if (response.error) {
+        console.log(response.error.response.data);
+    }
+    else {
+        console.log(response.data);
+    }
+    return response;
+}
+
+// onClick={() => getRecentlyPlayedSongs()}
+export async function getRecentlyPlayedSongs() {
+    const response = await recentlyPlayedSongs.getRecentlyPlayedSongs();
+    if (response.error) {
+        //console.log(response.error.response.data);
+    }
+    else {
+        //console.log(response.data);
+    }
+    return response;
+}
+
+/* //onClick = {() => deleteFavouriteFile("6322fab48ab321a55be1d784")}
+export async function deleteFavouriteFile(fileId) {
+    const response = await favouriteFiles.deleteFavouriteFile(fileId);
+    if (response.error) {
+        console.log(response.error);
+    }
+    else {
+        console.log(response.data);
+    }
+    return response;
+} */
 
 //onClick = {() => createEmptyPlaylist("playlist1", 'public')}
 export async function createEmptyPlaylist(playlistName, visibility = 'private') {
