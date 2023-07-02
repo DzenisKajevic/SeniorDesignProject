@@ -1,7 +1,7 @@
 try:
     from pymongo import MongoClient
 
-    def get_database():
+    def getDatabase():
         # Provide the mongodb atlas url to connect python to mongodb using pymongo
         CONNECTION_STRING = "mongodb://localhost:27017/newDb"
 
@@ -15,7 +15,7 @@ try:
     # This is added so that many files can reuse the function get_database()
     if __name__ == "__main__":
         # Get the database
-        dbname = get_database()
+        dbname = getDatabase()
 
 except Exception as e:
     print("Error in pymongo_get_database.py")
