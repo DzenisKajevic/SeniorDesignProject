@@ -16,7 +16,10 @@ To setup db:
                             { role: "readAnyDatabase", db: "admin" },
                             "readWrite"] }
     )
-- optionally (recommended) force login on mongodb so that the db isn't accessible without an account    
+- optionally (recommended) force login on mongodb so that the db isn't accessible without an account   
+
+Before starting the server, activate the python virtual environment (full guide in folder /ML):
+    ML/env/Scripts/activate
 To start the server, run:
     cd server
     node index.js
