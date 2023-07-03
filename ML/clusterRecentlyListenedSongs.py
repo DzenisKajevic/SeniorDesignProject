@@ -1,61 +1,65 @@
 import pandas as pd
+import numpy as np
 
 
 def clusterRecentlyListenedSongs(recentlyListenedSongFeatures):
+    songIds = recentlyListenedSongFeatures["songId"]
+    del recentlyListenedSongFeatures["songId"]
+    recentlyListenedSongFeatures.reset_index(drop=True, inplace=True)
     maxIterations = 100
     k = 3
 
     # random sample of k rows from songFeaturesDf
     centroids = recentlyListenedSongFeatures.sample(n=k)
     centroids.reset_index(drop=True, inplace=True)
-    del centroids["songId"]
-    print("\n\ncentroids\n\n", centroids)
 
     for i in range(maxIterations):
         # assign each row in songFeaturesDf to a centroid
         # calculate new centroids
-        # if centroids don't change, break
+        # break if the centroids don't change
         print("iteration", i)
-        cluster1, cluster2, cluster3 = assignToCentroids(
-            recentlyListenedSongFeatures, centroids
-        )
+        oldCentroids = centroids.copy()
+        print("oldCentroids", oldCentroids)
+        (
+            cluster1Idx,
+            cluster2Idx,
+            cluster3Idx,
+            idxmin_series,  # returned in case it might be easier to filter later
+            centroids,
+        ) = assignToCentroids(recentlyListenedSongFeatures, centroids)
+        print("newCentroids", centroids)
+        if oldCentroids.equals(centroids):
+            break
 
-    # dummy return values until I finish this function
-    return [cluster1, cluster2, cluster3]
+    recentlyListenedSongFeatures["songId"] = songIds
+    return [cluster1Idx, cluster2Idx, cluster3Idx]
 
 
 def assignToCentroids(dataPoints, centroids):
-    # print("CMALKSMDČKLAMSČDLAMS;DČ", centroids)
+    rows = dataPoints.shape[0]
+    cols = centroids.shape[0]
+    distances = [[0] * cols] * rows
+    distances = pd.DataFrame(distances)
 
-    cluster1 = pd.DataFrame()
-    cluster2 = pd.DataFrame()
-    cluster3 = pd.DataFrame()
+    for i in range(cols):
+        distances[i] = ((dataPoints.values - centroids.iloc[i].values) ** 2).sum(
+            axis=1
+        ) ** 0.5
 
-    for index, row in dataPoints.iterrows():  # iterate rows as (index, Series) pairs
-        distances = []
-        songId = row["songId"]
-        del row["songId"]
+    # minvalue_series = distances.min(axis=1)
+    idxmin_series = distances.idxmin(axis=1)
 
-        distances = (centroids - row).sum(axis=1) ** 2
-        # print("distances", distances[distances == min(distances)].index[0])
+    cluster1Indexes = []
+    cluster2Indexes = []
+    cluster3Indexes = []
 
-        row["songId"] = songId
-        # finds min distance and adds row to cluster dataframe
-        match distances[distances == min(distances)].index[0]:
-            case 0:
-                # print("case 0")
-                cluster1 = pd.concat(
-                    [cluster1, pd.DataFrame.from_records([row])], ignore_index=True
-                )
-            case 1:
-                # print("case 1")
-                cluster2 = pd.concat(
-                    [cluster2, pd.DataFrame.from_records([row])], ignore_index=True
-                )
-            case 2:
-                # print("case 2")
-                cluster3 = pd.concat(
-                    [cluster3, pd.DataFrame.from_records([row])], ignore_index=True
-                )
+    cluster1Indexes = list(idxmin_series.loc[lambda x: x == 0].index)
+    cluster2Indexes = list(idxmin_series.loc[lambda x: x == 1].index)
+    cluster3Indexes = list(idxmin_series.loc[lambda x: x == 2].index)
 
-    return [cluster1, cluster2, cluster3]
+    for i in range(cols):
+        centroids.iloc[i] = dataPoints.iloc[
+            list(idxmin_series.loc[lambda x: x == i].index)
+        ].mean()
+
+    return [cluster1Indexes, cluster2Indexes, cluster3Indexes, idxmin_series, centroids]

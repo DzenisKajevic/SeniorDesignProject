@@ -48,12 +48,12 @@ filters = songFeaturesDf["songId"].isin(listOfSongIds)
 recentlyListenedSongFeatures = songFeaturesDf[filters]
 print("\n\nrecent\n\n", recentlyListenedSongFeatures)
 
-[cluster1, cluster2, cluster3] = clusterRecentlyListenedSongs(
+[cluster1Idx, cluster2Idx, cluster3Idx] = clusterRecentlyListenedSongs(
     recentlyListenedSongFeatures
 )
-print("\n\ncluster1\n\n", cluster1)
-print("\n\ncluster2\n\n", cluster2)
-print("\n\ncluster3\n\n", cluster3)
+print("\ncluster1\n", cluster1Idx)
+print("\ncluster2\n", cluster2Idx)
+print("\ncluster3\n", cluster3Idx)
 
 
 """ except Exception as e:
