@@ -32,7 +32,7 @@ def clusterRecentlyListenedSongs(recentlyListenedSongFeatures):
             break
 
     recentlyListenedSongFeatures["songId"] = songIds
-    return [cluster1Idx, cluster2Idx, cluster3Idx]
+    return [cluster1Idx, cluster2Idx, cluster3Idx, idxmin_series]
 
 
 def assignToCentroids(dataPoints, centroids):

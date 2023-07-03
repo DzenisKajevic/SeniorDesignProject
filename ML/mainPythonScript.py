@@ -2,6 +2,7 @@
 from pymongoGetDatabase import getDatabase
 from standardizeData import standardizeData
 from clusterRecentlyListenedSongs import clusterRecentlyListenedSongs
+from recommendPlaylists import recommendPlaylists
 import pandas as pd
 
 dbname = getDatabase()
@@ -48,13 +49,22 @@ filters = songFeaturesDf["songId"].isin(listOfSongIds)
 recentlyListenedSongFeatures = songFeaturesDf[filters]
 print("\n\nrecent\n\n", recentlyListenedSongFeatures)
 
-[cluster1Idx, cluster2Idx, cluster3Idx] = clusterRecentlyListenedSongs(
+[cluster1Idx, cluster2Idx, cluster3Idx, idxmin_series] = clusterRecentlyListenedSongs(
     recentlyListenedSongFeatures
 )
+
 print("\ncluster1\n", cluster1Idx)
 print("\ncluster2\n", cluster2Idx)
 print("\ncluster3\n", cluster3Idx)
 
+[recommendedPlaylist1, recommendedPlaylist2, recommendedPlaylist3] = recommendPlaylists(
+    cluster1Idx,
+    cluster2Idx,
+    cluster3Idx,
+    idxmin_series,
+    songFeaturesDf,
+    recentlyListenedSongFeatures,
+)
 
 """ except Exception as e:
     print("Error in mainPythonScript.py")
