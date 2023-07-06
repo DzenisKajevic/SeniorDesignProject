@@ -23,4 +23,8 @@ export default configureStore({
         genres: genresReducer,
         recentSongs: recentSongsReducer,
     },
+    middleware: (getDefaultMiddleware) =>
+        getDefaultMiddleware({
+            serializableCheck: false,
+        }),
 })
