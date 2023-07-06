@@ -33,7 +33,12 @@ const MainPageCreatePlaylist = () => {
     if (reloadPlaylists) {
       const fetchPlaylists = async function () {
         let result = await mainAxios.getPlaylists(pagination.current);
+        let currentUserFullPlaylists = await mainAxios.getPlaylists();
+        let playlistCount = currentUserFullPlaylists.data.data.length;
+        console.log(playlistCount);
+
         result.data.data.pagination = pagination.current;
+        result.data.data.playlistCount = playlistCount;
         dispatch(setPlaylists(result.data.data));
         dispatch(setReloadPlaylists(false));
       }
@@ -119,7 +124,7 @@ const MainPageCreatePlaylist = () => {
           className="nextPage"
           style={ {
             display:
-              Number(pagination.current.page) > playlists.playlistsPageCount || !playlists.songsHidden
+              Number(pagination.current.page) + 1 > playlists.playlistsPageCount || !playlists.songsHidden
                 ? "none"
                 : null,
           } }

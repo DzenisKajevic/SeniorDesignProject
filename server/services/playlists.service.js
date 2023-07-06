@@ -107,14 +107,20 @@ async function getPlaylistById(user, playlistId) {
 };
 
 async function getPlaylists(user, reqQuery) {
-    page = parseInt(reqQuery.page) || 1;
-    pageSize = parseInt(reqQuery.pageSize) || 10;
+    page = parseInt(reqQuery.page);
+    pageSize = parseInt(reqQuery.pageSize);
 
 
     // if we're looking for our own playlists
     if (!reqQuery.userId || reqQuery.userId === user.userId) {
-        let playlists = await Playlist.find({ 'userId': user.userId })
-            .skip((page - 1) * pageSize).limit(pageSize);
+        let playlists;
+        if (page && pageSize) {
+            playlists = await Playlist.find({ 'userId': user.userId })
+                .skip((page - 1) * pageSize).limit(pageSize);
+        }
+        else {
+            playlists = await Playlist.find({ 'userId': user.userId });
+        }
         return playlists;
     }
 
@@ -127,8 +133,14 @@ async function getPlaylists(user, reqQuery) {
         }
         // commented line below is for checking if a playlist is shared with the user
         //{ userId: user.userId }, $or: [{ visibility: "public" }, { sharedWith: {$in: [user.userId]} }];
-        let playlists = await Playlist.find({ 'userId': reqQuery.userId, $or: [{ 'visibility': 'public' }, { sharedWith: { $in: [user.userId] } }] })
-            .skip((page - 1) * pageSize).limit(pageSize);
+        let playlists;
+        if (page && pageSize) {
+            playlists = await Playlist.find({ 'userId': reqQuery.userId, $or: [{ 'visibility': 'public' }, { sharedWith: { $in: [user.userId] } }] })
+                .skip((page - 1) * pageSize).limit(pageSize);
+        }
+        else {
+            playlists = await Playlist.find({ 'userId': reqQuery.userId, $or: [{ 'visibility': 'public' }, { sharedWith: { $in: [user.userId] } }] });
+        }
         return playlists;
     }
 }

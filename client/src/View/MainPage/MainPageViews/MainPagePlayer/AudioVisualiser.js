@@ -212,12 +212,12 @@ const AudioVisualiser = () => {
             ctx.clearRect(0, 0, canvasRef.width, canvasRef.height);
         }
         analyser.current.getByteFrequencyData(dataObj.current.dataArray);
-        drawWeirdVisualiser(ctx, dataObj.current.bufferLength, dataObj.current.x,
-            dataObj.current.barWidth, dataObj.current.barHeight, dataObj.current.dataArray);
-        /* drawBarVisualiser(ctx, dataObj.current.bufferLength, dataObj.current.x,
-           dataObj.current.barWidth, dataObj.current.barHeight, dataObj.current.dataArray); */
-        /* drawCircleVisualiser(ctx, dataObj.current.bufferLength, dataObj.current.x,
+        /* drawWeirdVisualiser(ctx, dataObj.current.bufferLength, dataObj.current.x,
             dataObj.current.barWidth, dataObj.current.barHeight, dataObj.current.dataArray); */
+        /* drawBarVisualiser(ctx, dataObj.current.bufferLength, dataObj.current.x,
+            dataObj.current.barWidth, dataObj.current.barHeight, dataObj.current.dataArray); */
+        drawCircleVisualiser(ctx, dataObj.current.bufferLength, dataObj.current.x,
+            dataObj.current.barWidth, dataObj.current.barHeight, dataObj.current.dataArray);
 
         animationId.current = requestAnimationFrame(animate);
     }

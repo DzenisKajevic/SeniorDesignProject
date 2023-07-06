@@ -18,7 +18,10 @@ export const playlistsSlice = createSlice({
     reducers: {
         setPlaylists: (state, action) => {
             state.playlists = action.payload;
-            state.playlistsPageCount = Math.ceil(state.playlists.length / action.payload.pagination.pageSize);
+            if (action.payload.playlistCount) {
+                state.playlistsPageCount = action.payload.playlistCount / action.payload.pagination.pageSize;
+            }
+            console.log(state.playlistsPageCount);
         },
         addPlaylistToArray: (state, action) => {
             state.playlists.push(action.payload);
