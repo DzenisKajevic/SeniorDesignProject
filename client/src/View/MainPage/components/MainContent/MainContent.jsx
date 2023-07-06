@@ -94,7 +94,6 @@ const MainContent = () => {
         };
         map1.set("playlistSongsPrevious", song);
       } else {
-        console.log("DRUGI");
         song = {
           ...playlists.currentlyPlayingPlaylistSongs[playlists.currentlyPlayingPlaylistSongs.length - 1],
           playedFrom: "PLAYLISTS",
@@ -181,8 +180,28 @@ const MainContent = () => {
       );
     }
 
+    else if (songInfo.playedFrom === "PLAYLISTS") {
+      if (Number(songInfo.songIndex + 1) < playlists.currentlyPlayingPlaylistSongs.length) {
+        song = {
+          ...playlists.currentlyPlayingPlaylistSongs[Number(songInfo.songIndex) + 1],
+          playedFrom: "PLAYLISTS",
+        };
+        map1.set("playlistSongsNext", song);
+      } else {
+        song = {
+          ...playlists.currentlyPlayingPlaylistSongs[0],
+          playedFrom: "PLAYLISTS",
+        };
+        map1.set("playlistSongsNextFirst", song);
+      }
+      await playNext(
+        "playlistSongsNext",
+        Number(playlists.currentlyPlayingPlaylistSongs.length) - 1
+      );
+    }
+
     else if (songInfo.playedFrom === "GENRES") {
-      map1.set("genresPreviousFinal", genres.currentlyPlayingGenreSongs[genres.currentlyPlayingGenreSongs.length - 1]);
+      //map1.set("genresPreviousFinal", genres.currentlyPlayingGenreSongs[genres.currentlyPlayingGenreSongs.length - 1]);
       if (songInfo.songIndex < genres.currentlyPlayingGenreSongs.length - 1) {
         song = {
           ...genres.currentlyPlayingGenreSongs[Number(songInfo.songIndex) + 1],
@@ -200,32 +219,16 @@ const MainContent = () => {
   const playPrevious = async function (source, sourceMaxIndex) {
     if (Number(songInfo.songIndex) > 0 && Number(songInfo.songIndex) <= Number(sourceMaxIndex)) {
       await playSong(map1.get(source), Number(songInfo.songIndex) - 1);
-      if (map1.get(source).playedFrom === "FAVOURITES" || map1.get(source).playedFrom === "PLAYLISTS")
-        await addToRecentlyPlayedSongs(map1.get(source)._id);
-      else await addToRecentlyPlayedSongs(map1.get(source).fileId._id);
-      // use _id to add to recently played
-      // await addSongToRecentlyPlayed(map1.get(source)._id);
     } else {
       await playSong(map1.get(source + "Final"), sourceMaxIndex);
-      if (map1.get(source + "Final").playedFrom === "FAVOURITES" || map1.get(source + "Final").playedFrom === "PLAYLISTS")
-        await addToRecentlyPlayedSongs(map1.get(source + "Final")._id);
-      else await addToRecentlyPlayedSongs(map1.get(source + "Final").fileId._id);
-      // use _id to add to recently played
-      // await addSongToRecentlyPlayed(map1.get(source)._id);
     }
   };
 
   const playNext = async function (source, sourceMaxIndex) {
     if (songInfo.songIndex < sourceMaxIndex) {
       await playSong(map1.get(source), Number(songInfo.songIndex) + 1);
-      // use _id to add to recently played
-      // await addSongToRecentlyPlayed(map1.get(source)._id);
-      await addToRecentlyPlayedSongs(map1.get(source).fileId._id);
     } else {
       await playSong(map1.get(source + "First"), 0);
-      // use _id to add to recently played
-      // await addSongToRecentlyPlayed(map1.get(source + "First")._id);
-      await addToRecentlyPlayedSongs(map1.get(source + "First").fileId._id);
     }
   };
 

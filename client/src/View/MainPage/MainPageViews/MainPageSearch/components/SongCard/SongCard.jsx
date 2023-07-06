@@ -29,14 +29,15 @@ const SongCard = (source, style) => {
 
   playSong = async function (song, index) {
     cleanup();
-    console.log("song", song);
-    console.log("index", index);
+    /*     console.log("song", song);
+        console.log("index", index); */
     let tempSongInfo = structuredClone(song);
     tempSongInfo["songIndex"] = index;
     if (!song["playedFrom"]) tempSongInfo["playedFrom"] = source.source;
     dispatch(setSongInfo(tempSongInfo));
     dispatch(setSeekBytes(0));
-    if (source.source === "SEARCH" || source.source === "GENRES" || source.source === "PLAYLISTS" || source.source === "FAVOURITES") {
+    //if (source.source === "SEARCH" || source.source === "GENRES" || source.source === "PLAYLISTS" || source.source === "FAVOURITES") {
+    if (!song.fileId) {
       await mainAxios.addToRecentlyPlayedSongs(song._id);
     }
     else {
