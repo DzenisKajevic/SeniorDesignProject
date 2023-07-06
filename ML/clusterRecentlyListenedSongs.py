@@ -17,22 +17,22 @@ def clusterRecentlyListenedSongs(recentlyListenedSongFeatures):
         # assign each row in songFeaturesDf to a centroid
         # calculate new centroids
         # break if the centroids don't change
-        print("iteration", i)
+        # print("iteration", i)
         oldCentroids = centroids.copy()
-        print("oldCentroids", oldCentroids)
+        # print("oldCentroids", oldCentroids)
         (
             cluster1Idx,
             cluster2Idx,
             cluster3Idx,
-            idxmin_series,  # returned in case it might be easier to filter later
+            # idxmin_series,  # returned in case it might be easier to filter later
             centroids,
         ) = assignToCentroids(recentlyListenedSongFeatures, centroids)
-        print("newCentroids", centroids)
+        # print("newCentroids", centroids)
         if oldCentroids.equals(centroids):
             break
 
     recentlyListenedSongFeatures["songId"] = songIds
-    return [cluster1Idx, cluster2Idx, cluster3Idx, idxmin_series]
+    return [cluster1Idx, cluster2Idx, cluster3Idx]
 
 
 def assignToCentroids(dataPoints, centroids):
@@ -62,4 +62,4 @@ def assignToCentroids(dataPoints, centroids):
             list(idxmin_series.loc[lambda x: x == i].index)
         ].mean()
 
-    return [cluster1Indexes, cluster2Indexes, cluster3Indexes, idxmin_series, centroids]
+    return [cluster1Indexes, cluster2Indexes, cluster3Indexes, centroids]

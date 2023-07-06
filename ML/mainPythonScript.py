@@ -47,21 +47,20 @@ songFeaturesDf = standardizeData(songFeaturesDf)
 filters = songFeaturesDf["songId"].isin(listOfSongIds)
 # print(filters)
 recentlyListenedSongFeatures = songFeaturesDf[filters]
-print("\n\nrecent\n\n", recentlyListenedSongFeatures)
+# print("\n\nrecent\n\n", recentlyListenedSongFeatures)
 
-[cluster1Idx, cluster2Idx, cluster3Idx, idxmin_series] = clusterRecentlyListenedSongs(
+[cluster1Idx, cluster2Idx, cluster3Idx] = clusterRecentlyListenedSongs(
     recentlyListenedSongFeatures
 )
 
-print("\ncluster1\n", cluster1Idx)
-print("\ncluster2\n", cluster2Idx)
-print("\ncluster3\n", cluster3Idx)
+# print("\ncluster1\n", cluster1Idx)
+# print("\ncluster2\n", cluster2Idx)
+# print("\ncluster3\n", cluster3Idx)
 
 [recommendedPlaylist1, recommendedPlaylist2, recommendedPlaylist3] = recommendPlaylists(
     cluster1Idx,
     cluster2Idx,
     cluster3Idx,
-    idxmin_series,
     songFeaturesDf,
     recentlyListenedSongFeatures,
 )

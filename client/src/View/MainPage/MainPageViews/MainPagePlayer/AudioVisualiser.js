@@ -376,7 +376,7 @@ const AudioVisualiser = () => {
                                 <p className='song-name'>{ songInfo.metadata.songName }</p>
                                 <p className='played-from'>{ "GENRE: " + songInfo.metadata.genre }</p>
                             </div>
-                            : songInfo.playedFrom === 'FAVOURITES' || songInfo.playedFrom === 'SEARCH' || songInfo.playedFrom === 'RECENTS' ?
+                            : songInfo.playedFrom === 'FAVOURITES' || songInfo.playedFrom === 'SEARCH' || songInfo.playedFrom === 'RECENTS' || songInfo.playedFrom === 'PLAYLISTS' ?
                                 <div className='song-information'>
                                     <p className='author-name'>{ songInfo.metadata.author }</p>
                                     <p className='song-name'>{ songInfo.metadata.songName }</p>

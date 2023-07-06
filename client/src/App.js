@@ -38,7 +38,7 @@ function App() {
           </PrivateRoute>
         } />
         <Route
-          path="/main-page/create-playlist"
+          path="/main-page/playlists"
           element={
             <PrivateRoute>
               <MainPageCreatePlaylist />

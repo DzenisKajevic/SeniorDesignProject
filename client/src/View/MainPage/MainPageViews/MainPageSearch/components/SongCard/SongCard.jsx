@@ -14,6 +14,7 @@ import { setSeekBytes } from "../../../../../../slices/audioVisualiser/seekBytes
 import * as mainAxios from "../../../../mainAxios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBookmark, faXmark, faPlay } from "@fortawesome/free-solid-svg-icons";
+import { setCurrentlyPlayingPlaylistSongs } from "../../../../../../slices/playlists/playlistsSlice";
 
 let playSong = null;
 
@@ -21,18 +22,21 @@ const SongCard = (source, style) => {
   const genres = useSelector((state) => state.genres);
   const searchResults = useSelector((state) => state.searchResults);
   const favouriteSongs = useSelector((state) => state.favouriteSongs);
+  const playlists = useSelector((state) => state.playlists);
   const recentSongs = useSelector((state) => state.recentSongs);
   const songInfo = useSelector((state) => state.songInfo.song);
   const dispatch = useDispatch();
 
   playSong = async function (song, index) {
     cleanup();
+    console.log("song", song);
+    console.log("index", index);
     let tempSongInfo = structuredClone(song);
     tempSongInfo["songIndex"] = index;
     if (!song["playedFrom"]) tempSongInfo["playedFrom"] = source.source;
     dispatch(setSongInfo(tempSongInfo));
     dispatch(setSeekBytes(0));
-    if (source.source === "SEARCH" || source.source === "GENRES") {
+    if (source.source === "SEARCH" || source.source === "GENRES" || source.source === "PLAYLISTS" || source.source === "FAVOURITES") {
       await mainAxios.addToRecentlyPlayedSongs(song._id);
     }
     else {
@@ -124,6 +128,53 @@ const SongCard = (source, style) => {
                   title="Remove song from favorites"
                 />
               </button>
+            </div>
+          );
+        }) : <p>{/* No favorites found */ }</p> }
+      </div>
+    );
+  }
+  else if (source.source === "PLAYLISTS") {
+    return (
+      <div className="song-cards" style={ { display: playlists.songsHidden ? "none" : null } }>
+        { playlists.currentlyViewingPlaylistSongs ? playlists.currentlyViewingPlaylistSongs.map((song, index) => {
+          return (
+            <div className="song-card" key={ song["_id"] }>
+              <button
+                className="song-card-play-button"
+                onClick={ async () => {
+                  dispatch(setCurrentlyPlayingPlaylistSongs({ calledFrom: "playButton" }));
+                  playSong(song, index);
+                } }
+              >
+                <FontAwesomeIcon icon={ faPlay } className="play-icon" />
+              </button>
+              <div className="song-card-text">
+                <p className="author-name-p">{ song.metadata.author }</p>
+                <p className="song-name-p">{ song.metadata.songName }</p>
+                {/* <p className="genre-p">{ song.fileId.metadata.genre }</p> */ }
+              </div>
+              <img
+                // src={null}
+                src="http://placekitten.com/60"
+                alt="album"
+                className="album-image"
+              />
+              {/*               <button
+                className="removeFromFavourites"
+                onClick={ async () => {
+                  const result = await mainAxios.deleteFavouriteFile(
+                    song.fileId["_id"]
+                  );
+                  if (result.data) dispatch(setReloadFavouriteSongs(true));
+                } }
+              >
+                <FontAwesomeIcon
+                  icon={ faXmark }
+                  className="bookmark-icon-remove"
+                  title="Remove song from favorites"
+                />
+              </button> */}
             </div>
           );
         }) : <p>{/* No favorites found */ }</p> }

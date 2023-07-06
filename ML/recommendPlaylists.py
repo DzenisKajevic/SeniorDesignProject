@@ -6,18 +6,17 @@ def recommendPlaylists(
     cluster1Idx,
     cluster2Idx,
     cluster3Idx,
-    idxmin_series,
     songFeaturesDf,
     recentlyListenedSongFeatures,
 ):
     songIds = recentlyListenedSongFeatures["songId"]
     del recentlyListenedSongFeatures["songId"]
 
-    print("recentlyListenedSongFeatures", recentlyListenedSongFeatures)
+    # print("recentlyListenedSongFeatures", recentlyListenedSongFeatures)
     recentlyListenedSongFeatures.reset_index(drop=True, inplace=True)
 
     songFeaturesDf.reset_index(drop=True, inplace=True)
-    print("songFeaturesDf", songFeaturesDf)
+    # print("songFeaturesDf", songFeaturesDf)
 
     cluster1Avg = recentlyListenedSongFeatures.iloc[cluster1Idx].mean()
     cluster2Avg = recentlyListenedSongFeatures.iloc[cluster2Idx].mean()
@@ -25,7 +24,7 @@ def recommendPlaylists(
 
     allClusterIdx = cluster1Idx + cluster2Idx + cluster3Idx
     songFeaturesDf = removeClusterSongsFromSongFeaturesDf(allClusterIdx, songFeaturesDf)
-    print("songFeaturesDf", songFeaturesDf)
+    # print("songFeaturesDf", songFeaturesDf)
 
     songFeaturesSongIds = songFeaturesDf["songId"]
     del songFeaturesDf["songId"]

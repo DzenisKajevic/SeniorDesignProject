@@ -20,7 +20,7 @@
 .playlist-name-title {
     font-family: var(--title-font);
     font-size: 2rem;
-    padding-left: 5rem;
+    padding-left: 1rem;
     margin-right: auto;
     width: 80%;
 }
@@ -54,6 +54,17 @@
 
 .delete-playlist:hover {
     color: var(--purple);
+    transform: scale(1.1);
+}
+
+.open-playlist {
+    cursor: pointer;
+    color: #000;
+    margin-left: 1rem;
+}
+
+.open-playlist:hover {
+    color: var(--yellow-dark);
     transform: scale(1.1);
 }
 
@@ -106,4 +117,11 @@
     background: none;
     outline: none;
     padding-right: 1rem;
+}
+
+.editableH1 {
+    outline: 2px solid #CCC;
+    border: 1px solid #999;
+    /* background-color: #999; */
+    margin: 10px
 }

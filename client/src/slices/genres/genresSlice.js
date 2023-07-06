@@ -27,6 +27,7 @@ export const genresSlice = createSlice({
             state.genresPageCount = Number(action.payload.pageCount);
         },
         setGenreSongs: (state, action) => {
+            console.log(action.payload);
             let temp = state.currentGenre;
             if (action.payload.currentGenre !== undefined) {
                 state.currentGenre = action.payload.currentGenre;

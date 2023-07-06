@@ -5,7 +5,7 @@ import {
   faClockRotateLeft,
   faHouse,
   faMagnifyingGlass,
-  faPlus,
+  faPlayCircle,
   faStar,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -55,14 +55,14 @@ const SideBar = () => {
         <div className="breakline"></div>
         <NavLink
           onClick={ () => { checkVisualiserBeforeRedirect() } }
-          to="/main-page/create-playlist"
+          to="/main-page/playlists"
           className={ ({ isActive }) =>
             isActive ? "active-link" : "not-active-link"
           }
         >
           <span className="sidebar-navigation">
-            <FontAwesomeIcon icon={ faPlus } className="navigation-icons" />
-            <h3 className="not-active-link">Create playlist</h3>
+            <FontAwesomeIcon icon={ faPlayCircle } className="navigation-icons" />
+            <h3 className="not-active-link">Playlists</h3>
           </span>
         </NavLink>
         {/* some of users playlists render if they exist */ }

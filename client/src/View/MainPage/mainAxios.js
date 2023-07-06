@@ -278,7 +278,8 @@ export async function updatePlaylistName(playlistId, playlistName) {
 }
 
 //onClick = {() => getPlaylistById("6323044493813cd714991cd5")}
-export async function getPlaylistById(playlistId) {
+export async function getPlaylistById({ playlistId }) {
+    //console.log(playlistId);
     const response = await playlists.getPlaylistById(playlistId);
     if (response.error) {
         console.log(response.error);

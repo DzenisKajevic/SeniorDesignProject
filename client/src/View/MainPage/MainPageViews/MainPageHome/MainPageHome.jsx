@@ -61,6 +61,8 @@ const MainPageHome = () => {
         <FontAwesomeIcon icon={ faCircleArrowLeft } className="back-icon" />
       </button>
       <SongCard source="GENRES" />
+
+      {/* EXTERNAL BUTTONS FOR GENRES */ }
       <div className="mainPage-button-container">
         <button
           id="previousPage"
@@ -112,9 +114,9 @@ const MainPageHome = () => {
         </button>
       </div>
 
-      {
-        // song buttons}
-      }
+      {/* 
+         INTERNAL BUTTONS FOR SONGS WITHIN THOSE GENRES
+       */}
       <div className="mainPage-button-container">
         <button
           id="previousSongPage"
