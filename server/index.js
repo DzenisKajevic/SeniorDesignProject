@@ -97,33 +97,8 @@ app.all('*', middleware.JWTAuth);
  *       200:
  *         description: hello world
  */
-
-var spotifyApi = new SpotifyWebApi({
-    clientId: spotifyConfig.SPOTIPY_CLIENT_ID,
-    clientSecret: spotifyConfig.SPOTIPY_CLIENT_SECRET,
-    redirectUri: spotifyConfig.SPOTIPY_REDIRECT_URI
-});
-
-const getSongFromSpotify = async (songName) => {
-    try {
-        const data = await spotifyApi.searchTracks(songName);
-        console.log(data.body.tracks.items[0]);
-        return data.body.tracks.items[0];
-    } catch (error) {
-        console.log(error);
-    }
-}
-
-app.get('/spotify', async (req, res) => {
-    const songName = req.query.songName;
-    const song = await getSongFromSpotify(songName);
-    res.send(song);
-});
-
-app.get('/spotifySongFeatures', async (req, res) => {
-    const songId = req.query.songId;
-    const songFeatures = await spotifyApi.getAudioFeaturesForTrack(songId);
-    res.send(songFeatures);
+app.get('/', (req, res) => {
+    res.send('Hello World!');
 });
 
 // route middleware

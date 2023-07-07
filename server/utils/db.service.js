@@ -75,7 +75,9 @@ const dbService = {
             console.log("Connected to DB");
         }
         catch (e) {
+            console.log("Could not connect to db");
             console.log(e);
+            setTimeout(dbService.connectDB, 1000);
         }
     },
 
