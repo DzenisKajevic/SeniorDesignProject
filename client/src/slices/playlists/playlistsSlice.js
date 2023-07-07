@@ -6,9 +6,9 @@ export const playlistsSlice = createSlice({
         playlists: [],
         reloadPlaylists: true,
         playlistsHidden: false,
+        reloadPlaylistSongs: false,
         songsHidden: true,
         currentlyPlayingPlaylistSongs: [],
-        currentlyViewingPlaylistSongs: [],
         currentPlaylist: null,
         currentPlaylistId: null,
         playlistsPageCount: null,
@@ -28,6 +28,9 @@ export const playlistsSlice = createSlice({
         },
         setReloadPlaylists: (state, action) => {
             state.reloadPlaylists = action.payload;
+        },
+        setReloadPlaylistSongs: (state, action) => {
+            state.reloadPlaylistSongs = action.payload;
         },
         setCurrentlyPlayingPlaylistSongs: (state, action) => {
             if (action.payload.calledFrom === "playButton") {
@@ -83,6 +86,6 @@ export const playlistsSlice = createSlice({
 })
 
 // Action creators are generated for each case reducer function
-export const { setPlaylists, addPlaylistToArray, setPlaylistSongs, setCurrentlyPlayingPlaylistSongs, setCurrentlyViewingPlaylistSongs, setReloadPlaylists, unhidePlaylists, deletePlaylist } = playlistsSlice.actions
+export const { setPlaylists, addPlaylistToArray, setReloadPlaylistSongs, setPlaylistSongs, setCurrentlyPlayingPlaylistSongs, setCurrentlyViewingPlaylistSongs, setReloadPlaylists, unhidePlaylists, deletePlaylist } = playlistsSlice.actions
 
 export default playlistsSlice.reducer

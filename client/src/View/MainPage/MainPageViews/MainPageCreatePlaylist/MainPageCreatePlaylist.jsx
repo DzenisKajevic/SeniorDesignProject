@@ -18,6 +18,7 @@ const MainPageCreatePlaylist = () => {
 
   const [playlistNameInput, setPlaylistNameInput] = useState("");
   const reloadPlaylists = useSelector((state) => state.playlists.reloadPlaylists);
+  const reloadPlaylistSongs = useSelector((state) => state.playlists.reloadPlaylistSongs);
   const dispatch = useDispatch();
   const playlists = useSelector((state) => state.playlists);
   const pagination = useRef({
@@ -49,7 +50,24 @@ const MainPageCreatePlaylist = () => {
       fetchPlaylists()
         .catch(console.error);
     }
-  }, [reloadPlaylists]);
+    if (reloadPlaylistSongs) {
+      songPagination.current.page = "1";
+      const fetchPlaylistSongs = async function () {
+        let result = await mainAxios.getPlaylistById({ playlistId: playlists.currentPlaylistId });
+        if (result.error) toast.error(result.error.response.data);
+        console.log(result);
+        result.data.data.pagination = songPagination.current;
+
+        dispatch(setPlaylistSongs(result.data));
+        dispatch(setCurrentlyViewingPlaylistSongs(songPagination.current));
+        dispatch(setReloadPlaylists(false));
+        window.location.hash = "nonExistantHashUsedForRefreshing";
+        window.location.hash = "#card-container";
+      }
+      fetchPlaylistSongs()
+        .catch(console.error);
+    }
+  }, [reloadPlaylists, reloadPlaylistSongs]);
 
   return (
 

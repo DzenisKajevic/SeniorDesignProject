@@ -14,7 +14,7 @@ import { setSeekBytes } from "../../../../../../slices/audioVisualiser/seekBytes
 import * as mainAxios from "../../../../mainAxios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBookmark, faXmark, faPlay } from "@fortawesome/free-solid-svg-icons";
-import { setCurrentlyPlayingPlaylistSongs } from "../../../../../../slices/playlists/playlistsSlice";
+import { setCurrentlyPlayingPlaylistSongs, setReloadPlaylistSongs } from "../../../../../../slices/playlists/playlistsSlice";
 import { toast } from 'react-toastify';
 
 let playSong = null;
@@ -166,21 +166,24 @@ const SongCard = (source, style) => {
                 alt="album"
                 className="album-image"
               />
-              {/*               <button
+              { <button
                 className="removeFromFavourites"
                 onClick={ async () => {
-                  const result = await mainAxios.deleteFavouriteFile(
-                    song.fileId["_id"]
-                  );
-                  if (result.data) dispatch(setReloadFavouriteSongs(true));
+                  console.log(song["_id"]);
+                  console.log(playlists.currentPlaylistId);
+                  const result = await mainAxios.removeFilesFromPlaylist({
+                    fileIDs: [song["_id"]],
+                    playlistId: playlists.currentPlaylistId
+                  });
+                  if (result.data) dispatch(setReloadPlaylistSongs(true));
                 } }
               >
                 <FontAwesomeIcon
                   icon={ faXmark }
                   className="bookmark-icon-remove"
-                  title="Remove song from favorites"
+                  title="Remove song from the playlist"
                 />
-              </button> */}
+              </button> }
             </div>
           );
         }) : <p>{/* No favorites found */ }</p> }
