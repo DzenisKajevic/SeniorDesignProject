@@ -14,12 +14,14 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { SongCard } from "../MainPageSearch/components/SongCard/SongCard";
+import { toast } from 'react-toastify';
 
 const MainPageHome = () => {
   useEffect(() => {
     if (reloadGenres) {
       const fetchPlaylists = async function () {
         let result = await mainAxios.getAllGenres(pagination.current);
+        if (result.error) toast.error(result.error.response.data);
         dispatch(setGenres(result.data.data));
         dispatch(setReloadGenres(false)); // never returned to true since multiple API calls would yield the same result
       };
@@ -76,6 +78,7 @@ const MainPageHome = () => {
           onClick={ async () => {
             pagination.current.page--;
             let result = await mainAxios.getAllGenres(pagination.current);
+            if (result.error) toast.error(result.error.response.data);
             dispatch(setGenres(result.data.data));
             window.location.hash = "nonExistantHashUsedForRefreshing";
             window.location.hash = "#card-container";
@@ -105,6 +108,7 @@ const MainPageHome = () => {
           onClick={ async () => {
             pagination.current.page++;
             let result = await mainAxios.getAllGenres(pagination.current);
+            if (result.error) toast.error(result.error.response.data);
             dispatch(setGenres(result.data.data));
             window.location.hash = "nonExistantHashUsedForRefreshing";
             window.location.hash = "#card-container";
@@ -135,6 +139,7 @@ const MainPageHome = () => {
               genre: genres.currentGenre,
             };
             let result = await mainAxios.getAllFiles(filters);
+            if (result.error) toast.error(result.error.response.data);
 
             dispatch(setGenreSongs(result.data.data));
             dispatch(setCurrentlyPlayingGenreSongs({ newGenre: filters.genre }));
@@ -171,6 +176,7 @@ const MainPageHome = () => {
               genre: genres.currentGenre,
             };
             let result = await mainAxios.getAllFiles(filters);
+            if (result.error) toast.error(result.error.response.data);
 
             dispatch(setGenreSongs(result.data.data));
             dispatch(setCurrentlyPlayingGenreSongs({ newGenre: filters.genre }));

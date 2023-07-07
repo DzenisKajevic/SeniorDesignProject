@@ -13,52 +13,57 @@ import { AudioVisualiser } from './View/MainPage/MainPageViews/MainPagePlayer/Au
 import PageNotFound from './View/MainPage/components/PageNotFound/PageNotFound';
 import { PrivateRoute } from './View/PrivateRoute';
 import MainPageRecents from './View/MainPage/MainPageViews/MainPageRecents/MainPageRecents';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
   return (
-    <Routes>
-      <Route path="/" element={ <LandingPage /> } />
-      <Route path="/login" element={ <LoginPage /> } />
-      <Route path="/registration" element={ <RegistrationPage /> } />
-      <Route path="/main-page" element={
-        <PrivateRoute>
-          <MainPage />
-        </PrivateRoute> }>
-        <Route path="/main-page/home" exact element={
+    <div>
+      <ToastContainer />
+      <Routes>
+        <Route path="/" element={ <LandingPage /> } />
+        <Route path="/login" element={ <LoginPage /> } />
+        <Route path="/registration" element={ <RegistrationPage /> } />
+        <Route path="/main-page" element={
           <PrivateRoute>
-            <MainPageHome />
-          </PrivateRoute> } />
-        <Route path="/main-page/search" element={
-          <PrivateRoute>
-            <MainPageSearch />
-          </PrivateRoute> } />
-        <Route path="/main-page/music-player" element={
-          <PrivateRoute>
-            {/* <MusicPlayerPage /> */ }
-          </PrivateRoute>
-        } />
-        <Route
-          path="/main-page/playlists"
-          element={
+            <MainPage />
+          </PrivateRoute> }>
+          <Route path="/main-page/home" exact element={
             <PrivateRoute>
-              <MainPageCreatePlaylist />
-            </PrivateRoute> }
-        />
-        {/*<Route path='/main-page/audio-player' element={ <AudioVisualiser /> } />*/ }
+              <MainPageHome />
+            </PrivateRoute> } />
+          <Route path="/main-page/search" element={
+            <PrivateRoute>
+              <MainPageSearch />
+            </PrivateRoute> } />
+          <Route path="/main-page/music-player" element={
+            <PrivateRoute>
+              {/* <MusicPlayerPage /> */ }
+            </PrivateRoute>
+          } />
+          <Route
+            path="/main-page/playlists"
+            element={
+              <PrivateRoute>
+                <MainPageCreatePlaylist />
+              </PrivateRoute> }
+          />
+          {/*<Route path='/main-page/audio-player' element={ <AudioVisualiser /> } />*/ }
 
-        < Route path="/main-page/favorites" element={
-          <PrivateRoute>
-            <MainPageFavorites />
-          </PrivateRoute> } />
+          < Route path="/main-page/favorites" element={
+            <PrivateRoute>
+              <MainPageFavorites />
+            </PrivateRoute> } />
 
-        < Route path="/main-page/recently-played" element={
-          <PrivateRoute>
-            <MainPageRecents />
-          </PrivateRoute> } />
-      </Route>
+          < Route path="/main-page/recently-played" element={
+            <PrivateRoute>
+              <MainPageRecents />
+            </PrivateRoute> } />
+        </Route>
 
-      <Route path="*" element={ <PageNotFound /> } />
-    </Routes >
+        <Route path="*" element={ <PageNotFound /> } />
+      </Routes >
+    </div>
   );
 }
 

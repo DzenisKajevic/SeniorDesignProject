@@ -28,10 +28,12 @@ a {
 
 .grid-sidebar {
     grid-area: 2 / 1 / 6 / 2;
+    background-color: #212121;
 }
 
 .grid-content {
     grid-area: 2 / 2 / 6 / 6;
+    background: linear-gradient(0deg, rgba(52, 52, 52, 1) 0%, #212121 100%);
 }
 
 @media (max-width: 800px) {

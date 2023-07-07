@@ -16,6 +16,7 @@ import { useDispatch, useSelector } from "react-redux";
 import * as mainAxios from "../../../mainAxios";
 import { setReloadPlaylists } from "../../../../../slices/audioVisualiser/songInfoSlice";
 import { deletePlaylist, setCurrentlyViewingPlaylistSongs, setPlaylistSongs } from "../../../../../slices/playlists/playlistsSlice";
+import { toast } from 'react-toastify';
 
 const CreatedPlaylist = () => {
   const playlists = useSelector((state) => state.playlists);
@@ -65,6 +66,7 @@ const CreatedPlaylist = () => {
                 //page: pagination.current.page,
                 //pageSize: pagination.current.pageSize,
               });
+              if (result.error) toast.error(result.error.response.data);
               //console.log(playlist);
               //result.data.data.currentPlaylist = playlist["_id"];
               result.data.data.currentPlaylist = playlist["playlistName"];
@@ -113,9 +115,15 @@ const CreatedPlaylist = () => {
               className={ isOpen.includes(playlist["_id"]) ? "edit-menu" : "edit-menu-closed" }
             //onClick={ () => setIsOpen(false) }
             >
-              <FontAwesomeIcon icon={ faLock } className="lock-playlist" onClick={ () => { mainAxios.updatePlaylistVisibility(playlist['_id'], "private"); } } />
-              <FontAwesomeIcon icon={ faLockOpen } className="unlock-playlist" onClick={ () => { mainAxios.updatePlaylistVisibility(playlist['_id'], "public"); } } />
-              <FontAwesomeIcon icon={ faPen } className="edit-playlist" onClick={ () => {
+              <FontAwesomeIcon icon={ faLock } className="lock-playlist" onClick={ async () => {
+                let response = await mainAxios.updatePlaylistVisibility(playlist['_id'], "private");
+                if (response.error) toast.error(response.error.response.data);
+              } } />
+              <FontAwesomeIcon icon={ faLockOpen } className="unlock-playlist" onClick={ async () => {
+                let response = await mainAxios.updatePlaylistVisibility(playlist['_id'], "public");
+                if (response.error) toast.error(response.error.response.data);
+              } } />
+              <FontAwesomeIcon icon={ faPen } className="edit-playlist" onClick={ async () => {
                 console.log(document.getElementById('playlist ' + playlist["_id"]).contentEditable);
                 if (document.getElementById('playlist ' + playlist["_id"]).contentEditable === "false") {
                   document.getElementById('playlist ' + playlist["_id"]).contentEditable = true;
@@ -125,7 +133,8 @@ const CreatedPlaylist = () => {
                   document.getElementById('playlist ' + playlist["_id"]).contentEditable = false;
                   // add border to element
                   document.getElementById('playlist ' + playlist["_id"]).classList.remove("editableH1");
-                  mainAxios.updatePlaylistName(playlist['_id'], document.getElementById('playlist ' + playlist["_id"]).innerText);
+                  let response = await mainAxios.updatePlaylistName(playlist['_id'], document.getElementById('playlist ' + playlist["_id"]).innerText);
+                  if (response.error) toast.error(response.error.response.data);
                 }
               } } />
               <FontAwesomeIcon
@@ -135,6 +144,7 @@ const CreatedPlaylist = () => {
                   const result = await mainAxios.deletePlaylist(
                     playlist["_id"]
                   );
+                  if (result.error) toast.error(result.error.response.data);
                   if (result.data) {
                     const index = playlists.playlists.indexOf(playlist);
                     dispatch(deletePlaylist(index));

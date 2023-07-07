@@ -5,7 +5,9 @@ import "./MainPageRecents.css";
 import { SongCard } from "../MainPageSearch/components/SongCard/SongCard";
 import { setCurrentlyViewingRecentSongs, setRecentSongs, setReloadRecentSongs } from "../../../../slices/recents/recentSongsSlice";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faArrowsRotate } from "@fortawesome/free-solid-svg-icons";
+import { faArrowsRotate, faMicrochip } from "@fortawesome/free-solid-svg-icons";
+import { setReloadPlaylists } from "../../../../slices/playlists/playlistsSlice";
+import { toast } from 'react-toastify';
 
 const MainPageRecents = () => {
     const dispatch = useDispatch();
@@ -23,6 +25,7 @@ const MainPageRecents = () => {
             const fetchFavourites = async function () {
                 let result = await mainAxios.getRecentlyPlayedSongs();
                 if (result.error) {
+                    toast.error(result.error.response.data);
                     let emptyArray = [];
                     dispatch(setRecentSongs(emptyArray));
                     dispatch(setCurrentlyViewingRecentSongs(0));
@@ -43,10 +46,24 @@ const MainPageRecents = () => {
             <h1 className="main-page-search-title">Recent songs</h1>
             <div className="flex-container"  >
                 <p className="linear-p">Refresh</p>
-                <button className="refresh-button" onClick={ () => { dispatch(setReloadRecentSongs(true)); } }>
+                <button className="interactive-button" onClick={ () => { dispatch(setReloadRecentSongs(true)); } }>
                     <FontAwesomeIcon
                         icon={ faArrowsRotate }
-                        className="refresh-icon"
+                        className="interactive-icon"
+                    />
+                </button>
+                <p className="linear-p">Generate Playlists</p>
+                <button className="interactive-button" onClick={ async () => {
+                    let response = await mainAxios.generateRecommendedPlaylists();
+                    if (response.error) {
+                        toast.error(response.error.response.data);
+                    }
+                    else
+                        dispatch(setReloadPlaylists(true));
+                } }>
+                    <FontAwesomeIcon
+                        icon={ faMicrochip }
+                        className="interactive-icon"
                     />
                 </button>
             </div>
@@ -60,10 +77,6 @@ const MainPageRecents = () => {
                     } }
                     onClick={ async () => {
                         pagination.current.page--;
-                        /*                         let result = await mainAxios.getFavouriteFiles({
-                                                    page: pagination.current.page,
-                                                    pageSize: pagination.current.pageSize,
-                                                }); */
                         dispatch(setCurrentlyViewingRecentSongs({ 'currentPage': pagination.current.page - 1, 'pageSize': pagination.current.pageSize }));
                         /* dispatch(setReloadRecentSongs(true)); */
                         window.location.hash = "nonExistantHashUsedForRefreshing";
@@ -87,10 +100,6 @@ const MainPageRecents = () => {
                     } }
                     onClick={ async () => {
                         pagination.current.page++;
-                        /*                         let result = await mainAxios.getFavouriteFiles({
-                                                    page: pagination.current.page,
-                                                    pageSize: pagination.current.pageSize,
-                                                }); */
                         dispatch(setCurrentlyViewingRecentSongs({ 'currentPage': pagination.current.page - 1, 'pageSize': pagination.current.pageSize }));
                         /* dispatch(setReloadRecentSongs(true)); */
                         window.location.hash = "nonExistantHashUsedForRefreshing";

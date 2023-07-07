@@ -1,15 +1,15 @@
-.refresh-icon {
+.interactive-icon {
     color: #fff;
     cursor: pointer;
     padding-left: 1rem;
     padding-right: 1rem;
 }
 
-.refresh-icon:hover {
+.interactive-icon:hover {
     color: var(--purple);
 }
 
-.refresh-button {
+.interactive-button {
     /*     width: 100%; */
     border: none;
     background: none;

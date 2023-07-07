@@ -7,6 +7,7 @@ import * as mainAxios from "../../mainAxios";
 import { SongCard } from "./components/SongCard/SongCard";
 import { useDispatch, useSelector } from "react-redux";
 import { setSearchResults } from "../../../../slices/search/searchResultsSlice";
+import { toast } from 'react-toastify';
 
 const MainPageSearch = () => {
   const [searchText, setSearchText] = useState("");
@@ -128,6 +129,7 @@ const MainPageSearch = () => {
               page: pagination.current.page,
               pageSize: pagination.current.pageSize,
             });
+            if (result.error) toast.error(result.error.response.data);
             updateSearch(result);
           } }
           type="button"
@@ -177,6 +179,7 @@ const MainPageSearch = () => {
               page: pagination.current.page,
               pageSize: pagination.current.pageSize,
             });
+            if (result.error) toast.error(result.error.response.data);
             updateSearch(result);
           } }
         >
@@ -212,6 +215,7 @@ const MainPageSearch = () => {
               page: pagination.current.page,
               pageSize: pagination.current.pageSize,
             });
+            if (result.error) toast.error(result.error.response.data);
             updateSearch(result);
           } }
         >

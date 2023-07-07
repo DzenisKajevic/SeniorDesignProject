@@ -102,6 +102,17 @@ export async function deletePlaylist(playlistId) {
         }));
 }
 
+export async function generateRecommendedPlaylists() {
+    return await resolve(
+        axios({
+            method: 'get',
+            url: `http://localhost:3001/api/v1/ML/generateRecommendedPlaylists`,
+            headers: {
+                'Authorization': 'Bearer ' + window.localStorage.token
+            }
+        }));
+}
+
 export async function sharePlaylist(input) {
     return await resolve(
         axios({

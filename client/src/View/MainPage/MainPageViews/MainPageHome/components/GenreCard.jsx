@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import "./genreCard.css";
 import * as mainAxios from "../../../mainAxios";
 import { setGenreSongs } from "../../../../../slices/genres/genresSlice";
+import { toast } from 'react-toastify';
 
 const GenreCard = () => {
   const genres = useSelector((state) => state.genres.genres);
@@ -34,6 +35,7 @@ const GenreCard = () => {
             page: pagination.current.page,
             pageSize: pagination.current.pageSize,
           });
+          if (result.error) toast.error(result.error.response.data);
           result.data.data.currentGenre = genre;
           updateGenreSongs(result);
         } }>

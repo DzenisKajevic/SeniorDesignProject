@@ -15,6 +15,7 @@ import * as mainAxios from "../../../../mainAxios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBookmark, faXmark, faPlay } from "@fortawesome/free-solid-svg-icons";
 import { setCurrentlyPlayingPlaylistSongs } from "../../../../../../slices/playlists/playlistsSlice";
+import { toast } from 'react-toastify';
 
 let playSong = null;
 
@@ -38,10 +39,12 @@ const SongCard = (source, style) => {
     dispatch(setSeekBytes(0));
     //if (source.source === "SEARCH" || source.source === "GENRES" || source.source === "PLAYLISTS" || source.source === "FAVOURITES") {
     if (!song.fileId) {
-      await mainAxios.addToRecentlyPlayedSongs(song._id);
+      let result = await mainAxios.addToRecentlyPlayedSongs(song._id);
+      if (result.error) toast.error(result.error.response.data);
     }
     else {
-      await mainAxios.addToRecentlyPlayedSongs(song.fileId._id);
+      let result = await mainAxios.addToRecentlyPlayedSongs(song.fileId._id);
+      if (result.error) toast.error(result.error.response.data);
     }
   };
 
@@ -75,6 +78,7 @@ const SongCard = (source, style) => {
                   const result = await mainAxios.addFileToFavourites(
                     song["_id"]
                   );
+                  if (result.error) toast.error(result.error.response.data);
                   if (result.data) dispatch(setReloadFavouriteSongs(true));
                 } }
               >
@@ -120,6 +124,7 @@ const SongCard = (source, style) => {
                   const result = await mainAxios.deleteFavouriteFile(
                     song.fileId["_id"]
                   );
+                  if (result.error) toast.error(result.error.response.data);
                   if (result.data) dispatch(setReloadFavouriteSongs(true));
                 } }
               >
@@ -216,6 +221,7 @@ const SongCard = (source, style) => {
                   const result = await mainAxios.addFileToFavourites(
                     song["_id"]
                   );
+                  if (result.error) toast.error(result.error.response.data);
                   if (result.data) dispatch(setReloadFavouriteSongs(true));
                 } }
               >

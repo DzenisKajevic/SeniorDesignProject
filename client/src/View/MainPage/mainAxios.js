@@ -3,6 +3,7 @@ import * as audioFiles from "../../api/audioFiles/audioFiles"
 import * as favouriteFiles from "../../api/favouriteFiles/favouriteFiles"
 import * as playlists from "../../api/playlists/playlists"
 import * as recentlyPlayedSongs from "../../api/recentlyPlayedSongs/recentlyPlayedSongs"
+import { toast } from 'react-toastify';
 
 // most of these functions will need to be moved to different folders
 export function logout() {
@@ -310,6 +311,18 @@ export async function deletePlaylist(playlistId) {
     }
     else {
         console.log(response.data);
+    }
+    return response;
+}
+
+export async function generateRecommendedPlaylists() {
+    const response = await playlists.generateRecommendedPlaylists();
+    if (response.error) {
+        console.log(response.error);
+    }
+    else {
+        console.log(response.data);
+        toast.error(response.error);
     }
     return response;
 }

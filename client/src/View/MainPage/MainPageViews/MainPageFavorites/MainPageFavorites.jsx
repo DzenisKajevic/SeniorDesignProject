@@ -4,6 +4,7 @@ import { setReloadFavouriteSongs } from "../../../../slices/favourites/favourite
 import { setFavouriteSongs } from "../../../../slices/favourites/favouriteSongsSlice";
 import * as mainAxios from "../../mainAxios";
 import { SongCard } from "../MainPageSearch/components/SongCard/SongCard";
+import { toast } from 'react-toastify';
 
 const MainPageFavorites = () => {
   const dispatch = useDispatch();
@@ -23,6 +24,7 @@ const MainPageFavorites = () => {
           pagination.current
         );
         if (result.error) {
+          toast.error(result.error.response.data);
           let emptyArray = [];
           dispatch(setFavouriteSongs(emptyArray));
           dispatch(setReloadFavouriteSongs(false));
@@ -53,6 +55,7 @@ const MainPageFavorites = () => {
               page: pagination.current.page,
               pageSize: pagination.current.pageSize,
             });
+            if (result.error) toast.error(result.error.response.data);
             dispatch(setFavouriteSongs(result.data.data));
             dispatch(setReloadFavouriteSongs(true));
             window.location.hash = "nonExistantHashUsedForRefreshing";
@@ -80,6 +83,7 @@ const MainPageFavorites = () => {
               page: pagination.current.page,
               pageSize: pagination.current.pageSize,
             });
+            if (result.error) toast.error(result.error.response.data);
             dispatch(setFavouriteSongs(result.data.data));
             dispatch(setReloadFavouriteSongs(true));
             window.location.hash = "nonExistantHashUsedForRefreshing";

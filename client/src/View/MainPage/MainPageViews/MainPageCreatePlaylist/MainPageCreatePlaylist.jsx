@@ -12,6 +12,7 @@ import * as mainAxios from "../../mainAxios";
 import { useDispatch, useSelector } from "react-redux";
 import { setPlaylists, setReloadPlaylists, addPlaylistToArray, unhidePlaylists, setCurrentlyPlayingPlaylistSongs, setPlaylistSongs, setCurrentlyViewingPlaylistSongs } from "../../../../slices/playlists/playlistsSlice";
 import { SongCard } from "../MainPageSearch/components/SongCard/SongCard";
+import { toast } from 'react-toastify';
 
 const MainPageCreatePlaylist = () => {
 
@@ -21,7 +22,7 @@ const MainPageCreatePlaylist = () => {
   const playlists = useSelector((state) => state.playlists);
   const pagination = useRef({
     page: "1",
-    pageSize: "5",
+    pageSize: "4",
   });
   const songPagination = useRef({
     page: "1",
@@ -31,9 +32,12 @@ const MainPageCreatePlaylist = () => {
 
   useEffect(() => {
     if (reloadPlaylists) {
+      pagination.current.page = "1";
       const fetchPlaylists = async function () {
         let result = await mainAxios.getPlaylists(pagination.current);
+        if (result.error) toast.error(result.error.response.data);
         let currentUserFullPlaylists = await mainAxios.getPlaylists();
+        if (currentUserFullPlaylists.error) toast.error(currentUserFullPlaylists.error.response.data);
         let playlistCount = currentUserFullPlaylists.data.data.length;
         console.log(playlistCount);
 
@@ -68,6 +72,7 @@ const MainPageCreatePlaylist = () => {
           title="create playlist"
           onClick={ async () => { // set song list under the search bar and edit the redux state
             let result = await mainAxios.createEmptyPlaylist(playlistNameInput, "private");
+            if (result.error) toast.error(result.error.response.data);
             if (result.data) {
               dispatch(addPlaylistToArray(result.data.data));
               dispatch(setReloadPlaylists(true));
@@ -106,6 +111,7 @@ const MainPageCreatePlaylist = () => {
               page: pagination.current.page,
               pageSize: pagination.current.pageSize,
             });
+            if (result.error) toast.error(result.error.response.data);
             result.data.data.pagination = pagination.current;
             dispatch(setPlaylists(result.data.data));
             //dispatch(setReloadPlaylists(true));
@@ -134,6 +140,7 @@ const MainPageCreatePlaylist = () => {
               page: pagination.current.page,
               pageSize: pagination.current.pageSize,
             });
+            if (result.error) toast.error(result.error.response.data)
             result.data.data.pagination = pagination.current;
             dispatch(setPlaylists(result.data.data));
             //dispatch(setReloadPlaylists(true));
@@ -162,7 +169,7 @@ const MainPageCreatePlaylist = () => {
             songPagination.current.page--;
 
             let result = await mainAxios.getPlaylistById({ playlistId: playlists.currentPlaylistId });
-
+            if (result.error) toast.error(result.error.response.data);
             console.log(result);
             result.data.data.pagination = songPagination.current;
             dispatch(setPlaylistSongs(result.data));
@@ -196,7 +203,7 @@ const MainPageCreatePlaylist = () => {
           onClick={ async () => {
             songPagination.current.page++;
             let result = await mainAxios.getPlaylistById({ playlistId: playlists.currentPlaylistId });
-
+            if (result.error) toast.error(result.error.response.data);
             console.log(result);
             result.data.data.pagination = songPagination.current;
             dispatch(setPlaylistSongs(result.data));
