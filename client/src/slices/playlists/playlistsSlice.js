@@ -14,6 +14,7 @@ export const playlistsSlice = createSlice({
         currentPlaylistId: null,
         playlistsPageCount: null,
         songsPageCount: null,
+        playlistIsOpen: false,
         songs: []
     },
     reducers: {
@@ -29,10 +30,11 @@ export const playlistsSlice = createSlice({
         setReloadPlaylists: (state, action) => {
             state.reloadPlaylists = action.payload;
         },
+        setPlaylistIsOpen: (state, action) => {
+            state.playlistIsOpen = action.payload;
+        },
         setReloadPlaylistSongs: (state, action) => {
-            console.log("RESETAJ IH BLOODY HELL");
             state.reloadPlaylistSongs = !state.reloadPlaylistSongs;
-            //state.reloadPlaylistSongs = action.payload;
             console.log(state.reloadPlaylistSongs);
         },
         setCurrentlyPlayingPlaylistSongs: (state, action) => {
@@ -89,6 +91,6 @@ export const playlistsSlice = createSlice({
 })
 
 // Action creators are generated for each case reducer function
-export const { setPlaylists, addPlaylistToArray, setReloadPlaylistSongs, deletePlaylistSong, setPlaylistSongs, setCurrentlyPlayingPlaylistSongs, setCurrentlyViewingPlaylistSongs, setReloadPlaylists, unhidePlaylists, deletePlaylist } = playlistsSlice.actions
+export const { setPlaylists, addPlaylistToArray, setPlaylistIsOpen, setReloadPlaylistSongs, deletePlaylistSong, setPlaylistSongs, setCurrentlyPlayingPlaylistSongs, setCurrentlyViewingPlaylistSongs, setReloadPlaylists, unhidePlaylists, deletePlaylist } = playlistsSlice.actions
 
 export default playlistsSlice.reducer

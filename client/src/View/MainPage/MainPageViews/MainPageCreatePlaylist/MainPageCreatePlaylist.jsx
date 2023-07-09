@@ -10,7 +10,7 @@ import {
 import CreatedPlaylist from "./components/CreatedPlaylist";
 import * as mainAxios from "../../mainAxios";
 import { useDispatch, useSelector } from "react-redux";
-import { setPlaylists, setReloadPlaylists, addPlaylistToArray, unhidePlaylists, setCurrentlyPlayingPlaylistSongs, setPlaylistSongs, setCurrentlyViewingPlaylistSongs, setReloadPlaylistSongs } from "../../../../slices/playlists/playlistsSlice";
+import { setPlaylists, setReloadPlaylists, addPlaylistToArray, unhidePlaylists, setCurrentlyPlayingPlaylistSongs, setPlaylistSongs, setCurrentlyViewingPlaylistSongs, setReloadPlaylistSongs, setPlaylistIsOpen } from "../../../../slices/playlists/playlistsSlice";
 import { SongCard } from "../MainPageSearch/components/SongCard/SongCard";
 import { toast } from 'react-toastify';
 
@@ -19,6 +19,7 @@ const MainPageCreatePlaylist = () => {
   const [playlistNameInput, setPlaylistNameInput] = useState("");
   const reloadPlaylists = useSelector((state) => state.playlists.reloadPlaylists);
   const reloadPlaylistSongs = useSelector((state) => state.playlists.reloadPlaylistSongs);
+  const playlistIsOpen = useSelector((state) => state.playlists.playlistIsOpen);
   const dispatch = useDispatch();
   const playlists = useSelector((state) => state.playlists);
   const pagination = useRef({
@@ -51,8 +52,8 @@ const MainPageCreatePlaylist = () => {
       fetchPlaylists()
         .catch(console.error);
     }
-    if (reloadPlaylistSongs) {
-      console.log("refreshed playlist songs");
+    if (reloadPlaylistSongs && playlistIsOpen) {
+      /* console.log("refreshed playlist songs"); */
       songPagination.current.page = "1";
       const fetchPlaylistSongs = async function () {
         let result = await mainAxios.getPlaylistById({ playlistId: playlists.currentPlaylistId });
@@ -80,6 +81,7 @@ const MainPageCreatePlaylist = () => {
         style={ { display: playlists.songsHidden ? "none" : null } }
         onClick={ () => {
           dispatch(unhidePlaylists());
+          dispatch(setPlaylistIsOpen(false));
         } }
       >
         <FontAwesomeIcon icon={ faCircleArrowLeft } className="back-icon" />

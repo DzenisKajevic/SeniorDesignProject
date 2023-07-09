@@ -285,6 +285,7 @@ const SongCard = (source, style) => {
                   );
                   if (result.error) toast.error(result.error.response.data, { className: "toast-message", style: { backgroundColor: "#000000", color: "yellow" } });
                   if (result.data) {
+                    toast.success("Song added to favorites", { className: "toast-message", style: { backgroundColor: "#000000", color: "green" } });
                     dispatch(setReloadFavouriteSongs(true));
                   }
                 } }
@@ -298,9 +299,7 @@ const SongCard = (source, style) => {
               <button
                 className="removeFromFavourites"
                 onClick={ async () => {
-                  console.log("AAAAAAAAAAAAA");
                   dispatch(setReloadPlaylistSongs(true));
-                  console.log("BBBBBBBBBB");
                   console.log(song["_id"]);
                   console.log(playlists.currentPlaylistId);
                   const result = await mainAxios.removeFilesFromPlaylist({
@@ -309,7 +308,6 @@ const SongCard = (source, style) => {
                   });
                   console.log(result);
                   if (result.data) {
-                    console.log("AJKLSDNLAKSDNK");
                     dispatch(setReloadPlaylistSongs(true));
 
                     //const index = playlists.songs.indexOf(song);
@@ -337,43 +335,84 @@ const SongCard = (source, style) => {
       >
         { genres.songs.length ? genres.songs.map((song, index) => {
           return (
-            <div className="song-card" key={ song["_id"] }>
-              <button
-                className="song-card-play-button"
-                onClick={ async () => {
-                  dispatch(setCurrentlyPlayingGenreSongs({ calledFrom: "playButton" }));
-                  playSong(song, index);
-                } }
-              >
-                <FontAwesomeIcon icon={ faPlay } className="play-icon" />
-              </button>
-              <div className="song-card-text">
-                <p className="author-name-p">{ song.metadata.author }</p>
-                <p className="song-name-p">{ song.metadata.songName }</p>
-                {/* <p className="genre-p">{ song.metadata.genre }</p> */ }
-              </div>
-              <img
-                // src={null}
-                src="http://placekitten.com/60"
-                alt="album"
-                className="album-image"
-              />
-              <button
-                className="addToFavourites"
-                onClick={ async () => {
-                  const result = await mainAxios.addFileToFavourites(
-                    song["_id"]
-                  );
-                  if (result.error) toast.error(result.error.response.data, { className: "toast-message", style: { backgroundColor: "#000000", color: "yellow" } });
-                  if (result.data) dispatch(setReloadFavouriteSongs(true));
-                } }
-              >
-                <FontAwesomeIcon
-                  icon={ faHeart }
-                  className="bookmark-icon"
-                  title="Add song to favorites"
+            <div key={ song["_id"] }>
+              <div className="song-card" key={ song["_id"] }>
+                <button
+                  className="song-card-play-button"
+                  onClick={ async () => {
+                    dispatch(setCurrentlyPlayingGenreSongs({ calledFrom: "playButton" }));
+                    playSong(song, index);
+                  } }
+                >
+                  <FontAwesomeIcon icon={ faPlay } className="play-icon" />
+                </button>
+                <div className="song-card-text">
+                  <p className="author-name-p">{ song.metadata.author }</p>
+                  <p className="song-name-p">{ song.metadata.songName }</p>
+                  {/* <p className="genre-p">{ song.metadata.genre }</p> */ }
+                </div>
+                <img
+                  // src={null}
+                  src="http://placekitten.com/60"
+                  alt="album"
+                  className="album-image"
                 />
-              </button>
+                <button
+                  className="addToPlaylist"
+                  onClick={ () => { console.log(song['_id']); toggleMenuVisibility(song); } }>
+                  <FontAwesomeIcon
+                    icon={ faList }
+                    className="bookmark-icon"
+                    title="Add song to a playlist"
+                  />
+                </button>
+                <button
+                  className="addToFavourites"
+                  onClick={ async () => {
+                    const result = await mainAxios.addFileToFavourites(
+                      song["_id"]
+                    );
+                    if (result.error) toast.error(result.error.response.data, { className: "toast-message", style: { backgroundColor: "#000000", color: "yellow" } });
+                    if (result.data) dispatch(setReloadFavouriteSongs(true));
+                  } }
+                >
+                  <FontAwesomeIcon
+                    icon={ faHeart }
+                    className="bookmark-icon"
+                    title="Add song to favorites"
+                  />
+                </button>
+              </div>
+              <div id={ "dropdown-playlist-menu-" + song["_id"] } className="dropdown-playlist-menu-hidden" >
+                <h2 className="dropdown-playlist-menu-h2 d-none" >Add to playlist</h2>
+                <hr className="dropdown-playlist-menu-hr d-none" ></hr>
+                <div className="dropdown-playlist-overflow-container d-none" >
+                  { playlists.playlists.map((playlist) => {
+                    return (
+                      <div
+                        className="dropdown-playlist-menu-item"
+                        /* id={ playlist["_id"] } */
+                        key={ playlist["_id"] }
+                        onClick={ async () => {
+                          console.log(playlist);
+                          console.log(songToBeAddedToPlaylist);
+                          const result = await mainAxios.addFilesToPlaylist({
+                            playlistId: playlist["_id"],
+                            fileIDs: [songToBeAddedToPlaylist["_id"]],
+                          }
+                          );
+                          if (result.error) toast.error(result.error.response.data, { className: "toast-message", style: { backgroundColor: "#000000", color: "yellow" } });
+                          if (result.data) {
+                            dispatch(setReloadPlaylistSongs(true));
+                            toast.success("Song added to playlist", { className: "toast-message-success", style: { backgroundColor: "#000000", color: "green" } });
+                          }
+                          /* toggleMenuVisibility(songToBeAddedToPlaylist); */
+                        } }
+                      > <p className="dropdown-playlist-menu-item-p">{ playlist["playlistName"] }</p></div>
+                    );
+                  }) }
+                </div>
+              </div>
             </div>
           );
         }) : <p>No songs found</p> }
@@ -385,60 +424,85 @@ const SongCard = (source, style) => {
       <div className="song-cards">
         { recentSongs.currentlyViewingRecentSongs ? recentSongs.currentlyViewingRecentSongs.map((song, index) => {
           return (
-            <div className="song-card" key={ song.fileId["_id"] }>
-              <button
-                className="song-card-play-button"
-                onClick={ async () => {
-                  playSong(song, index);
-                } }
-              >
-                <FontAwesomeIcon icon={ faPlay } className="play-icon" />
-              </button>
-              <div className="song-card-text">
-                <p className="author-name-p">{ song.fileId.metadata.author }</p>
-                <p className="song-name-p">{ song.fileId.metadata.songName }</p>
-                {/* <p className="genre-p">{ song.fileId.metadata.genre }</p> */ }
-              </div>
-              <img
-                // src={null}
-                src="http://placekitten.com/60"
-                alt="album"
-                className="album-image"
-              />
-              <button
-                className="addToPlaylist"
-                onClick={ async () => {
-                  console.log(song);
-                  const result = await mainAxios.addFileToFavourites(
-                    song["_id"]
-                  );
-                  if (result.error) toast.error(result.error.response.data, { className: "toast-message", style: { backgroundColor: "#000000", color: "yellow" } });
-                  if (result.data) dispatch(setReloadFavouriteSongs(true));
-                } }>
-                <FontAwesomeIcon
-                  icon={ faList }
-                  className="bookmark-icon"
-                  title="Add song to a playlist"
+            <div key={ song["_id"] }>
+              <div className="song-card" key={ song.fileId["_id"] }>
+                <button
+                  className="song-card-play-button"
+                  onClick={ async () => {
+                    playSong(song, index);
+                  } }
+                >
+                  <FontAwesomeIcon icon={ faPlay } className="play-icon" />
+                </button>
+                <div className="song-card-text">
+                  <p className="author-name-p">{ song.fileId.metadata.author }</p>
+                  <p className="song-name-p">{ song.fileId.metadata.songName }</p>
+                  {/* <p className="genre-p">{ song.fileId.metadata.genre }</p> */ }
+                </div>
+                <img
+                  // src={null}
+                  src="http://placekitten.com/60"
+                  alt="album"
+                  className="album-image"
                 />
-              </button>
-              <button
-                className="addToFavourites"
-                onClick={ async () => {
+                <button
+                  className="addToPlaylist"
+                  onClick={ () => { console.log(song.fileId); toggleMenuVisibility(song.fileId); } }>
+                  <FontAwesomeIcon
+                    icon={ faList }
+                    className="bookmark-icon"
+                    title="Add song to a playlist"
+                  />
+                </button>
+                <button
+                  className="addToFavourites"
+                  onClick={ async () => {
 
-                  console.log(song);
-                  const result = await mainAxios.addFileToFavourites(
-                    song["fileId"]["_id"]
-                  );
-                  if (result.error) toast.error(result.error.response.data, { className: "toast-message", style: { backgroundColor: "#000000", color: "yellow" } });
-                  if (result.data) dispatch(setReloadFavouriteSongs(true));
-                } }
-              >
-                <FontAwesomeIcon
-                  icon={ faHeart }
-                  className="bookmark-icon"
-                  title="Add song to favorites"
-                />
-              </button>
+                    console.log(song);
+                    const result = await mainAxios.addFileToFavourites(
+                      song["fileId"]["_id"]
+                    );
+                    if (result.error) toast.error(result.error.response.data, { className: "toast-message", style: { backgroundColor: "#000000", color: "yellow" } });
+                    if (result.data) dispatch(setReloadFavouriteSongs(true));
+                  } }
+                >
+                  <FontAwesomeIcon
+                    icon={ faHeart }
+                    className="bookmark-icon"
+                    title="Add song to favorites"
+                  />
+                </button>
+              </div>
+              <div id={ "dropdown-playlist-menu-" + song.fileId["_id"] } className="dropdown-playlist-menu-hidden" >
+                <h2 className="dropdown-playlist-menu-h2 d-none" >Add to playlist</h2>
+                <hr className="dropdown-playlist-menu-hr d-none" ></hr>
+                <div className="dropdown-playlist-overflow-container d-none" >
+                  { playlists.playlists.map((playlist) => {
+                    return (
+                      <div
+                        className="dropdown-playlist-menu-item"
+                        /* id={ playlist["_id"] } */
+                        key={ playlist["_id"] }
+                        onClick={ async () => {
+                          console.log(playlist);
+                          console.log(songToBeAddedToPlaylist);
+                          const result = await mainAxios.addFilesToPlaylist({
+                            playlistId: playlist["_id"],
+                            fileIDs: [songToBeAddedToPlaylist["_id"]],
+                          }
+                          );
+                          if (result.error) toast.error(result.error.response.data, { className: "toast-message", style: { backgroundColor: "#000000", color: "yellow" } });
+                          if (result.data) {
+                            dispatch(setReloadPlaylistSongs(true));
+                            toast.success("Song added to playlist", { className: "toast-message-success", style: { backgroundColor: "#000000", color: "green" } });
+                          }
+                          /* toggleMenuVisibility(songToBeAddedToPlaylist); */
+                        } }
+                      > <p className="dropdown-playlist-menu-item-p">{ playlist["playlistName"] }</p></div>
+                    );
+                  }) }
+                </div>
+              </div>
             </div>
           );
         }) : <p>{/* No favorites found */ }</p> }
