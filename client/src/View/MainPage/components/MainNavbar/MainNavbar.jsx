@@ -123,8 +123,8 @@ const MainNavbar = () => {
           </div>
         </div>
         <div className="mainNavbar-button-container">
-          <button className="sub-button shine">Subscribe</button>
-          <div className="v-breakline-main"></div>
+          {/* {<button className="sub-button shine">Subscribe</button>}
+          <div className="v-breakline-main"></div> */}
           <button
             className="logout-button shine"
             onClick={ () => {
