@@ -58,9 +58,10 @@
     background-color: #fff;
     border-radius: 10px;
     padding: 1rem;
-    border: 2px solid #ebebeb;
+    border: 2px solid var(--purple);
     box-shadow: 0 2px 5px var(--purple);
     /* transform: translateY(-10px); */
+    background: var(--dark-bg);
     transition: opacity 0.2s ease-in-out, transform 0.2s ease-in-out;
     padding: 5px;
 }
@@ -103,7 +104,7 @@
 .dropdown-breakline {
     width: 90%;
     margin-left: 0.5rem;
-    border: 1px solid #ebebeb;
+    border: 1px solid purple;
 }
 
 .mainNavbar-username {

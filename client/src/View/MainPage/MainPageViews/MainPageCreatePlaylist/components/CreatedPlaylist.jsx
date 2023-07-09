@@ -14,7 +14,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { useDispatch, useSelector } from "react-redux";
 import * as mainAxios from "../../../mainAxios";
-import { setReloadPlaylists } from "../../../../../slices/audioVisualiser/songInfoSlice";
+import { setReloadPlaylists } from "../../../../../slices/playlists/playlistsSlice";
 import { deletePlaylist, setCurrentlyViewingPlaylistSongs, setPlaylistSongs } from "../../../../../slices/playlists/playlistsSlice";
 import { toast } from 'react-toastify';
 
@@ -146,8 +146,6 @@ const CreatedPlaylist = () => {
                   );
                   if (result.error) toast.error(result.error.response.data);
                   if (result.data) {
-                    const index = playlists.playlists.indexOf(playlist);
-                    dispatch(deletePlaylist(index));
                     dispatch(setReloadPlaylists(true));
                   }
                 } }

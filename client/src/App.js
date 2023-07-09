@@ -13,7 +13,7 @@ import { AudioVisualiser } from './View/MainPage/MainPageViews/MainPagePlayer/Au
 import PageNotFound from './View/MainPage/components/PageNotFound/PageNotFound';
 import { PrivateRoute } from './View/PrivateRoute';
 import MainPageRecents from './View/MainPage/MainPageViews/MainPageRecents/MainPageRecents';
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 function App() {

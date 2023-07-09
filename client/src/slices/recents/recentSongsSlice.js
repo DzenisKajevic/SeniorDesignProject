@@ -19,6 +19,7 @@ export const recentSongsSlice = createSlice({
             let currentPage = Number(action.payload.currentPage);
             let pageSize = Number(action.payload.pageSize);
             state.pageCount = Math.ceil(current(state.songs).length / action.payload.pageSize);
+            console.log(pageSize, currentPage, state.pageCount);
 
             if (currentPage * pageSize + pageSize > current(state.songs).length) {
 

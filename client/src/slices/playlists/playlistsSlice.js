@@ -9,6 +9,7 @@ export const playlistsSlice = createSlice({
         reloadPlaylistSongs: false,
         songsHidden: true,
         currentlyPlayingPlaylistSongs: [],
+        currentlyViewingPlaylistSongs: [],
         currentPlaylist: null,
         currentPlaylistId: null,
         playlistsPageCount: null,
@@ -19,9 +20,8 @@ export const playlistsSlice = createSlice({
         setPlaylists: (state, action) => {
             state.playlists = action.payload;
             if (action.payload.playlistCount) {
-                state.playlistsPageCount = action.payload.playlistCount / action.payload.pagination.pageSize;
+                state.playlistsPageCount = Math.ceil(action.payload.playlistCount / action.payload.pagination.pageSize);
             }
-            console.log(state.playlistsPageCount);
         },
         addPlaylistToArray: (state, action) => {
             state.playlists.push(action.payload);
@@ -30,7 +30,10 @@ export const playlistsSlice = createSlice({
             state.reloadPlaylists = action.payload;
         },
         setReloadPlaylistSongs: (state, action) => {
-            state.reloadPlaylistSongs = action.payload;
+            console.log("RESETAJ IH BLOODY HELL");
+            state.reloadPlaylistSongs = !state.reloadPlaylistSongs;
+            //state.reloadPlaylistSongs = action.payload;
+            console.log(state.reloadPlaylistSongs);
         },
         setCurrentlyPlayingPlaylistSongs: (state, action) => {
             if (action.payload.calledFrom === "playButton") {
@@ -86,6 +89,6 @@ export const playlistsSlice = createSlice({
 })
 
 // Action creators are generated for each case reducer function
-export const { setPlaylists, addPlaylistToArray, setReloadPlaylistSongs, setPlaylistSongs, setCurrentlyPlayingPlaylistSongs, setCurrentlyViewingPlaylistSongs, setReloadPlaylists, unhidePlaylists, deletePlaylist } = playlistsSlice.actions
+export const { setPlaylists, addPlaylistToArray, setReloadPlaylistSongs, deletePlaylistSong, setPlaylistSongs, setCurrentlyPlayingPlaylistSongs, setCurrentlyViewingPlaylistSongs, setReloadPlaylists, unhidePlaylists, deletePlaylist } = playlistsSlice.actions
 
 export default playlistsSlice.reducer

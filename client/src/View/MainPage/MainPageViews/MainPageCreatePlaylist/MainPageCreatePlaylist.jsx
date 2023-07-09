@@ -10,7 +10,7 @@ import {
 import CreatedPlaylist from "./components/CreatedPlaylist";
 import * as mainAxios from "../../mainAxios";
 import { useDispatch, useSelector } from "react-redux";
-import { setPlaylists, setReloadPlaylists, addPlaylistToArray, unhidePlaylists, setCurrentlyPlayingPlaylistSongs, setPlaylistSongs, setCurrentlyViewingPlaylistSongs } from "../../../../slices/playlists/playlistsSlice";
+import { setPlaylists, setReloadPlaylists, addPlaylistToArray, unhidePlaylists, setCurrentlyPlayingPlaylistSongs, setPlaylistSongs, setCurrentlyViewingPlaylistSongs, setReloadPlaylistSongs } from "../../../../slices/playlists/playlistsSlice";
 import { SongCard } from "../MainPageSearch/components/SongCard/SongCard";
 import { toast } from 'react-toastify';
 
@@ -32,6 +32,8 @@ const MainPageCreatePlaylist = () => {
 
 
   useEffect(() => {
+    console.log("resfreshed");
+    console.log(reloadPlaylists, reloadPlaylistSongs);
     if (reloadPlaylists) {
       pagination.current.page = "1";
       const fetchPlaylists = async function () {
@@ -40,7 +42,6 @@ const MainPageCreatePlaylist = () => {
         let currentUserFullPlaylists = await mainAxios.getPlaylists();
         if (currentUserFullPlaylists.error) toast.error(currentUserFullPlaylists.error.response.data);
         let playlistCount = currentUserFullPlaylists.data.data.length;
-        console.log(playlistCount);
 
         result.data.data.pagination = pagination.current;
         result.data.data.playlistCount = playlistCount;
@@ -60,7 +61,7 @@ const MainPageCreatePlaylist = () => {
 
         dispatch(setPlaylistSongs(result.data));
         dispatch(setCurrentlyViewingPlaylistSongs(songPagination.current));
-        dispatch(setReloadPlaylists(false));
+        dispatch(setReloadPlaylistSongs(false));
         window.location.hash = "nonExistantHashUsedForRefreshing";
         window.location.hash = "#card-container";
       }

@@ -24,9 +24,6 @@ export const songInfoSlice = createSlice({
 
             state.isPlaying = true;
         },
-        setReloadPlaylists: (state, action) => {
-            state.reloadPlaylists = action.payload;
-        },
         setIsPlaying: (state, action) => {
             state.isPlaying = action.payload;
         }
@@ -34,7 +31,7 @@ export const songInfoSlice = createSlice({
 })
 
 // Action creators are generated for each case reducer function
-export const { setSongInfo, setReloadPlaylists, setIsPlaying } = songInfoSlice.actions
+export const { setSongInfo, setIsPlaying } = songInfoSlice.actions
 
 export default songInfoSlice.reducer
 

@@ -58,8 +58,10 @@ const MainPageRecents = () => {
                     if (response.error) {
                         toast.error(response.error.response.data);
                     }
-                    else
+                    else {
+                        console.log("REFRESHGED LOL")
                         dispatch(setReloadPlaylists(true));
+                    }
                 } }>
                     <FontAwesomeIcon
                         icon={ faMicrochip }
@@ -86,7 +88,7 @@ const MainPageRecents = () => {
                     { Number(pagination.current.page) - 1 }
                 </button>
 
-                <button id="currentPage" className="currentPage" style={ { display: recentSongs.pageCount ? null : "none" } }>
+                <button id="currentPage" className="currentPage" onClick={ () => { console.log(pagination.current.page, recentSongs.pageCount) } } style={ { display: recentSongs.pageCount ? null : "none" } }>
                     { pagination.current.page }
                 </button>
                 <button
