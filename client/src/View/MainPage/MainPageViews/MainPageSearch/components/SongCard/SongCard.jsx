@@ -29,6 +29,7 @@ const SongCard = (source, style) => {
 
   const [menuVisibility, setMenuVisibility] = useState(false);
   const [songToBeAddedToPlaylist, setSongToBeAddedToPlaylist] = useState(null);
+  const [divId, setDivId] = useState(null);
 
   const toggleMenuVisibility = (song) => {
     console.log(song);
@@ -36,6 +37,28 @@ const SongCard = (source, style) => {
     console.log(songToBeAddedToPlaylist);
     setMenuVisibility((prevState) => !prevState);
 
+    if (divId && song._id !== divId) {
+      let checkIfOldMenuIsOpen = document.getElementById('dropdown-playlist-menu-' + divId);
+      if (checkIfOldMenuIsOpen) {
+        let oldMenu = document.getElementById('dropdown-playlist-menu-' + divId),
+          //let menu = document.getElementsByClassName('dropdown-playlist-menu-hidden');
+          //modern browsers IE >= 10
+          classList = 'classList' in oldMenu;
+        for (var i = 0; i < oldMenu.children.length; i++) {
+          var child = oldMenu.children[i];
+          if (classList && child.classList.contains('d-none')) {
+            child.classList.remove('d-none');
+          } else if (classList && !child.classList.contains('d-none')) {
+            child.classList.add('d-none');
+          }
+        }
+        //let menu = document.getElementsByClassName('dropdown-playlist-menu-hidden');
+        oldMenu.classList.toggle('dropdown-playlist-menu');
+        oldMenu.classList.toggle('dropdown-playlist-menu-hidden');
+      }
+    }
+
+    setDivId(song._id);
     let menu = document.getElementById('dropdown-playlist-menu-' + song._id),
       //let menu = document.getElementsByClassName('dropdown-playlist-menu-hidden');
       //modern browsers IE >= 10
