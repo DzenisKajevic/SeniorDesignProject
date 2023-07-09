@@ -38,7 +38,7 @@ const MainPageCreatePlaylist = () => {
       pagination.current.page = "1";
       const fetchPlaylists = async function () {
         let result = await mainAxios.getPlaylists(pagination.current);
-        if (result.error) toast.error(result.error.response.data);
+        if (result.error) toast.error(result.error.response.data, { className: "toast-message", style: { backgroundColor: "#000000", color: "yellow" } });
         let currentUserFullPlaylists = await mainAxios.getPlaylists();
         if (currentUserFullPlaylists.error) toast.error(currentUserFullPlaylists.error.response.data);
         let playlistCount = currentUserFullPlaylists.data.data.length;
@@ -52,10 +52,11 @@ const MainPageCreatePlaylist = () => {
         .catch(console.error);
     }
     if (reloadPlaylistSongs) {
+      console.log("refreshed playlist songs");
       songPagination.current.page = "1";
       const fetchPlaylistSongs = async function () {
         let result = await mainAxios.getPlaylistById({ playlistId: playlists.currentPlaylistId });
-        if (result.error) toast.error(result.error.response.data);
+        if (result.error) toast.error(result.error.response.data, { className: "toast-message", style: { backgroundColor: "#000000", color: "yellow" } });
         console.log(result);
         result.data.data.pagination = songPagination.current;
 
@@ -91,7 +92,7 @@ const MainPageCreatePlaylist = () => {
           title="create playlist"
           onClick={ async () => { // set song list under the search bar and edit the redux state
             let result = await mainAxios.createEmptyPlaylist(playlistNameInput, "private");
-            if (result.error) toast.error(result.error.response.data);
+            if (result.error) toast.error(result.error.response.data, { className: "toast-message", style: { backgroundColor: "#000000", color: "yellow" } });
             if (result.data) {
               dispatch(addPlaylistToArray(result.data.data));
               dispatch(setReloadPlaylists(true));
@@ -130,7 +131,7 @@ const MainPageCreatePlaylist = () => {
               page: pagination.current.page,
               pageSize: pagination.current.pageSize,
             });
-            if (result.error) toast.error(result.error.response.data);
+            if (result.error) toast.error(result.error.response.data, { className: "toast-message", style: { backgroundColor: "#000000", color: "yellow" } });
             result.data.data.pagination = pagination.current;
             dispatch(setPlaylists(result.data.data));
             //dispatch(setReloadPlaylists(true));
@@ -188,7 +189,7 @@ const MainPageCreatePlaylist = () => {
             songPagination.current.page--;
 
             let result = await mainAxios.getPlaylistById({ playlistId: playlists.currentPlaylistId });
-            if (result.error) toast.error(result.error.response.data);
+            if (result.error) toast.error(result.error.response.data, { className: "toast-message", style: { backgroundColor: "#000000", color: "yellow" } });
             console.log(result);
             result.data.data.pagination = songPagination.current;
             dispatch(setPlaylistSongs(result.data));
@@ -222,7 +223,7 @@ const MainPageCreatePlaylist = () => {
           onClick={ async () => {
             songPagination.current.page++;
             let result = await mainAxios.getPlaylistById({ playlistId: playlists.currentPlaylistId });
-            if (result.error) toast.error(result.error.response.data);
+            if (result.error) toast.error(result.error.response.data, { className: "toast-message", style: { backgroundColor: "#000000", color: "yellow" } });
             console.log(result);
             result.data.data.pagination = songPagination.current;
             dispatch(setPlaylistSongs(result.data));

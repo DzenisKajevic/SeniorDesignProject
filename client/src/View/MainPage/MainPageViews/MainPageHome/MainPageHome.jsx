@@ -21,7 +21,7 @@ const MainPageHome = () => {
     if (reloadGenres) {
       const fetchPlaylists = async function () {
         let result = await mainAxios.getAllGenres(pagination.current);
-        if (result.error) toast.error(result.error.response.data);
+        if (result.error) toast.error(result.error.response.data, { className: "toast-message", style: { backgroundColor: "#000000", color: "yellow" } });
         dispatch(setGenres(result.data.data));
         dispatch(setReloadGenres(false)); // never returned to true since multiple API calls would yield the same result
       };
@@ -78,7 +78,7 @@ const MainPageHome = () => {
           onClick={ async () => {
             pagination.current.page--;
             let result = await mainAxios.getAllGenres(pagination.current);
-            if (result.error) toast.error(result.error.response.data);
+            if (result.error) toast.error(result.error.response.data, { className: "toast-message", style: { backgroundColor: "#000000", color: "yellow" } });
             dispatch(setGenres(result.data.data));
             window.location.hash = "nonExistantHashUsedForRefreshing";
             window.location.hash = "#card-container";
@@ -108,7 +108,7 @@ const MainPageHome = () => {
           onClick={ async () => {
             pagination.current.page++;
             let result = await mainAxios.getAllGenres(pagination.current);
-            if (result.error) toast.error(result.error.response.data);
+            if (result.error) toast.error(result.error.response.data, { className: "toast-message", style: { backgroundColor: "#000000", color: "yellow" } });
             dispatch(setGenres(result.data.data));
             window.location.hash = "nonExistantHashUsedForRefreshing";
             window.location.hash = "#card-container";
@@ -139,7 +139,7 @@ const MainPageHome = () => {
               genre: genres.currentGenre,
             };
             let result = await mainAxios.getAllFiles(filters);
-            if (result.error) toast.error(result.error.response.data);
+            if (result.error) toast.error(result.error.response.data, { className: "toast-message", style: { backgroundColor: "#000000", color: "yellow" } });
 
             dispatch(setGenreSongs(result.data.data));
             dispatch(setCurrentlyPlayingGenreSongs({ newGenre: filters.genre }));
@@ -176,7 +176,7 @@ const MainPageHome = () => {
               genre: genres.currentGenre,
             };
             let result = await mainAxios.getAllFiles(filters);
-            if (result.error) toast.error(result.error.response.data);
+            if (result.error) toast.error(result.error.response.data, { className: "toast-message", style: { backgroundColor: "#000000", color: "yellow" } });
 
             dispatch(setGenreSongs(result.data.data));
             dispatch(setCurrentlyPlayingGenreSongs({ newGenre: filters.genre }));

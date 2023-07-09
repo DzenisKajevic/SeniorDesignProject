@@ -24,7 +24,7 @@ const MainPageFavorites = () => {
           pagination.current
         );
         if (result.error) {
-          toast.error(result.error.response.data);
+          toast.error(result.error.response.data, { className: "toast-message", style: { backgroundColor: "#000000", color: "yellow" } });
           let emptyArray = [];
           dispatch(setFavouriteSongs(emptyArray));
           dispatch(setReloadFavouriteSongs(false));
@@ -55,7 +55,7 @@ const MainPageFavorites = () => {
               page: pagination.current.page,
               pageSize: pagination.current.pageSize,
             });
-            if (result.error) toast.error(result.error.response.data);
+            if (result.error) toast.error(result.error.response.data, { className: "toast-message", style: { backgroundColor: "#000000", color: "yellow" } });
             dispatch(setFavouriteSongs(result.data.data));
             dispatch(setReloadFavouriteSongs(true));
             window.location.hash = "nonExistantHashUsedForRefreshing";
@@ -83,7 +83,7 @@ const MainPageFavorites = () => {
               page: pagination.current.page,
               pageSize: pagination.current.pageSize,
             });
-            if (result.error) toast.error(result.error.response.data);
+            if (result.error) toast.error(result.error.response.data, { className: "toast-message", style: { backgroundColor: "#000000", color: "yellow" } });
             dispatch(setFavouriteSongs(result.data.data));
             dispatch(setReloadFavouriteSongs(true));
             window.location.hash = "nonExistantHashUsedForRefreshing";

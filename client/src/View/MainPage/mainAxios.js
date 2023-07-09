@@ -322,7 +322,7 @@ export async function generateRecommendedPlaylists() {
     }
     else {
         console.log(response.data);
-        toast.error(response.error);
+        toast.error(response.error, { className: "toast-message", style: { backgroundColor: "#000000", color: "yellow" } });
     }
     return response;
 }

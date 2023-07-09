@@ -66,7 +66,7 @@ const CreatedPlaylist = () => {
                 //page: pagination.current.page,
                 //pageSize: pagination.current.pageSize,
               });
-              if (result.error) toast.error(result.error.response.data);
+              if (result.error) toast.error(result.error.response.data, { className: "toast-message", style: { backgroundColor: "#000000", color: "yellow" } });
               //console.log(playlist);
               //result.data.data.currentPlaylist = playlist["_id"];
               result.data.data.currentPlaylist = playlist["playlistName"];
@@ -144,7 +144,7 @@ const CreatedPlaylist = () => {
                   const result = await mainAxios.deletePlaylist(
                     playlist["_id"]
                   );
-                  if (result.error) toast.error(result.error.response.data);
+                  if (result.error) toast.error(result.error.response.data, { className: "toast-message", style: { backgroundColor: "#000000", color: "yellow" } });
                   if (result.data) {
                     dispatch(setReloadPlaylists(true));
                   }

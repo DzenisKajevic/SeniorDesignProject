@@ -30,14 +30,17 @@
 }
 
 /* buttons  */
-.currentPage, .nextPage, .previousPage, .back-button {
+.currentPage,
+.nextPage,
+.previousPage,
+.back-button {
   width: 30px;
   height: 30px;
   background-color: var(--purple);
   border: none;
   outline: none;
   cursor: pointer;
-  margin-bottom: 1rem;
+  margin-bottom: 2.5rem;
 }
 
 .back-button {

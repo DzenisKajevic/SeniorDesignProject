@@ -5,6 +5,10 @@
     margin-bottom: 5rem;
 }
 
+.d-none {
+    display: none;
+}
+
 .song-card {
     height: 60px;
     width: 100%;
@@ -192,8 +196,7 @@
     height: 75px;
 }
 
-.toast-message-success {
-    background: darkblue;
+.toast-message {
     font-family: var(--text-font1);
     /* border-radius: 10px; */
     border: 2px solid var(--purple);

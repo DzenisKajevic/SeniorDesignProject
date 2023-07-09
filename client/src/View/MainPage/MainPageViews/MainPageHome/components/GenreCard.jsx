@@ -35,7 +35,7 @@ const GenreCard = () => {
             page: pagination.current.page,
             pageSize: pagination.current.pageSize,
           });
-          if (result.error) toast.error(result.error.response.data);
+          if (result.error) toast.error(result.error.response.data, { className: "toast-message", style: { backgroundColor: "#000000", color: "yellow" } });
           result.data.data.currentGenre = genre;
           updateGenreSongs(result);
         } }>

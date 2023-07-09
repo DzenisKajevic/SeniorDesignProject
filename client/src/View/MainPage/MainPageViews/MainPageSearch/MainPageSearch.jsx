@@ -129,7 +129,7 @@ const MainPageSearch = () => {
               page: pagination.current.page,
               pageSize: pagination.current.pageSize,
             });
-            if (result.error) toast.error(result.error.response.data);
+            if (result.error) toast.error(result.error.response.data, { className: "toast-message", style: { backgroundColor: "#000000", color: "yellow" } });
             updateSearch(result);
           } }
           type="button"
@@ -179,7 +179,7 @@ const MainPageSearch = () => {
               page: pagination.current.page,
               pageSize: pagination.current.pageSize,
             });
-            if (result.error) toast.error(result.error.response.data);
+            if (result.error) toast.error(result.error.response.data, { className: "toast-message", style: { backgroundColor: "#000000", color: "yellow" } });
             updateSearch(result);
           } }
         >
@@ -215,7 +215,7 @@ const MainPageSearch = () => {
               page: pagination.current.page,
               pageSize: pagination.current.pageSize,
             });
-            if (result.error) toast.error(result.error.response.data);
+            if (result.error) toast.error(result.error.response.data, { className: "toast-message", style: { backgroundColor: "#000000", color: "yellow" } });
             updateSearch(result);
           } }
         >

@@ -25,7 +25,7 @@ const MainPageRecents = () => {
             const fetchFavourites = async function () {
                 let result = await mainAxios.getRecentlyPlayedSongs();
                 if (result.error) {
-                    toast.error(result.error.response.data);
+                    toast.error(result.error.response.data, { className: "toast-message", style: { backgroundColor: "#000000", color: "yellow" } });
                     let emptyArray = [];
                     dispatch(setRecentSongs(emptyArray));
                     dispatch(setCurrentlyViewingRecentSongs(0));
