@@ -54,6 +54,8 @@ async function getFileInfo(req, res, next) {
 async function getAllFiles(req, res, next) {
     try {
         await audioFilesService.getAllFiles(req.user, req.query, (err, files) => {
+            console.log("files", files);
+            console.log("err", err);
             if (err) {
                 next(err);
             }

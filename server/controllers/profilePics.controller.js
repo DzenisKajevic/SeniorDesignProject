@@ -12,6 +12,7 @@ async function deleteFile(req, res, next) {
 
 async function uploadFile(req, res, next) {
     try {
+        console.log("...", req.file);
         res.status(201).send({ "fileId": await profilePicsService.uploadFile(req.file) });
     } catch (err) {
         if (err.name === 'StatusError') {

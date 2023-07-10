@@ -12,17 +12,17 @@ const UploadImgPopup = (props) => {
 
   return (
     <div
-      style={{
+      style={ {
         visibility: props.show ? "visible" : "hidden",
         opacity: props.show ? "1" : "0",
-      }}
-      className={popupStyles.overlay}
+      } }
+      className={ popupStyles.overlay }
     >
-      <div className={popupStyles.popup}>
-        <h2>{props.title}</h2>
-        <span className={popupStyles.close}>&times;</span>
+      <div className={ popupStyles.popup }>
+        <h2>{ props.title }</h2>
+        {/* <span className={popupStyles.close}>&times;</span> */ }
       </div>
-      <div className={popupStyles.content}>{props.children}</div>
+      <div className={ popupStyles.content }>{ props.children }</div>
     </div>
   );
 };

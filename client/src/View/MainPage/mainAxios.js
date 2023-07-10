@@ -3,6 +3,7 @@ import * as audioFiles from "../../api/audioFiles/audioFiles"
 import * as favouriteFiles from "../../api/favouriteFiles/favouriteFiles"
 import * as playlists from "../../api/playlists/playlists"
 import * as recentlyPlayedSongs from "../../api/recentlyPlayedSongs/recentlyPlayedSongs"
+import * as profilePics from "../../api/profilePics/profilePics"
 import { toast } from 'react-toastify';
 
 // most of these functions will need to be moved to different folders
@@ -46,6 +47,7 @@ export async function uploadFile(audioFile, author, genre, songName, album) {
     }
     return response;
 }
+
 
 //onClick={() => getFile("631aed4060c43bb3bf484804")}
 export async function getFile(fileId) {
@@ -319,10 +321,10 @@ export async function generateRecommendedPlaylists() {
     const response = await playlists.generateRecommendedPlaylists();
     if (response.error) {
         console.log(response.error);
+        toast.error(response.error, { className: "toast-message", style: { backgroundColor: "#000000", color: "yellow" } });
     }
     else {
         console.log(response.data);
-        toast.error(response.error, { className: "toast-message", style: { backgroundColor: "#000000", color: "yellow" } });
     }
     return response;
 }

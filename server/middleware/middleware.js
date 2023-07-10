@@ -83,6 +83,7 @@ async function profilePicUploadMiddleware(req, res, next) {
     // accepts a single file and stores it in req.file
     // the file must be passed with the key: "profilePic", otherwise the request will fail
 
+    console.log("req.body", req.body);
     store = await db.setupProfilePicStorageEngine(req);
 
     // deletes previous profile picture, replaces it with the new

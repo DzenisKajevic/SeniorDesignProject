@@ -14,16 +14,19 @@ export async function getFile(input) {
     // axios doesn't work for this (blob issue)
 }
 
-// requires multipart form for testing
-export async function uploadFile(profilePic) {
+export async function uploadProfilePicture({ profilePic }) {
+    let formData = new FormData();
+    formData.append('profilePic', profilePic);
+    console.log(formData.get('profilePic'));
     return await resolve(
         axios({
             method: 'post',
             url: 'http://localhost:3001/api/v1/profilePics/uploadFile',
-            data: { profilePic },
+            data: formData,
             headers: { 'Authorization': 'Bearer ' + window.localStorage.token }
         }));
 }
+
 
 export async function deleteFile(fileId) {
     return await resolve(

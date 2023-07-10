@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import "./mainContent.css";
 import "../../../../variables.css";
 import { Outlet } from "react-router-dom";
@@ -10,11 +10,15 @@ import { useDispatch, useSelector } from "react-redux";
 import { playSong } from "../../MainPageViews/MainPageSearch/components/SongCard/SongCard";
 import UploadImgPopup from "../MainNavbar/components/UploadImgPopup";
 import { addToRecentlyPlayedSongs } from "../../mainAxios";
+import { toast } from "react-toastify";
+import * as mainAxios from "../../mainAxios";
+import { setPlaylists, setReloadPlaylists } from "../../../../slices/playlists/playlistsSlice";
 
 let preparePlayNext;
 let preparePlayPrevious;
 
 const MainContent = () => {
+  const reloadPlaylists = useSelector((state) => state.playlists.reloadPlaylists);
   const visualiserHidden = useSelector((state) => state.visualiserHidden.hidden);
   const songInfo = useSelector((state) => state.songInfo.song);
   const playlists = useSelector((state) => state.playlists);
@@ -25,6 +29,32 @@ const MainContent = () => {
   const dispatch = useDispatch();
   const map1 = new Map();
 
+  // this ref and the useEffect below it are used for loading playlists due to the "Add to playlist" button in the song card
+  const pagination = useRef({
+    page: "1",
+    pageSize: "4",
+  });
+
+  useEffect(() => {
+    /* console.log("Test", reloadPlaylists); */
+    if (reloadPlaylists) {
+      pagination.current.page = "1";
+      const fetchPlaylists = async function () {
+        let result = await mainAxios.getPlaylists(pagination.current);
+        if (result.error) toast.error(result.error.response.data, { className: "toast-message", style: { backgroundColor: "#000000", color: "yellow" } });
+        let currentUserFullPlaylists = await mainAxios.getPlaylists();
+        if (currentUserFullPlaylists.error) toast.error(currentUserFullPlaylists.error.response.data);
+        let playlistCount = currentUserFullPlaylists.data.data.length;
+
+        result.data.data.pagination = pagination.current;
+        result.data.data.playlistCount = playlistCount;
+        dispatch(setPlaylists(result.data.data));
+        dispatch(setReloadPlaylists(false));
+      }
+      fetchPlaylists()
+        .catch(console.error);
+    }
+  }, [reloadPlaylists]);
   preparePlayPrevious = async function () {
 
     // check where the song is located (search / playlists / favourites / genres)

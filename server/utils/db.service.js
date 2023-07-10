@@ -122,6 +122,7 @@ const dbService = {
             url: dbService.dbURI,
             bucketName: dbService.profilePicBucketName,
             file: (req, file) => {
+                console.log("123", file);
                 let metadata = {
                     'uploadedBy': mongoose.Types.ObjectId(req.user.userId)
                 };

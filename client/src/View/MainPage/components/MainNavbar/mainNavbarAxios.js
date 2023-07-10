@@ -13,9 +13,8 @@ export async function deleteFile(fileId) {
     return response;
 }
 
-// can't test yet, requires a multipart form for file uploads
-export async function uploadFile(profilePic) {
-    const response = await profilePics.uploadFile(profilePic);
+export async function uploadProfilePicture(image) {
+    const response = await profilePics.uploadProfilePicture(image);
     if (response.error) {
         console.log(response.error);
     }
@@ -24,6 +23,7 @@ export async function uploadFile(profilePic) {
     }
     return response;
 }
+
 
 export async function getFile(input) {
     const response = await profilePics.getFile(input);

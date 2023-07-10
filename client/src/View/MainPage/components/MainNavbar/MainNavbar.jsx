@@ -11,8 +11,10 @@ import {
   faPlus,
   faRightFromBracket,
   faPen,
+  faX,
 } from "@fortawesome/free-solid-svg-icons";
 import UploadImgPopup from "./components/UploadImgPopup";
+import { toast } from "react-toastify";
 
 const MainNavbar = () => {
   const [profilePic, setProfilePic] = useState(null);
@@ -26,9 +28,7 @@ const MainNavbar = () => {
     setMenuVisibility((prevState) => !prevState);
   };
 
-  const popupCloseHandler = () => {
-    setVisibility(false);
-  };
+  const [reloadProfilePic, setReloadProfilePic] = useState(true);
 
   const closeDropdownMenu = (e) => { };
   // Converts any given blob into a base64 encoded string.
@@ -43,6 +43,7 @@ const MainNavbar = () => {
     });
   }
   useEffect(() => {
+    if (!reloadProfilePic) return;
     const setProfilePicture = async function () {
       const response = await mainNavbarAxios.getFile({
         userId: JSON.parse(window.localStorage.user)["_id"],
@@ -51,7 +52,8 @@ const MainNavbar = () => {
       setProfilePic(src);
     };
     setProfilePicture();
-  }, []);
+    setReloadProfilePic(false);
+  }, [reloadProfilePic]);
 
   useEffect(() => {/* 
     console.log(visibility, "vidljivost"); */
@@ -85,22 +87,30 @@ const MainNavbar = () => {
               <div className="dropdown-menu">
                 <button
                   onClick={ (event) => {
-                    event.stopPropagation();
+                    /* event.stopPropagation(); */
                     setVisibility(!visibility);
                   } }
                 >
                   Change picture{ " " }
-                  <FontAwesomeIcon icon={ faPlus } className="dropdown-icons" />
-                  { visibility && (
-                    <UploadImgPopup
-                      onClick={ popupCloseHandler }
-                      show={ visibility }
-                      title="Upload an image"
-                    >
-                      {/* <input type="file" /> */ }
-                    </UploadImgPopup>
-                  ) }
                 </button>
+                <FontAwesomeIcon icon={ faPlus } className="dropdown-icons" />
+                { visibility && (
+                  <div>
+                    <label htmlFor="profilePic">File</label>
+                    <input id="profilePic" name="profilePic" type="file" onChange={ async (e) => {
+                      let response = await mainNavbarAxios.uploadProfilePicture({ profilePic: e.target.files[0] });
+                      console.log(response);
+                      if (response.error) {
+                        console.log(response.error);
+                        toast.error(response.error, { className: "toast-message", style: { backgroundColor: "#000000", color: "yellow" } });
+                      }
+                      else {
+                        console.log(response.data);
+                        setReloadProfilePic(true);
+                      }
+                    } } />
+                  </div>
+                ) }
                 <div className="dropdown-breakline"></div>
                 <p>
                   Change username{ " " }
@@ -121,7 +131,7 @@ const MainNavbar = () => {
               </div>
             ) }
           </div>
-        </div>
+        </div >
         <div className="mainNavbar-button-container">
           {/* {<button className="sub-button shine">Subscribe</button>}
           <div className="v-breakline-main"></div> */}
@@ -134,7 +144,7 @@ const MainNavbar = () => {
             Log out
           </button>
         </div>
-      </nav>
+      </nav >
     </>
   );
 };

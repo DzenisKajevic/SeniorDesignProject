@@ -79,10 +79,10 @@ async function getFile(req, res) {
     const _id = mongoose.Types.ObjectId(fileId);
     filters = {};
     filters['_id'] = _id;
-    console.log(filters);
 
     // only admins get to see non-reviewed files
-    if (user.role != 'Admin') filters['reviewed'] = true;
+    if (user.role != 'Admin') filters['metadata.reviewed'] = "true";
+    console.log(filters);
 
     await db.getAudioGfs().find(filters).limit(1).toArray((err, files) => {
         if (!files || files.length === 0) res.status(500).send('A file with that id was not found');
@@ -105,8 +105,6 @@ async function getFile(req, res) {
             }
             // otherwise send only the requested portion of the file
             else {
-                /*                 console.log("range req", rangeRequest);
-                                console.log(rangeRequest.Start, rangeRequest.End); */
                 var start = rangeRequest.Start;
                 var end = rangeRequest.End;
 
@@ -151,7 +149,7 @@ async function getAllFiles(user, queryParams, callback) {
     let filters = {};
     if (queryParams['genre'] !== undefined) filters['metadata.genre'] = queryParams['genre'];
     filters['contentType'] = "audio/mpeg";
-    if (user.role !== 'Admin') filters['reviewed'] = true;
+    if (user.role !== 'Admin') filters['reviewed'] = 'true';
     else if (queryParams['reviewed'] === 'true' || queryParams['reviewed'] === 'false') filters['reviewed'] = queryParams['reviewed'];
     Object.keys(queryParams).forEach(key => {
         if (key in util.fileSearchFilters) filters[key] = queryParams[key];
@@ -166,37 +164,31 @@ async function getAllFiles(user, queryParams, callback) {
         delete filters['metadata.songName'];
 
         let matchingCount = await AudioFile.count({ $and: [{ 'metadata.songName': { '$regex': new RegExp(songNameRegex, "i") } }, filters] });
-        db.getAudioGfs().find({ $and: [{ 'metadata.songName': { '$regex': new RegExp(songNameRegex, "i") } }, filters] }).skip((page - 1) * pageSize).limit(pageSize)
-            .toArray((err, files) => {
-                if (!files || files.length === 0) {
-                    callback(new StatusError(null, 'No files available', 404));
-                }
-                else {
-                    //console.log(files);
-                    let returnObject = {
-                        'searchResults': files,
-                        'pageCount': Math.ceil(matchingCount / pageSize)
-                    }
-                    console.log(returnObject);
-                    callback(null, returnObject);
-                }
-            });
+        console.log(matchingCount);
+        let searchResults = await AudioFile.find({ $and: [{ 'metadata.songName': { '$regex': new RegExp(songNameRegex, "i") } }, filters] }).skip((page - 1) * pageSize).limit(pageSize);
+        let pageCount = Math.ceil(matchingCount / pageSize);
+        let returnObject = {
+            'searchResults': searchResults,
+            'pageCount': pageCount
+        };
+        console.log(returnObject);
+        callback(null, returnObject); ''
     }
     // else match exact values
     else {
+        console.log(filters);
         let matchingCount = await AudioFile.count(filters);
-        db.getAudioGfs().find(filters).skip((page - 1) * pageSize).limit(pageSize).toArray((err, files) => {
-            if (!files || files.length === 0) {
-                callback(new StatusError(null, 'No files available', 404));
-            }
-            else {
-                let returnObject = {
-                    'searchResults': files,
-                    'pageCount': Math.ceil(matchingCount / pageSize)
-                }
-                callback(null, returnObject);
-            }
-        });
+
+        console.log(matchingCount);
+        console.log(page, pageSize);
+        let searchResults = await AudioFile.find(filters).skip((page - 1) * pageSize).limit(pageSize);
+        let pageCount = Math.ceil(matchingCount / pageSize);
+        let returnObject = {
+            'searchResults': searchResults,
+            'pageCount': pageCount
+        };
+        console.log(returnObject);
+        callback(null, returnObject);
     }
 };
 
