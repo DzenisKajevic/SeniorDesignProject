@@ -25,6 +25,7 @@ export async function renameUser(newUsername) {
             method: 'put',
             url: 'http://localhost:3001/api/v1/auth/renameUser',
             data: { newUsername },
+            headers: { 'Authorization': 'Bearer ' + window.localStorage.token }
         }));
 }
 

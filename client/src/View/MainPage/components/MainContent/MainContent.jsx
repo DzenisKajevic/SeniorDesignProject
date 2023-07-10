@@ -45,6 +45,7 @@ const MainContent = () => {
         let currentUserFullPlaylists = await mainAxios.getPlaylists();
         if (currentUserFullPlaylists.error) toast.error(currentUserFullPlaylists.error.response.data);
         let playlistCount = currentUserFullPlaylists.data.data.length;
+        if (playlistCount === 0) toast.error("You have no playlists yet.", { className: "toast-message", style: { backgroundColor: "#000000", color: "yellow" } })
 
         result.data.data.pagination = pagination.current;
         result.data.data.playlistCount = playlistCount;

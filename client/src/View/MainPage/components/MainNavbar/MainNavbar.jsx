@@ -12,6 +12,7 @@ import {
   faRightFromBracket,
   faPen,
   faX,
+  faCheck,
 } from "@fortawesome/free-solid-svg-icons";
 import UploadImgPopup from "./components/UploadImgPopup";
 import { toast } from "react-toastify";
@@ -21,6 +22,7 @@ const MainNavbar = () => {
 
   // opening and closing upload img popup
   const [visibility, setVisibility] = useState(false);
+  const [nameChangeVisibility, setNameChangeVisibility] = useState(false);
 
   const [menuVisibility, setMenuVisibility] = useState(false);
 
@@ -95,9 +97,9 @@ const MainNavbar = () => {
                 </button>
                 <FontAwesomeIcon icon={ faPlus } className="dropdown-icons" />
                 { visibility && (
-                  <div>
-                    <label htmlFor="profilePic">File</label>
-                    <input id="profilePic" name="profilePic" type="file" onChange={ async (e) => {
+                  <div style={ { display: "flex", alignItems: "center" } }>
+                    <label htmlFor="profilePic" className={ "dropdown-menu-item-label" }>Upload</label>
+                    <input id="profilePic" name="profilePic" type="file" style={ { display: "none" } } onChange={ async (e) => {
                       let response = await mainNavbarAxios.uploadProfilePicture({ profilePic: e.target.files[0] });
                       console.log(response);
                       if (response.error) {
@@ -111,11 +113,35 @@ const MainNavbar = () => {
                     } } />
                   </div>
                 ) }
-                <div className="dropdown-breakline"></div>
-                <p>
-                  Change username{ " " }
-                  <FontAwesomeIcon icon={ faPen } className="dropdown-icons" />
-                </p>
+                <div className="dropdown-breakline" ></div>
+                <button
+                  onClick={ (event) => {
+                    /* event.stopPropagation(); */
+                    setNameChangeVisibility(!nameChangeVisibility);
+                  } }
+                >
+                  Change name{ " " }
+                </button>
+                <FontAwesomeIcon icon={ faPen } className="dropdown-icons" />
+                { nameChangeVisibility && (
+                  <div style={ { display: "flex", justifyContent: "space-between", alignItems: "center" } }>
+                    <input id="usernameChange" name="usernameChange" className={ "dropdown-menu-item-text-input" } style={ { width: "120px" } } type="text" />
+                    <FontAwesomeIcon icon={ faCheck } className="dropdown-icons-clickable" onClick={ async () => {
+                      let newName = document.getElementById("usernameChange").value;
+                      let response = await mainNavbarAxios.renameUser(newName);
+                      console.log(response);
+                      if (response.error) {
+                        console.log(response.error);
+                        toast.error(response.error, { className: "toast-message", style: { backgroundColor: "#000000", color: "yellow" } });
+                      }
+                      else {
+                        console.log(response.data);
+                        let usernameParagraph = document.getElementsByClassName("mainNavbar-username")[0];
+                        usernameParagraph.innerHTML = newName;
+                      }
+                    } } />
+                  </div>
+                ) }
                 <div className="dropdown-breakline"></div>
                 <button
                   onClick={ () => {

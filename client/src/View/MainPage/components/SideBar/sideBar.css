@@ -9,13 +9,14 @@
 
 .animated-logo {
     position: relative;
+    display: flex;
     width: 10vw;
     height: 10vw;
     border-radius: 50%;
     background-color: #212121;
     align-items: center;
     text-align: center;
-    padding-top: 3.5rem;
+    /* padding-top: 3.5rem; */
     margin: 5rem auto;
 }
 

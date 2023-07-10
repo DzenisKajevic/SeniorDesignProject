@@ -91,6 +91,54 @@
     color: var(--purple-dark);
 }
 
+.dropdown-menu-item-label {
+    color: var(--purple);
+    font-family: var(--text-font1);
+    padding: 10px;
+    cursor: pointer;
+    margin: auto;
+    margin-bottom: 10px;
+    border: yellow 2px solid;
+    opacity: 0.7;
+    border-radius: 10px;
+}
+
+.dropdown-menu-item-text-input {
+    color: var(--purple);
+    font-family: var(--text-font1);
+    padding: 7px;
+    cursor: pointer;
+    margin-bottom: 10px;
+    background: black;
+    border: yellow 2px solid;
+    opacity: 0.7;
+    font-size: 1rem;
+    margin-left: 10px;
+    margin-right: 10px;
+    border-radius: 10px;
+}
+
+.dropdown-menu-item-text-input:focus {
+    color: var(--purple);
+    font-family: var(--text-font1);
+    cursor: pointer;
+    margin-bottom: 10px;
+    background: #323232;
+    border: yellow 2px solid;
+    margin-left: 10px;
+    margin-right: 10px;
+    border-radius: 10px;
+}
+
+.dropdown-menu-item-label:hover {
+    opacity: 1;
+    transform: scale(1.1);
+    background: #323232;
+    transition: all 0.2s ease-in-out;
+
+
+}
+
 /* .dropdown > .dropdown-button:focus + .dropdown-menu {
     opacity: 1;
     transform: translateY(0);
@@ -100,6 +148,20 @@
 .dropdown-icons {
     padding-left: 5px;
     color: var(--purple);
+}
+
+.dropdown-icons-clickable {
+    padding-left: 5px;
+    padding-right: 15px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    color: var(--purple);
+}
+
+.dropdown-icons-clickable:hover {
+    color: var(--purple-dark);
+    transform: scale(1.2);
+    transition: all 0.2s ease-in-out;
 }
 
 .dropdown-breakline {
@@ -144,7 +206,6 @@
 }
 
 .animated-logo {
-    position: relative;
     width: 10vw;
     height: 10vw;
     border-radius: 50%;
