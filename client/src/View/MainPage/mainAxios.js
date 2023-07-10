@@ -325,6 +325,7 @@ export async function generateRecommendedPlaylists() {
     }
     else {
         console.log(response.data);
+        toast.success("Playlists successfully generated", { className: "toast-message", style: { backgroundColor: "#000000", color: "green" } });
     }
     return response;
 }
