@@ -9,7 +9,7 @@ const Navbar = () => {
       <nav className="navbar">
         <img
           className="music-app-logo"
-          src="./assets/app-images/music-app-logo.png"
+          src="./assets/app-images/music-app-logo2.png"
           alt="application logo"
         />
         <Link to="/login" className="links">

@@ -236,7 +236,7 @@ const Register = () => {
               <Link to="/">
                 <img
                   className="registerpage-icon"
-                  src="./assets/app-images/music-app-logo.png"
+                  src="./assets/app-images/music-app-logo2.png"
                   alt="music app logo"
                 />
               </Link>

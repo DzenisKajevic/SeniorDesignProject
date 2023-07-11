@@ -47,17 +47,17 @@ const Login = () => {
 
   return (
     <>
-      {success ? (
+      { success ? (
         <section className="success-login-page">
           <h1 className="success-login-title">Successfuly Logged in!</h1>
         </section>
       ) : (
         <section className="loginpage-container">
           <div className="login-bg-color-wrapper">
-            <form onSubmit={submitHandler} className="login-form">
+            <form onSubmit={ submitHandler } className="login-form">
               <h1 className="login-title">Log in to your account</h1>
-              <p ref={errRef} className={errMsg ? "errmsg" : "offscreen"}>
-                {errMsg}
+              <p ref={ errRef } className={ errMsg ? "errmsg" : "offscreen" }>
+                { errMsg }
               </p>
               <label htmlFor="email" className="login-label">
                 Email:
@@ -65,9 +65,9 @@ const Login = () => {
               <input
                 id="email"
                 type="email"
-                value={email}
-                ref={emailRef}
-                onChange={(e) => setEmail(e.target.value)}
+                value={ email }
+                ref={ emailRef }
+                onChange={ (e) => setEmail(e.target.value) }
                 autoComplete="off"
                 required
                 className="login-input"
@@ -80,8 +80,8 @@ const Login = () => {
               <input
                 type="password"
                 id="password"
-                value={pass}
-                onChange={(e) => setPass(e.target.value)}
+                value={ pass }
+                onChange={ (e) => setPass(e.target.value) }
                 required
                 className="login-input"
                 placeholder="Type in your password"
@@ -100,7 +100,7 @@ const Login = () => {
               <Link to="/">
                 <img
                   className="loginpage-icon"
-                  src="./assets/app-images/music-app-logo.png"
+                  src="./assets/app-images/music-app-logo2.png"
                   alt="music app logo"
                 />
               </Link>
@@ -110,7 +110,7 @@ const Login = () => {
             </form>
           </div>
         </section>
-      )}
+      ) }
     </>
   );
 };

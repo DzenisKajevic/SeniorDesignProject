@@ -5,14 +5,12 @@ import "../../../../variables.css";
 const Info = () => {
   return (
     <section className="info-container">
-      <h2 className="info-title">Download and listen to music while offline</h2>
+      <h2 className="info-title">Out of ideas of what you want to listen?</h2>
       <p className="info-p">
-        Listen to music wherever you are and whenever you want. You can download
-        music and are allowed to listen to it even offline.
+        Enjoy <span className="highlighted-text">recommended</span> music based on your recent listening history.
         <br />
-        For <span className="highlighted-text">Subscribed</span> users only.
       </p>
-      <button className="subscribe-button shine">Subscribe Now</button>
+      {/* <button className="subscribe-button shine">Subscribe Now</button> */ }
     </section>
   );
 };

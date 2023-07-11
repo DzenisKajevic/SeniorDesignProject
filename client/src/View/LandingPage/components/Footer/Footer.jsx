@@ -8,18 +8,18 @@ const Footer = () => {
       <div className="footer-links-container">
         <div className="footer-links-content">
           <ul className="footer-ul">
-            <h4>Title1</h4>
+            {/*             <h4>Title1</h4>
             <a href="">link1</a>
             <a href="">link2</a>
-            <a href="">link3</a>
+            <a href="">link3</a> */}
           </ul>
         </div>
         <div className="footer-links-content">
           <ul className="footer-ul">
-            <h4>Title2</h4>
+            {/*             <h4>Title2</h4>
             <a href="">link4</a>
             <a href="">link5</a>
-            <a href="">link6</a>
+            <a href="">link6</a> */}
           </ul>
         </div>
         <div className="sm-container">
@@ -44,10 +44,10 @@ const Footer = () => {
         </select>
         <img
           className="footer-music-app-logo"
-          src="./assets/app-images/music-app-logo.png"
+          src="./assets/app-images/music-app-logo2.png"
           alt="app logo"
         />
-        <p className="copyright-p">2022 &copy; AntCol Music App</p>
+        <p className="copyright-p">2023 &copy; Music App</p>
       </div>
     </footer>
   );
