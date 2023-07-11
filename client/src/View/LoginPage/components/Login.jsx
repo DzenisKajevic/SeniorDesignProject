@@ -59,7 +59,7 @@ const Login = () => {
               <p ref={ errRef } className={ errMsg ? "errmsg" : "offscreen" }>
                 { errMsg }
               </p>
-              <label htmlFor="email" className="login-label">
+              <label htmlFor="email" className="login-label" style={ { paddingTop: "3rem" } }>
                 Email:
               </label>
               <input
@@ -90,13 +90,13 @@ const Login = () => {
               <button type="submit" className="loginpage-button shine">
                 Log in
               </button>
-              <fieldset className="paragraph-fieldset">
+              {/*               <fieldset className="paragraph-fieldset">
                 <label className="login-label2">Remember me</label>
                 <input className="checkbox-input" type="checkbox" />
                 <p className="pw-link-paragraph">
                   Forgot your <a href="">password?</a>
                 </p>
-              </fieldset>
+              </fieldset> */}
               <Link to="/">
                 <img
                   className="loginpage-icon"

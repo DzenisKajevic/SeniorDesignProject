@@ -220,6 +220,7 @@ button:focus::after {
     margin: auto;
     display: block;
     padding: 1.5rem 0;
+    padding-top: 3rem;
 }
 
 /* validation */
@@ -235,7 +236,7 @@ button:focus::after {
     padding-left: 20%;
 }
 
-.log-instructions > svg {
+.log-instructions>svg {
     margin-right: 0.25rem;
 }
 
