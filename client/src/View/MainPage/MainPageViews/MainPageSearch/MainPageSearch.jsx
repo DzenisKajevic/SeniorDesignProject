@@ -137,10 +137,7 @@ const MainPageSearch = () => {
           <FontAwesomeIcon icon={ faMagnifyingGlass } className="search-icon" />
         </button>
       </form>
-      <nav className="search-buttons-container">
-        {/* <button className="search-buttons" type="button">
-          All
-        </button> */}
+      {/*       <nav className="search-buttons-container">
         <button
           className="search-buttons"
           type="button"
@@ -159,12 +156,8 @@ const MainPageSearch = () => {
         >
           Song
         </button>
-        {/* <button className="search-buttons" type="button">
-          Playlist
-        </button> */}
-      </nav>
-      {/* <SongContainer /> */ }
-      <SongCard source="SEARCH" />
+      </nav> */}
+      < SongCard source="SEARCH" />
       <div className="mainPage-button-container">
         <button
           id="previousPage"
@@ -222,7 +215,7 @@ const MainPageSearch = () => {
           { Number(pagination.current.page) + 1 }
         </button>
       </div>
-    </section>
+    </section >
   );
 };
 
