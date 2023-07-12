@@ -1,9 +1,12 @@
 //express service = php dao
 
 const User = require('../models/User.js');
-const { StatusError } = require('../utils/helper.util');
+const { StatusError, containsUppercase } = require('../utils/helper.util');
 
 async function register(user) {
+    if (!containsUppercase(user.password)) {
+        throw new StatusError('Password must contain at least one uppercase letter', 422);
+    }
     let registeredUser = await User.create({
         username: user.username,
         email: user.email,

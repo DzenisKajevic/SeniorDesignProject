@@ -318,6 +318,7 @@ export async function deletePlaylist(playlistId) {
 }
 
 export async function generateRecommendedPlaylists() {
+    toast.info("Generating playlists...", { className: "toast-message", style: { backgroundColor: "#000000", color: "white" } })
     const response = await playlists.generateRecommendedPlaylists();
     if (response.error) {
         console.log(response.error);

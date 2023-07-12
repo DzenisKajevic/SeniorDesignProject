@@ -46,7 +46,7 @@ function morganFetchUser(req, res, param) {
 }
 
 function morganFetchError(req, res, param) {
-    if (res.statusCode > 399) return req.err;
+    if (res.statusCode > 299) return req.err;
     return "-";
 }
 
@@ -108,8 +108,13 @@ function readRangeHeader(range, totalLength) {
     return result;
 }
 
+function containsUppercase(str) {
+    return /[A-Z]/.test(str);
+}
+
 module.exports = {
     StatusError,
+    containsUppercase,
     morgan,
     fileSearchFilters,
     paginationOptions,

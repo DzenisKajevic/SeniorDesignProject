@@ -7,6 +7,7 @@ async function register(req, res, next) {
         res.status(201).send(await users.register(req.body));
     } catch (err) {
         if (err.name === 'StatusError') {
+            req.err = err.message;
             console.log(err);
             return res.status(err.statusCode).send(err.additionalMessage);
         }
