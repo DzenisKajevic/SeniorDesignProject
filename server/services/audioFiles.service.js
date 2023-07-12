@@ -160,12 +160,15 @@ async function getAllFiles(user, queryParams, callback) {
     //if songName is present, use regex to find matching songs
     if (filters['metadata.songName'] !== undefined) {
         let songNameRegex = filters['metadata.songName'];
+        let authorRegex = filters['metadata.songName'];
         filters['metadata.songName'] = undefined;
         delete filters['metadata.songName'];
 
-        let matchingCount = await AudioFile.count({ $and: [{ 'metadata.songName': { '$regex': new RegExp(songNameRegex, "i") } }, filters] });
+        let matchingCount = await AudioFile.count({ $or: [{ $and: [{ 'metadata.songName': { '$regex': new RegExp(songNameRegex, "i") } }, filters] }, { $and: [{ 'metadata.author': { '$regex': new RegExp(authorRegex, "i") } }, filters] }] });
+        //let matchingCount = await AudioFile.count({ $and: [{ 'metadata.songName': { '$regex': new RegExp(songNameRegex, "i") } }, filters] });
         console.log(matchingCount);
-        let searchResults = await AudioFile.find({ $and: [{ 'metadata.songName': { '$regex': new RegExp(songNameRegex, "i") } }, filters] }).skip((page - 1) * pageSize).limit(pageSize);
+        let searchResults = await AudioFile.find({ $or: [{ $and: [{ 'metadata.songName': { '$regex': new RegExp(songNameRegex, "i") } }, filters] }, { $and: [{ 'metadata.author': { '$regex': new RegExp(authorRegex, "i") } }, filters] }] }).skip((page - 1) * pageSize).limit(pageSize);
+        //let searchResults = await AudioFile.find({ $and: [{ 'metadata.songName': { '$regex': new RegExp(songNameRegex, "i") } }, filters] }).skip((page - 1) * pageSize).limit(pageSize);
         let pageCount = Math.ceil(matchingCount / pageSize);
         let returnObject = {
             'searchResults': searchResults,
