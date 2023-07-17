@@ -43,7 +43,7 @@ const MainPageRecents = () => {
 
     return (
         <section>
-            <h1 className="main-page-search-title">Recent songs</h1>
+            <h1 className="main-page-search-title">Recently played songs</h1>
             <div className="flex-container"  >
                 <p className="linear-p">Refresh</p>
                 <button className="interactive-button" onClick={ () => { dispatch(setReloadRecentSongs(true)); } }>

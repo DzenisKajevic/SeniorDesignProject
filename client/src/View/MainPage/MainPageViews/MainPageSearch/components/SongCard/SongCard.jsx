@@ -145,7 +145,7 @@ const SongCard = (source, style) => {
                   <FontAwesomeIcon
                     icon={ faHeart }
                     className="bookmark-icon"
-                    title="Add song to favorites"
+                    title="Add song to favourites"
                   />
                 </button>
               </div>
@@ -232,7 +232,7 @@ const SongCard = (source, style) => {
                   <FontAwesomeIcon
                     icon={ faXmark }
                     className="bookmark-icon-remove"
-                    title="Remove song from favorites"
+                    title="Remove song from favourites"
                   />
                 </button>
               </div>
@@ -268,7 +268,7 @@ const SongCard = (source, style) => {
               </div>
             </div>
           );
-        }) : <p>{/* No favorites found */ }</p>
+        }) : <p>{/* No favourites found */ }</p>
         }
       </div >
     );
@@ -308,7 +308,7 @@ const SongCard = (source, style) => {
                   );
                   if (result.error) toast.error(result.error.response.data, { className: "toast-message", style: { backgroundColor: "#000000", color: "yellow" } });
                   if (result.data) {
-                    toast.success("Song added to favorites", { className: "toast-message", style: { backgroundColor: "#000000", color: "green" } });
+                    toast.success("Song added to favourites", { className: "toast-message", style: { backgroundColor: "#000000", color: "green" } });
                     dispatch(setReloadFavouriteSongs(true));
                   }
                 } }
@@ -316,7 +316,7 @@ const SongCard = (source, style) => {
                 <FontAwesomeIcon
                   icon={ faHeart }
                   className="bookmark-icon"
-                  title="Add song to favorites"
+                  title="Add song to favourites"
                 />
               </button>
               <button
@@ -346,7 +346,7 @@ const SongCard = (source, style) => {
               </button>
             </div>
           );
-        }) : <p>{/* No favorites found */ }</p>
+        }) : <p>{/* No favourites found */ }</p>
         }
       </div >
     );
@@ -402,7 +402,7 @@ const SongCard = (source, style) => {
                   <FontAwesomeIcon
                     icon={ faHeart }
                     className="bookmark-icon"
-                    title="Add song to favorites"
+                    title="Add song to favourites"
                   />
                 </button>
               </div>
@@ -492,7 +492,7 @@ const SongCard = (source, style) => {
                   <FontAwesomeIcon
                     icon={ faHeart }
                     className="bookmark-icon"
-                    title="Add song to favorites"
+                    title="Add song to favourites"
                   />
                 </button>
               </div>
@@ -528,7 +528,7 @@ const SongCard = (source, style) => {
               </div>
             </div>
           );
-        }) : <p>{/* No favorites found */ }</p> }
+        }) : <p>{/* No favourites found */ }</p> }
       </div>
     );
   }

@@ -40,7 +40,7 @@ const MainPageFavorites = () => {
 
   return (
     <section>
-      <h1 className="main-page-search-title">Favorite songs</h1>
+      <h1 className="main-page-search-title">Favourite songs</h1>
       <SongCard source="FAVOURITES" />
       <div className="mainPage-button-container">
         <button

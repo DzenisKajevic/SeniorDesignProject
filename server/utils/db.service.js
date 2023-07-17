@@ -81,6 +81,17 @@ const dbService = {
         }
     },
 
+    closeDBConnection: async function () {
+        try {
+            await dbService.dbConnection.close();
+            console.log(`Connection to ${dbService.dbURI} closed`);
+        }
+        catch (e) {
+            console.log("Could not close db connection");
+            console.log(e);
+        }
+    },
+
     setupAudioStorageEngine: async function () {
         // Create storage engine
         dbService.audioStorage = new GridFsStorage({
@@ -179,6 +190,7 @@ module.exports = {
     /*     getAudioStore: dbService.getAudioStore,
         getProfilePicStore: dbService.getAudioStore, */
     connect: dbService.connectDB,
+    closeConnection: dbService.closeDBConnection,
     getConnectionInstance: dbService.getConnectionInstance,
     getAudioGfs: dbService.getAudioGfs,
     getProfilePicGfs: dbService.getProfilePicGfs,

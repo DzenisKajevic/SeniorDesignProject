@@ -44,7 +44,7 @@ const MainPageHome = () => {
 
   return (
     <section>
-      <h1 className="main-page-home-title">{ genres.currentGenre ? genres.currentGenre : "Find your favorite genres" } </h1>
+      <h1 className="main-page-home-title">{ genres.currentGenre ? genres.currentGenre : "Find the perfect song" } </h1>
       {/* old cards */ }
       <div
         className="card-container"
@@ -121,7 +121,7 @@ const MainPageHome = () => {
       {/* 
          INTERNAL BUTTONS FOR SONGS WITHIN THOSE GENRES
        */}
-      <div className="mainPage-button-container">
+      <div className="mainPage-button-container button-container-genre">
         <button
           id="previousSongPage"
           className="previousPage"

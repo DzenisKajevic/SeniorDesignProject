@@ -29,6 +29,10 @@
   margin-top: 2.5rem;
 }
 
+.button-container-genre {
+  margin-top: 0;
+}
+
 /* buttons  */
 .currentPage,
 .nextPage,

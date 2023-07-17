@@ -75,7 +75,7 @@ const SideBar = () => {
         >
           <span className="sidebar-navigation">
             <FontAwesomeIcon icon={ faStar } className="navigation-icons" />
-            <h3 className="not-active-link">Favorites</h3>
+            <h3 className="not-active-link">Favourites</h3>
           </span>
         </NavLink>
         <NavLink

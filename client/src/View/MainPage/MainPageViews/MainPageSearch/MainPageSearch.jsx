@@ -99,7 +99,7 @@ const MainPageSearch = () => {
   return (
     <section>
       <h1 className="main-page-search-title">
-        Find your favorite songs and artists
+        Find the perfect song
       </h1>
       <form
         className="search-form"
@@ -116,7 +116,7 @@ const MainPageSearch = () => {
           onChange={ (event) => {
             setSearchText(event.target.value);
           } }
-          placeholder="Search for your favorite songs"
+          placeholder="Search for your favourite songs"
           className="search-bar"
           incremental="true"
         />
