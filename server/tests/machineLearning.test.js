@@ -36,19 +36,20 @@ describe("fail GET /api/v1/ML/generateRecommendedPlaylists", () => {
 });
 
 describe("success GET /api/v1/ML/generateRecommendedPlaylists", () => {
-    it("should generate 3 new playlists, check if they were created, and instantly delete them afterwards", async () => {
+    it("should generate 3 new playlists", async () => {
         const loginInput = {
             email: "TestUser505@gmail.com",
             password: "TestUser505_123"
         }
         let otherUsersToken = (await request(app).post("/api/v1/auth/login").send(loginInput)).body.token;
+        console.log(otherUsersToken);
         const res = await request(app).get("/api/v1/ML/generateRecommendedPlaylists").set("Authorization", "Bearer " + otherUsersToken);
         console.log(res.error);
         console.log(res.statusCode);
         console.log(res.body);
-        expect(res.statusCode).toBe(201);
-
-        let deletePlaylist = await request(app).delete("/api/v1/playlists/deletePlaylist").send(playlistId1).set("Authorization", "Bearer " + otherUsersToken);
+        console.log(res.text);
+        expect(res.statusCode).toBe(200);
+        expect(res.text).toBe("Successfully generated recommendations");
     });
 });
 

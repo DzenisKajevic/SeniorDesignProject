@@ -3,7 +3,7 @@ const request = require("supertest");
 const app = require("../app");
 const generalConfig = require('../configs/general.config');
 const dbConnection = require('../utils/db.service');
-const fileId = "649ab97c1759d624cb205270";
+let fileId = null;
 let token = null;
 
 
@@ -15,6 +15,7 @@ beforeAll(async () => {
         password: "TestUser2_123"
     }
     token = (await request(app).post("/api/v1/auth/login").send(loginInput)).body.token;
+    fileId = "649ab97c1759d624cb205270";
 });
 
 afterAll(async () => {
@@ -37,7 +38,7 @@ describe("GET /api/v1/audioFiles/getFile/:fileId", () => {
 // passes
 // check if song's name is "Lost"
 // check if IDs match
-describe("GET /api/v1/audioFiles/getRecentlyPlayedSongs", () => {
+describe("GET /api/v1/audioFiles/getFileInfo", () => {
     it("should return a song's info", async () => {
         const res = await request(app).get("/api/v1/audioFiles/getFileInfo/" + fileId).set("Authorization", "Bearer " + token);
         console.log(res.error);
