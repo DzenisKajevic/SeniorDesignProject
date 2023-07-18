@@ -16,6 +16,8 @@ a {
 
 .grid {
     display: grid;
+    overflow: hidden;
+    /* Fixes the white bars at the bottom */
     grid-template-columns: 288px 1fr;
     grid-template-rows: 90px 1fr;
     grid-column-gap: 0px;
