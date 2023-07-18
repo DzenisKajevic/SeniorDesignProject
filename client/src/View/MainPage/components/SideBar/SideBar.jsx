@@ -97,15 +97,17 @@ const SideBar = () => {
       <div className="animated-logo">
         <h1 className="animated-logo-title">Music App</h1>
       </div>
-      <a className="sidebar-links" href="#">
-        About
-      </a>
-      <a className="sidebar-links" href="#">
-        Contact
-      </a>
-      <a className="sidebar-links" href="#">
-        Partners
-      </a>
+      {/*       <div>
+        <a className="sidebar-links" href="#">
+          About
+        </a>
+        <a className="sidebar-links" href="#">
+          Contact
+        </a>
+        <a className="sidebar-links" href="#">
+          Partners
+        </a>
+      </div> */}
     </aside>
   );
 };
