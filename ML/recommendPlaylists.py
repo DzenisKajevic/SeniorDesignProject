@@ -42,15 +42,15 @@ def removeClusterSongsFromSongFeaturesDf(allClusterIdx, songFeaturesDf):
     songFeaturesDf.reset_index(drop=True, inplace=True)
     return songFeaturesDf
 
-
 def recommendPlaylist(songFeaturesDf, clusterAvg, songFeaturesSongIds):
     cosineSimilarities = (songFeaturesDf.values * clusterAvg.values).sum(axis=1) / (
         (songFeaturesDf.values**2).sum(axis=1) ** 0.5
         * (clusterAvg.values**2).sum() ** 0.5
     )
     cosineSimilarities = pd.DataFrame(cosineSimilarities)
+    cosineSimilarities.rename(columns={0: "sim"}, inplace=True)
     cosineSimilarities["songId"] = songFeaturesSongIds
-    cosineSimilarities.sort_values(by=0, ascending=False, inplace=True)
+    cosineSimilarities.sort_values(by="sim", ascending=False, inplace=True)
     cosineSimilarities.reset_index(drop=True, inplace=True)
-    print("cosineSimilarities", cosineSimilarities.head(5))
+    print(cosineSimilarities.head(5), "\n")
     return cosineSimilarities["songId"].head(5).tolist()

@@ -36,12 +36,12 @@ def clusterRecentlyListenedSongs(recentlyListenedSongFeatures):
 
 
 def assignToCentroids(dataPoints, centroids):
-    rows = dataPoints.shape[0]
-    cols = centroids.shape[0]
-    distances = [[0] * cols] * rows
+    numOfDataPoints = dataPoints.shape[0]
+    numOfCentroids = centroids.shape[0]
+    distances = [[0] * numOfCentroids] * numOfDataPoints
     distances = pd.DataFrame(distances)
 
-    for i in range(cols):
+    for i in range(numOfCentroids):
         distances[i] = ((dataPoints.values - centroids.iloc[i].values) ** 2).sum(
             axis=1
         ) ** 0.5
@@ -57,7 +57,7 @@ def assignToCentroids(dataPoints, centroids):
     cluster2Indexes = list(idxmin_series.loc[lambda x: x == 1].index)
     cluster3Indexes = list(idxmin_series.loc[lambda x: x == 2].index)
 
-    for i in range(cols):
+    for i in range(numOfCentroids):
         centroids.iloc[i] = dataPoints.iloc[
             list(idxmin_series.loc[lambda x: x == i].index)
         ].mean()

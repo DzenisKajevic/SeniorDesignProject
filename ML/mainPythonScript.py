@@ -10,6 +10,7 @@ from bson.objectid import ObjectId
 
 try:
     user = json.loads(sys.argv[1])
+    """ user["userId"] = "64ae68f408096724f27a1e20" """
 
     dbname = getDatabase()
 
