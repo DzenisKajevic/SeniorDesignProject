@@ -44,7 +44,7 @@ const MainPageHome = () => {
 
   return (
     <section>
-      <h1 className="main-page-home-title">{ genres.currentGenre ? genres.currentGenre : "Find the perfect song" } </h1>
+      <h1 className="main-page-home-title">{ genres.currentGenre ? genres.currentGenre : "Browse genres" } </h1>
       {/* old cards */ }
       <div
         className="card-container"
