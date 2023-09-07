@@ -139,7 +139,10 @@ const SongCard = (source, style) => {
                       song["_id"]
                     );
                     if (result.error) toast.error(result.error.response.data, { className: "toast-message", style: { backgroundColor: "#000000", color: "yellow" } });
-                    if (result.data) dispatch(setReloadFavouriteSongs(true));
+                    if (result.data) {
+                      toast.success("Song added to favourites", { className: "toast-message", style: { backgroundColor: "#000000", color: "green" } });
+                      dispatch(setReloadFavouriteSongs(true));
+                    }
                   } }
                 >
                   <FontAwesomeIcon
@@ -396,7 +399,10 @@ const SongCard = (source, style) => {
                       song["_id"]
                     );
                     if (result.error) toast.error(result.error.response.data, { className: "toast-message", style: { backgroundColor: "#000000", color: "yellow" } });
-                    if (result.data) dispatch(setReloadFavouriteSongs(true));
+                    if (result.data) {
+                      toast.success("Song added to favourites", { className: "toast-message", style: { backgroundColor: "#000000", color: "green" } });
+                      dispatch(setReloadFavouriteSongs(true));
+                    }
                   } }
                 >
                   <FontAwesomeIcon
@@ -486,7 +492,10 @@ const SongCard = (source, style) => {
                       song["fileId"]["_id"]
                     );
                     if (result.error) toast.error(result.error.response.data, { className: "toast-message", style: { backgroundColor: "#000000", color: "yellow" } });
-                    if (result.data) dispatch(setReloadFavouriteSongs(true));
+                    if (result.data) {
+                      toast.success("Song added to favourites", { className: "toast-message", style: { backgroundColor: "#000000", color: "green" } });
+                      dispatch(setReloadFavouriteSongs(true));
+                    }
                   } }
                 >
                   <FontAwesomeIcon
